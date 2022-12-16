@@ -26,13 +26,12 @@ export const FooterInfoContainer = styled.div`
     align-items: center;
 `
 export const FooterLogoContainer = styled.div`
-    position: relative;
-    width: 15%;
-    height: 40%;
-    margin: 2vh;
+    display: flex;
+    flex-direction: column;
     
 `
 export const Logo = styled.div`
+    text-align: center;
     color: ${titleColor};
     font-family: "IceCaps", sans-serif; //Title Font;
     font-size: 3rem;

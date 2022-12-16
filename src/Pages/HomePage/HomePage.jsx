@@ -1,12 +1,11 @@
 import React  from 'react';
 import {
     CoverPhoto,
-    HomePageContainer,
+    HomePageContainer, MainContentContainer,
     Name,
     NameContainer,
     Occupation,
 } from "./HomePageStyle";
-import coverPhoto from "../../Assets/Images/coverPhoto.png"
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 function HomePage() {
@@ -15,12 +14,14 @@ function HomePage() {
 
             <HomePageContainer>
                 <Header/>
+                <CoverPhoto/>
+                <MainContentContainer>
+                    <NameContainer>
+                        <Name> William Teasley </Name>
+                        <Occupation> Full-Stack-Developer </Occupation>
+                    </NameContainer>
+                </MainContentContainer>
 
-                <CoverPhoto src={(coverPhoto)} alt="fuck you"></CoverPhoto>
-                <NameContainer>
-                    <Name> Frost Milano </Name>
-                    <Occupation> web developer </Occupation>
-                </NameContainer>
             </HomePageContainer>
             <Footer/>
         </>

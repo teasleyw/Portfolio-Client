@@ -20,10 +20,10 @@ function LandingPage() {
         </LandingPageContainer>
         <LogoContainer>
             <Frost>
-                Frost
+                Will
             </Frost>
             <Milano>
-                Milano
+                Teasley
             </Milano>
             <NeonBtn onClick={() => {navigate("/Home")}} NeonColor={"rgb(180,242,242)"}>
                 Enter

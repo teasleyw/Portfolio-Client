@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {ButtonContainer, Poem, PoemContainer, PoetryPageContainer} from "./PoetryPageStyled";
 import Header from "../../Components/Header/Header";
 import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
-import Modal from "../../Components/Modal/Modal";
+import ModalUnderConstruction from "../../Components/Modal/ModalUnderConstruction";
 
 
 function EventsPage() {
@@ -43,8 +43,8 @@ function EventsPage() {
         <>
             {showModal &&
             <>
-                <Modal exitModal={() => exitModal()}>
-                </Modal>
+                <ModalUnderConstruction exitModal={() => exitModal()}>
+                </ModalUnderConstruction>
             </>
 
         }
@@ -52,7 +52,7 @@ function EventsPage() {
                 <Header/>
                 <ButtonContainer>
                     <NeuMorphicButton onClick={() => submitPoem()} label="Submit"/>
-                    <NeuMorphicButton label="Read Other Poems"/>
+                    <NeuMorphicButton onClick={() => submitPoem()} label="Read Other Poems"/>
                     <NeuMorphicButton onClick={() => clearFunction()} label="Clear"/>
                 </ButtonContainer>
                 <PoemContainer>

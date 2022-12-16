@@ -15,6 +15,18 @@ export const HeaderDiv = styled.div`
   top: 0;
   z-index: 999;
 `
+export const MobileIcon= styled.div`
+  display: none;
+  @media screen and (max-width: 960px) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 60%);
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+`
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -29,14 +41,27 @@ export const HeaderContainer = styled.div`
     padding-left: 30px;
   }
 `
-export const TabContainer = styled.div`
+export const TabContainer = styled.ul`
   display: flex;
   align-items: center;
   list-style: none;
   text-align: center;
+  @media screen and (max-width: 960px) {
+    padding-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 60px;
+    left: ${({ click }) => (click ? 0 : '-120%')};
+    opacity: 1;
+    transition: all 0.5s ease;
+    background: rgb(0,0,0);
+  }
   
 `
-export const TabItem = styled.a`
+export const TabItem = styled.li`
   color: ${nameColor};
   font-family: "Aboreto", sans-serif; //Title Font;
   font-size: 25px;
@@ -58,7 +83,7 @@ export const TabItem = styled.a`
     background-image:
             linear-gradient(135deg,
             rgba(255,255,255,0),
-            rgba(255,255,255,.8),
+            rgba(255,255,255,0),
             rgba(255,255,255,0)
             );
   }
@@ -68,6 +93,13 @@ export const TabItem = styled.a`
     transform: scaleX(1);
     border-bottom: 2px solid #ffff;
     &:after {
+      background-image:
+              linear-gradient(135deg,
+              rgba(255,255,255,0),
+              rgba(255,255,255,.8),
+              rgba(255,255,255,0)
+              );
+      display: block;
       transition: all .4s ease-out;
       right: 100%;
     }

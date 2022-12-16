@@ -40,6 +40,10 @@ export const ModalForm = styled.div`
   opacity: 100%;
   z-index: 999;
   border-radius: 10px;
+  @media screen and (max-width: 960px) {
+    width: 100vw;
+    height: 75vh;
+  }
 `
 export const ExitButton = styled.button`
   color: black;
@@ -47,6 +51,10 @@ export const ExitButton = styled.button`
   width: 25%;
   opacity: 100%;
   z-index: 999;
+  align-self: center;
+  @media screen and (max-width: 960px) {
+    width: 75%;
+  }
 `
 export const InputBox = styled.input`
   outline: none;
@@ -99,7 +107,13 @@ export const Logo = styled.div`
   
 `
 export const FormContainer = styled.div`
-    background-color: black;
-    width: 95%;
-    height: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+  align-content: center;
+  background-color: black;
+  width: 95%;
+  height: 95%;
+  
 `
