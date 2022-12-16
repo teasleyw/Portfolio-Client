@@ -1,0 +1,172 @@
+$background: #ededed;
+$background-shadow: #c9c9c9;
+$elevation-xs: 4px;
+$elevation-s: 8px;
+$elevation-m: 12px;
+$elevation-l: 16px;
+$elevation-xl: 20px;
+
+body {
+  background-color: #ededed;
+}
+
+@mixin pressed($distance) {
+  $distance-inverted: $distance * -1;
+  background: $background;
+  box-shadow: inset $distance $distance ($distance * 2) $background-shadow,
+  inset $distance-inverted $distance-inverted ($distance * 2) #ffffff;
+}
+
+@mixin convex($distance) {
+  $distance-inverted: $distance * -1;
+  background: linear-gradient(145deg, #fefefe, #d5d5d5);
+  box-shadow: $distance $distance ($distance * 2) #c9c9c9,
+  $distance-inverted $distance-inverted ($distance * 2) #ffffff;
+}
+
+@mixin concave($distance) {
+  $distance-inverted: $distance * -1;
+  background: linear-gradient(145deg, #d7d7d7, #ffffff);
+  box-shadow: $distance $distance ($distance * 2) #cbcbcb,
+  $distance-inverted $distance-inverted ($distance * 2) #ffffff;
+}
+
+@mixin flat($distance) {
+  $distance-inverted: $distance * -1;
+  background: $background;
+  box-shadow: $distance $distance ($distance * 2) #cbcbcb,
+  $distance-inverted $distance-inverted ($distance * 2) #ffffff;
+}
+
+button {
+  padding: 24px;
+  margin: 20px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s all ease;
+  cursor: pointer;
+  height: fit-content;
+  background: $background;
+}
+
+.pressed {
+  @include pressed($elevation-xs);
+}
+
+.convex {
+  @include convex($elevation-xs);
+}
+
+.concave {
+  @include concave($elevation-xs);
+}
+
+.flat {
+  @include flat($elevation-xs);
+}
+
+.button.primary {
+  @include concave($elevation-s);
+  &:hover {
+    @include concave($elevation-m);
+  }
+  &:focus {
+    @include concave($elevation-m);
+  }
+  &:active {
+    @include concave($elevation-xs);
+  }
+}
+
+.button.inverted {
+  &:not(:active):hover {
+    @include concave($elevation-xs);
+  }
+  &:not(:active):focus {
+    @include concave($elevation-xs);
+  }
+  &:active {
+    @include concave(2px);
+  }
+}
+
+.rounded {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  padding: 0;
+}
+
+.example {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  @include flat($elevation-xs);
+}
+
+/* Template Style */
+
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+}
+
+.chris2cant-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 16px;
+}
+
+.by {
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 4px;
+  margin: 8px;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+
+.row, .flex, .column {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row.vertical-center, .column.horizontal-center {
+  align-items: center;
+}
+
+.row.horizontal-center, .column.vertical-center {
+  justify-content: center;
+}
