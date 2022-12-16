@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import backgroundImage from "../../Assets/Images/coverPhoto.jpeg"
+import backgroundImage from "../../Assets/Images/coverPhoto.jpg"
 import backgroundImageMobile from "../../Assets/Images/mobilePhoto.jpg"
 const backgroundColor = "black"
 const nameColor = "white"
