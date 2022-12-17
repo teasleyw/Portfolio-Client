@@ -2,7 +2,7 @@ import React from "react";
 import "./ModalStyled"
 import {
     Dimmer,
-    ExitButton, FormContainer,
+    FormButton, FormContainer,
     InputLabels,
     Logo,
     LogoContainer,
@@ -25,9 +25,9 @@ function Modal({exitModal}) {
                        <InputLabels>
                            Poems Is currently Under Construction sorry for the Inconvenience
                        </InputLabels>
-                       <ExitButton onClick={() => exitModal()}>
+                       <FormButton onClick={() => exitModal()}>
                            EXIT
-                       </ExitButton>
+                       </FormButton>
                    </FormContainer>
                </ModalForm>
            </ModalContainer>

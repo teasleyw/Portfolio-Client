@@ -13,5 +13,10 @@ export function isValidPhone(phone) {
   const regex = new RegExp(pattern);
   return regex.test(phone);
 }
+export function isValidPoemTitle(phone) {
+  const pattern = /^[A-z]+$/;
+  const regex = new RegExp(pattern);
+  return regex.test(phone);
+}
 
 

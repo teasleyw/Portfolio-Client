@@ -35,41 +35,98 @@ export const ModalForm = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
-  width: 50vw;
+  height: 75vh;
+  width: 75vw;
   opacity: 100%;
   z-index: 999;
   border-radius: 10px;
   @media screen and (max-width: 960px) {
     width: 100vw;
-    height: 75vh;
+    padding-top: 110px;
+    height: 100vh;
   }
 `
-export const ExitButton = styled.button`
-  color: black;
+export const SubmitFormButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    height: 100px;
+    @media screen and (max-width: 960px) {
+      flex-direction: column;
+      height: 50%;
+    
+    }
+`
+export const FormButton = styled.button`
+  color: ${checkerColorTwo};
+  background: ${checkerColor};
   height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 25%;
   opacity: 100%;
   z-index: 999;
   align-self: center;
+  &:hover{
+    color: ${checkerColor};
+    background: ${checkerColorTwo};
+    width: 30%;
+    height: 30%;
+  }
+  &:disabled,
+  &[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
   @media screen and (max-width: 960px) {
     width: 75%;
+    &:hover{
+      color: ${checkerColorTwo};
+      background: ${checkerColor};
+      width: 75%;
+      height: 75%;
+    }
+    &:focus{
+      color: ${checkerColor};
+      background: ${checkerColorTwo};
+      width: 100%;
+      height: 80%;
+    }
+    &:active{
+    }
+    
   }
+`
+export const InputContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 10%;
+    
 `
 export const InputBox = styled.input`
   outline: none;
   font-size: 30px;
-  width: 75%;
+  width: 100%;
   background: #323232;
   border-radius: 10px;
   border: none;
   color: #61dafb;
   border-bottom: 4px solid yellow;
-
   ::placeholder,
   ::-webkit-input-placeholder {
     color: ${checkerColor};
     text-shadow: 1px 1px ${shadowOne},-1px -1px ${shadowTwo};
+  }
+  @media screen and (max-width: 960px) {
+    ::placeholder,
+    ::-webkit-input-placeholder {
+      font-size: 75%;
+      color: ${checkerColor};
+      text-shadow: 1px 1px ${shadowOne},-1px -1px ${shadowTwo};
+    }
   }
 
 `
@@ -95,6 +152,9 @@ export const LogoContainer = styled.div`
   animation-duration: 10s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
+  border-bottom: #61dafb solid 5px;
+  padding-bottom: 10px;
+  border-radius: 50%;
 `
 export const Logo = styled.div`
   position: relative;
@@ -107,13 +167,17 @@ export const Logo = styled.div`
   
 `
 export const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  justify-content: center;
-  align-content: center;
   background-color: black;
   width: 95%;
   height: 95%;
   
+`
+export const FormContentContainer = styled.div`
+  display: flex;
+  padding-left: 5%;
+  padding-right: 5%;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 `

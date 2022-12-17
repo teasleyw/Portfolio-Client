@@ -1,12 +1,12 @@
 export let initialState = {
   firstName: {
     value: "",
-    hasError: true,
+    hasError: false,
     errorMessage: "",
   },
   lastName: {
     value: "",
-    hasError: true,
+    hasError: false,
     errorMessage: "",
   },
   poemTitle: {
@@ -19,6 +19,6 @@ export let initialState = {
     hasError: false,
     errorMessage: ""
   },
-  email: { value: "", hasError: true, errorMessage: "" },
+  email: { value: "", hasError: false, errorMessage: "" },
   emailConsent: { value: false },
 };

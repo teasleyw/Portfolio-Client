@@ -2,10 +2,11 @@ import React, {useEffect, useRef, useState} from "react";
 import {ButtonContainer, Poem, PoemContainer, PoetryPageContainer} from "./PoetryPageStyled";
 import Header from "../../Components/Header/Header";
 import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
-import ModalUnderConstruction from "../../Components/Modal/ModalUnderConstruction";
+import Modal from "../../Components/Modal/Modal";
+import {updatePoemContent} from "../../redux/app-state-slice";
 
 
-function EventsPage() {
+function PoetryPage({dispatch,customerData}) {
     const [poemHTML, setPoem] = useState("Write me a poem")
     const [changeState, setChangeState] = useState(0)
     const [showModal, setShowModal] = useState(false)
@@ -23,35 +24,34 @@ function EventsPage() {
             setPoem("Believe In Yourself, Because I Believe in you.")
         }
         setChangeState(changeState + 1)
-        console.log(poemHTML)
     };
-    const submitPoem = () => {
+    const submitPoem = (dispatch) => {
         setShowModal(true)
-        console.log(showModal)
         if (poem) {
             setPoem(poem)
             console.log("submitted poem: " + poemHTML)
         } else {
             console.log("poem not submitted")
         }
+        dispatch(updatePoemContent(poemHTML))
     }
     const exitModal = () => {
         setShowModal(false)
-        console.log(showModal)
+        console.log(customerData)
     }
     return (
         <>
             {showModal &&
             <>
-                <ModalUnderConstruction exitModal={() => exitModal()}>
-                </ModalUnderConstruction>
+                <Modal customerData={customerData} dispatch={dispatch} exitModal={() => exitModal()}>
+                </Modal>
             </>
 
         }
             <PoetryPageContainer>
                 <Header/>
                 <ButtonContainer>
-                    <NeuMorphicButton onClick={() => submitPoem()} label="Submit"/>
+                    <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit"/>
                     <NeuMorphicButton onClick={() => submitPoem()} label="Read Other Poems"/>
                     <NeuMorphicButton onClick={() => clearFunction()} label="Clear"/>
                 </ButtonContainer>
@@ -90,4 +90,4 @@ const PoemLogic = (props) => {
     });
     return elements;
 };
-export default EventsPage;
+export default PoetryPage;

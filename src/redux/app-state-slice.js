@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./initialState";
 import {
   validateAndUpdateFirstName,
-  validateAndUpdateEmail, validateAndUpdateLastName,
+  validateAndUpdateEmail, validateAndUpdateLastName, validateAndUpdatePoemTitle,
 } from "../validation/InputValidation";
 
 export const customerDataSlice = createSlice({
@@ -10,25 +10,26 @@ export const customerDataSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateFirstName : (state, action) => {
-      state.value = action.payload;
+      state.firstName.value = action.payload;
       validateAndUpdateFirstName(state);
     },
     updateLastName : (state, action) => {
-      state.value = action.payload;
+      state.lastName.value = action.payload;
       validateAndUpdateLastName(state);
     },
     updatePoemTitle : (state, action) => {
-      state.value = action.payload;
+      state.poemTitle.value = action.payload;
+      validateAndUpdatePoemTitle(state)
     },
     updatePoemContent : (state, action) => {
-      state.value = action.payload;
+      state.poemContent.value = action.payload;
     },
     updateEmail : (state, action) => {
-      state.value = action.payload;
+      state.email.value = action.payload;
       validateAndUpdateEmail(state);
     },
     updateEmailConsent : (state, action) => {
-      state.state.value = action.payload;
+      state.emailConsent.value = action.payload;
     }
   },
 });

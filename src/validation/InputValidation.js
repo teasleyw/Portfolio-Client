@@ -1,6 +1,6 @@
 import {
   isValidEmail,
-  isValidName
+  isValidName, isValidPoemTitle
 } from "./PatternValidation";
 
 export const validateAndUpdateEmail = (state) => {
@@ -45,5 +45,20 @@ export const validateAndUpdateLastName = (state) => {
   else{
     state.lastName.hasError =false;
     state.lastName.errorMessage = ''
+  }
+}
+
+export const validateAndUpdatePoemTitle = (state) => {
+  if (!isValidPoemTitle(state.poemTitle.value)){
+    state.poemTitle.hasError = true;
+    state.poemTitle.errorMessage = "Poem Contains Invalid Charachters";
+  }
+  else if (state.lastName.value.length > 20){
+    state.poemTitle.hasError = true;
+    state.poemTitle.errorMessage = "Poem Title Must be 20 characters";
+  }
+  else{
+    state.poemTitle.hasError =false;
+    state.poemTitle.errorMessage = ''
   }
 }
