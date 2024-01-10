@@ -10,7 +10,7 @@ export const AboutPageContainer = styled.div`
   background: ${backgroundColor};
   width: 100vw;
   color: white;
-  height: 140vh;
+  height: fit-content;
   overflow: hidden;
   position: absolute;
   top: 0;
