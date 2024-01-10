@@ -40,6 +40,10 @@
   font-family: 'IceCaps';
   src: local("IceCaps"), url("./Assets/Fonts/ice_caps/IceCaps.ttf") format("truetype")
 }
+@font-face {
+  font-family: 'Textile-Regular';
+  src: local("Textile-Regular"), url("./Assets/Fonts/Textile_Regular/Textile-Regular.ttf") format("truetype")
+}
 
 @font-face {
   font-family: 'Aboreto';

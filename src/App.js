@@ -3,6 +3,7 @@ import './App.css';
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import HomePage from "./Pages/HomePage/HomePage";
 import EventsPage from "./Pages/EventsPage/EventsPage";
+import AboutPage from "./Pages/AboutPage/AboutPage";
 //Router
 import { BrowserRouter as Router,Route,Routes, } from 'react-router-dom';
 //fonts
@@ -26,7 +27,8 @@ function App() {
             <Route path="/Home" element={<HomePage/>} />
             <Route path="/Events" element={<EventsPage/>} />
             <Route path="/Poetry" element={<PoetryPage dispatch={dispatch} customerData={customerData}/>} />
-        </Routes>
+            <Route path="/About" element={<AboutPage dispatch={dispatch} customerData={customerData}/>} />
+         </Routes>
       </Router>
     </div>
   );
