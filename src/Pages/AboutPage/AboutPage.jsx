@@ -12,7 +12,8 @@ import InfoSection from "../../Components/InfoSection/infoSection"
 import AboutPictureOne from "../../Assets/Images/AboutPictureOne.jpg"
 import guitar from "../../Assets/Images/guitar-emoji.png"
 import coding from "../../Assets/Images/Coding.png"
-import {CareerText} from "../../utils/constants.js"
+import {CareerText, GuitarText} from "../../utils/constants.js"
+import Folsom from "../../Assets/Videos/Folsom.MOV"
 
 function AboutPage() {
     const [isVisible, setVisible] = useState(false);
@@ -44,6 +45,8 @@ function AboutPage() {
                     <Icon src={coding} ref={documentRef} animate={isVisible}/>
                  </HeroSection>
                  <InfoSection inverse={true} sectionOne={CareerText} header="Career" Image= {AboutPictureOne}/>
+                 <InfoSection inverse={false} hasVideo={true} sectionOne={GuitarText} header="Hobbies" video= {Folsom}/>
+
 
 {/*                     <NameContainer> */}
 {/*                         <Name> William Teasley </Name> */}

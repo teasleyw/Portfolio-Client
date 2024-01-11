@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
-import {InfoSectionContainer, InfoSectionOne, InfoSectionTwo, InfoSectionTwoImage, InfoHeader,InfoSectionText} from "./infoSectionStyled";
+import {InfoSectionContainer, InfoSectionOne, InfoSectionTwo, InfoSectionTwoImage, InfoHeader,InfoSectionText, InfoSectionVideo} from "./infoSectionStyled";
 
 const InfoSection = (
     {
         inverse = false,
+        hasVideo = false,
+        video = "",
         sectionOne= "",
         sectionTwo = "",
         id="",
@@ -30,14 +32,22 @@ const InfoSection = (
 
     return (
         <InfoSectionContainer id={id} inverse={inverse} ref={documentRef} animate={isVisible}>
-            <InfoSectionOne>
+            <InfoSectionOne inverse={inverse}>
                 <InfoHeader > {header} </InfoHeader>
                 <InfoSectionText>
                 {sectionOne}
                 </InfoSectionText>
             </InfoSectionOne>
-            <InfoSectionTwo>
+            <InfoSectionTwo inverse={inverse}>
+             {hasVideo == true &&
+                    <InfoSectionVideo controls autoplay>
+                        <source src = {video} type={"video/mp4"}/>
+                    </InfoSectionVideo>
+             }
+
+             {hasVideo == false &&
                 <InfoSectionTwoImage src={Image}/>
+             }
 {/*                 {sectionTwo} */}
             </InfoSectionTwo>
         </InfoSectionContainer>

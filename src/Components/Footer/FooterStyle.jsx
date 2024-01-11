@@ -2,8 +2,8 @@ import styled from "styled-components";
 const titleColor = "rgb(180,242,242)"
 
 export const FooterContainer = styled.div`
-  background: rgb(0,0,0,0.7);
-  height: 40vh;
+  background: rgb(0,0,0,0.9);
+  height: 25vh;
   width: 100vw;
   font-size: 1.2rem;
   position: absolute;

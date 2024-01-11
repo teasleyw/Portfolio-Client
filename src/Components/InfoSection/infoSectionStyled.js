@@ -7,6 +7,7 @@ export const InfoSectionContainer = styled.div`
     background-color: ${props => props.inverse ? primaryDark : secondaryLight};
     color: ${props => props.inverse ? secondaryLight: primaryDark};
     min-height: 50vh;
+    max-height: 50vh
     padding-top: 20px;
 //    z-index: 998;
     position: relative;
@@ -60,7 +61,17 @@ export const InfoSectionTwoImage = styled.div`
     background-position: center;
     box-shadow: 0 0 8px 8px black inset;
     background-image: url(${props => props.src});
-    order: ${props => props.inverse ? 1 : 0};
+//    order: ${props => props.inverse ? 1 : 0};
+`
+export const InfoSectionVideo = styled.video`
+     width: 20vw;
+     height: 50vh;
+     object-fit: contain;
+     @media screen and (max-width: 960px) {
+             flex-direction: column;
+             height: 60vh;
+             width: 90vw;
+     }
 `
 export const InfoSectionText = styled.div`
     width: 80%;

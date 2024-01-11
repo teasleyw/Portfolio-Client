@@ -20,7 +20,9 @@ function HomePage() {
                         <Name> William Teasley </Name>
                         <Occupation> Full-Stack-Developer </Occupation>
                     </NameContainer>
+
                 </MainContentContainer>
+
 
             </HomePageContainer>
             <Footer/>
