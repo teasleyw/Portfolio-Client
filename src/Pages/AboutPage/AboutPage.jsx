@@ -13,7 +13,7 @@ import AboutPictureOne from "../../Assets/Images/AboutPictureOne.jpg"
 import guitar from "../../Assets/Images/guitar-emoji.png"
 import coding from "../../Assets/Images/Coding.png"
 import {CareerText, GuitarText} from "../../utils/constants.js"
-import Folsom from "../../Assets/Videos/Folsom.mov"
+import Folsom from "../../Assets/Videos/Folsom.MOV"
 
 function AboutPage() {
     const [isVisible, setVisible] = useState(false);
