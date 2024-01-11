@@ -40,9 +40,7 @@ const InfoSection = (
             </InfoSectionOne>
             <InfoSectionTwo inverse={inverse}>
              {hasVideo == true &&
-                    <InfoSectionVideo controls autoplay>
-                        <source src = {video} type={"video/mp4"}/>
-                    </InfoSectionVideo>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/WgX-RpJUQaY?si=j6EWLdrJC1c6kIIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
              }
 
              {hasVideo == false &&
