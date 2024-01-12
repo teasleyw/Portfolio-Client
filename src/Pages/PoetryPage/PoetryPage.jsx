@@ -4,6 +4,7 @@ import Header from "../../Components/Header/Header";
 import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
 import Modal from "../../Components/Modal/Modal";
 import {updatePoemContent} from "../../redux/app-state-slice";
+import {SuitAndTie} from "../../utils/poems.js"
 
 
 function PoetryPage({dispatch,customerData}) {
@@ -35,6 +36,14 @@ function PoetryPage({dispatch,customerData}) {
         }
         dispatch(updatePoemContent(poemHTML))
     }
+    const randomPoem = () => {
+            if (changeState % 2 === 1) {
+                setPoem(SuitAndTie)
+            } else {
+                setPoem("Believe In Yourself, Because I Believe in you.")
+            }
+            setChangeState(changeState + 1)
+        };
     const exitModal = () => {
         setShowModal(false)
         console.log(customerData)
@@ -52,7 +61,7 @@ function PoetryPage({dispatch,customerData}) {
                 <Header/>
                 <ButtonContainer>
                     <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit"/>
-                    <NeuMorphicButton onClick={() => submitPoem()} label="Read Other Poems"/>
+                    <NeuMorphicButton onClick={() => randomPoem()} label="Read Other Poems"/>
                     <NeuMorphicButton onClick={() => clearFunction()} label="Clear"/>
                 </ButtonContainer>
                 <PoemContainer>
