@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
 
-const backgroundColor = "#D8D8D8";
-const poemColor = "#000"
+//const backgroundColor = "#D8D8D8";
+const backgroundColor = "#272727";
+//const poemColor = "#000"
+const poemColor = "#D8D8D8"
+const poemTitleColor = "rgb(255, 253, 208)"
+const poemAuthorColor = "rgb(255, 253, 208)"
+
 
 export const PoetryPageContainer = styled.div`
   background: ${backgroundColor};
@@ -12,6 +17,7 @@ export const PoetryPageContainer = styled.div`
   min-height: 140vh;
   overflow: hidden;
   position: absolute;
+  align-items: center;
   top: 0;
   left: 0;
   opacity: ${props => props.opacity};
@@ -22,8 +28,38 @@ export const PoemContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 960px) {
+      font-size: 25px;
+  }
+  @media screen and (max-width: 350px) {
+  }
+`
+export const PoemTitle = styled.div`
+    color: ${poemTitleColor};
+    font-size: 44px;
+    text-align: center;
+    @media screen and (max-width: 960px) {
+          font-size: 25px;
+      }
+      @media screen and (max-width: 350px) {
+                     font-size: 18px;
+           }
+`
+export const PoemAuthor = styled.div`
+    color: ${poemAuthorColor};
+    font-size: 44px;
+    text-align: center;
+    @media screen and (max-width: 960px) {
+          font-size: 25px;
+      }
+      @media screen and (max-width: 350px) {
+                     font-size: 18px;
+           }
 `
 export const Poem = styled.h1`
+    background: #303030;
+    border-radius: 25px;
+    padding: 1rem;
     color: ${poemColor};
     font-size: 44px;
     text-align: center;
@@ -31,6 +67,15 @@ export const Poem = styled.h1`
     outline: none;
     font-family: 'Maitree', serif;
     white-space: pre;
+    white-space: pre-wrap;
+    @media screen and (max-width: 960px) {
+          font-size: 20px;
+          width: 90vw;
+     }
+     @media screen and (max-width: 350px) {
+               font-size: 13px;
+               width: 90vw;
+     }
 `
 export const ButtonContainer = styled.div`
   width: 100vw;

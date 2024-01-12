@@ -1,14 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
-import {ButtonContainer, Poem, PoemContainer, PoetryPageContainer} from "./PoetryPageStyled";
+import {ButtonContainer, Poem, PoemAuthor, PoemTitle, PoemContainer, PoetryPageContainer} from "./PoetryPageStyled";
 import Header from "../../Components/Header/Header";
 import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
 import Modal from "../../Components/Modal/Modal";
 import {updatePoemContent} from "../../redux/app-state-slice";
 import {SuitAndTie} from "../../utils/poems.js"
+import {ColterWallDevil} from "../../utils/poemObjects.js"
 
 
 function PoetryPage({dispatch,customerData}) {
     const [poemHTML, setPoem] = useState("Write me a poem")
+     const [poemTitle, setPoemTitle] = useState("")
+      const [poemAuthor, setAuthor] = useState("")
     const [changeState, setChangeState] = useState(0)
     const [showModal, setShowModal] = useState(false)
     let poem = ""
@@ -19,6 +22,8 @@ function PoetryPage({dispatch,customerData}) {
 
     };
     const clearFunction = () => {
+        setAuthor("")
+        setPoemTitle("")
         if (changeState % 2 === 1) {
             setPoem("Roses Are Red....")
         } else {
@@ -38,8 +43,12 @@ function PoetryPage({dispatch,customerData}) {
     }
     const randomPoem = () => {
             if (changeState % 2 === 1) {
-                setPoem(SuitAndTie)
+                setAuthor("by: " + ColterWallDevil.author)
+                setPoemTitle(ColterWallDevil.title)
+                setPoem(ColterWallDevil.poem)
             } else {
+                setAuthor("")
+                setPoemTitle("")
                 setPoem("Believe In Yourself, Because I Believe in you.")
             }
             setChangeState(changeState + 1)
@@ -67,6 +76,15 @@ function PoetryPage({dispatch,customerData}) {
                 <PoemContainer>
                     <PoemLogic onChange={handleChangePoem}>
                         <Poem>
+                        {poemTitle != "" &&
+                            <>
+                            <PoemTitle> {poemTitle} </PoemTitle>
+                            <br/>
+                            <PoemAuthor> {poemAuthor} </PoemAuthor>
+                            <br/>
+                            <br/>
+                            </>
+                            }
                             {poemHTML}
                         </Poem>
                     </PoemLogic>
