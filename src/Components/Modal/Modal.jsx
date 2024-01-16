@@ -18,6 +18,7 @@ function Modal({exitModal, dispatch,customerData}) {
         console.log(customerData)
         submitPoemService(customerData, "").then((result) => console.log(result))
             .catch((error) => console.log(error));
+        exitModal();
     }
 
     return (
@@ -57,7 +58,7 @@ function Modal({exitModal, dispatch,customerData}) {
                                    {customerData.email.errorMessage}
                                </>
                            }
-                       </InputContainer>
+
                        <InputLabels>
                            First Name:
                        </InputLabels>
@@ -84,6 +85,7 @@ function Modal({exitModal, dispatch,customerData}) {
                                    {customerData.lastName.errorMessage}
                                </>
                            }
+                           </InputContainer>
                            <SubmitFormButtonContainer>
                                <FormButton onClick={() => exitModal()}>
                                    EXIT

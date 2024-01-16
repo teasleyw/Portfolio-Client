@@ -19,8 +19,10 @@ export const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
+  padding-top: 10vh;
   height: 100%;
   width: 100%;
+
 `
 
 export const ModalForm = styled.div`
@@ -35,7 +37,7 @@ export const ModalForm = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75vh;
+  height: 100vh;
   width: 75vw;
   opacity: 100%;
   z-index: 999;
@@ -48,6 +50,7 @@ export const ModalForm = styled.div`
 `
 export const SubmitFormButtonContainer = styled.div`
     display: flex;
+    gap: 10px;
     flex-direction: row;
     width: 100%;
     justify-content: center;
@@ -102,14 +105,17 @@ export const FormButton = styled.button`
 `
 export const InputContainer = styled.div`
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     height: 10%;
+    width: 100%;
     
 `
 export const InputBox = styled.input`
   outline: none;
   font-size: 30px;
-  width: 100%;
+  width: 75%;
   background: #323232;
   border-radius: 10px;
   border: none;
@@ -142,7 +148,7 @@ export const Dimmer = styled.div`
   color: black;
   opacity: 66%;
   position: absolute;
-  height: 100%;
+  height: 300vh;
   width: 100%;
   z-index: 999;
 `
