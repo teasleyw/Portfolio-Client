@@ -47,8 +47,8 @@ function PoetryPage({dispatch,customerData}) {
                 setPoemTitle(ColterWallDevil.title)
                 setPoem(ColterWallDevil.poem)
             } else {
-                setAuthor("")
-                setPoemTitle("")
+                setAuthor("Title")
+                setPoemTitle("TItle")
                 setPoem("Believe In Yourself, Because I Believe in you.")
             }
             setChangeState(changeState + 1)
@@ -74,7 +74,7 @@ function PoetryPage({dispatch,customerData}) {
                     <NeuMorphicButton onClick={() => clearFunction()} label="Clear"/>
                 </ButtonContainer>
                 <PoemContainer>
-                    <PoemLogic onChange={handleChangePoem}>
+                    <div onChange={handleChangePoem}>
                         <Poem>
                         {poemTitle != "" &&
                             <>
@@ -84,10 +84,14 @@ function PoetryPage({dispatch,customerData}) {
                             <br/>
                             <br/>
                             </>
-                            }
-                            {poemHTML}
+                        }
+                            <PoemLogic onChange={handleChangePoem}>
+                                <div>
+                                {poemHTML}
+                                </div>
+                           </PoemLogic>
                         </Poem>
-                    </PoemLogic>
+                    </div>
                 </PoemContainer>
             </PoetryPageContainer>
         </>

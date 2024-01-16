@@ -56,7 +56,7 @@ export const PoemAuthor = styled.div`
                      font-size: 18px;
            }
 `
-export const Poem = styled.h1`
+export const Poem = styled.div`
     background: #303030;
     border-radius: 25px;
     padding: 1rem;
