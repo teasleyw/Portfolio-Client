@@ -47,8 +47,8 @@ function PoetryPage({dispatch,customerData}) {
                 setPoemTitle(ColterWallDevil.title)
                 setPoem(ColterWallDevil.poem)
             } else {
-                setAuthor("Title")
-                setPoemTitle("TItle")
+                setAuthor("")
+                setPoemTitle("")
                 setPoem("Believe In Yourself, Because I Believe in you.")
             }
             setChangeState(changeState + 1)
