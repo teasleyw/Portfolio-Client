@@ -1,6 +1,6 @@
 // BowlingPage.jsx
 import React, { useState } from 'react';
-import {BowlingPageStyled,ScoreSection,FrameScoreInput,CalculateButton,FrameContainer,FrameNumber, BowlingPageContainer,HeroSection, HeroTitle, ThrowsContainer} from './BowlingPageStyled';
+import {BowlingPageStyled,ScoreSection,FrameScoreInput,CalculateButton,FrameContainer,FrameNumber, BowlingPageContainer,HeroSection, HeroTitle, ThrowsContainer,TanSquare,NumberSquare,SecondNumberSquare,TotalSquare, FrameThrowsContainer,FrameContainerTwo,ScoreContainer,FrameLabel} from './BowlingPageStyled';
 import PinDiagram from '../../Components/PinDiagram/PinDiagram'; // Make sure to adjust the path based on your project structure
 import Header from "../../Components/Header/Header";
 const BowlingPage = () => {
@@ -157,7 +157,34 @@ const BowlingPage = () => {
                   <CalculateButton onClick={() => alert(`Total Score: ${calculateTotalScore()}`)}>
                     Calculate Total Score
                   </CalculateButton>
+
+
                 </ScoreSection>
+                <ScoreContainer>
+                 {frameScores.map((_, index) => (
+                 <FrameContainerTwo>
+                 <FrameLabel> {index+1} </FrameLabel>
+                     <TanSquare>
+                        <FrameThrowsContainer>
+                            <NumberSquare
+                               type="text"
+                               maxLength="2"
+                               value={frameScores[index].firstThrow}
+                               onChange={(e) => handleScoreChange(index, 'firstThrow', e.target.value)}
+                               />
+                            <SecondNumberSquare
+                                 type="text"
+                                 maxLength="2"
+                                 value={frameScores[index].secondThrow}
+                                 onChange={(e) => handleScoreChange(index, 'secondThrow', e.target.value)}
+                            />
+                        </FrameThrowsContainer>
+                        <TotalSquare> 10 </TotalSquare>
+                     </TanSquare>
+                 </FrameContainerTwo>
+                 ))}
+                 </ScoreContainer>
+
         </BowlingPageStyled>
   );
 };

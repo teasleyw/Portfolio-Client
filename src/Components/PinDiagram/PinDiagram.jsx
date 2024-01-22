@@ -55,6 +55,45 @@
 //     border-bottom: none;
 // }
 // `
+  const BowlingPin = styled.div`
+  margin: 5px;
+  height: 50px;
+  width: 30px;
+  border-radius: 50% 50% 40% 40%;
+  border: solid black;
+  background: radial-gradient(white 0 50%, gray 90%);
+
+
+  &::before {
+    content: '';
+    display: block;
+    position: relative;
+    top: -32px;
+    left: 4px;
+    height: 20px;
+    width: 20px;
+    border: solid black;
+    border-radius: 50% 50% 30% 30%;
+    background: radial-gradient(white 0 50%, gray 90%);
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: relative;
+    top: -35px;
+    left: 8px;
+    width: 12px;
+    height: 14px;
+
+    background: linear-gradient(90deg, gray 2%, transparent 30% 70%, gray 96%),
+      linear-gradient(white 0 30%, red 30% 40%, white 40% 60%, red 60% 70%, white 70%);
+    border: solid black;
+    border-top: none;
+    border-bottom: none;
+
+  }
+`;
 
 
 
@@ -70,13 +109,13 @@
    width: 240px; /* Adjust as needed */
  `;
 
- const BowlingPin = ({ percentage, pinNumber }) => {
-   return (
-    <BowlingPinRectangle percentage={percentage}>
-         <PinNumber>{pinNumber}</PinNumber>
-    </BowlingPinRectangle>
-   );
- };
+//  const BowlingPin = ({ percentage, pinNumber }) => {
+//    return (
+//     <BowlingPinRectangle percentage={percentage}>
+//          <PinNumber>{pinNumber}</PinNumber>
+//     </BowlingPinRectangle>
+//    );
+//  };
 
  const PinDiagram = () => {
    const pinPercentages = [100, 80, 60, 40, 20, 40, 60, 80, 100, 50]; // Customize percentages as needed
