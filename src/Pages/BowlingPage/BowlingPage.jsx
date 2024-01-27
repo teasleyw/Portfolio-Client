@@ -9,28 +9,35 @@ const BowlingPage = () => {
   const [frameScores, setFrameScores] = useState(Array(10).fill(''));
   const [totalScore, setTotalScore] = useState(0);
     const isValidInput = (input, frameIndex, throwType) => {
+        console.log(input)
         // Check if input is a valid score
         if (!/^$|^([0-9]|10|X|\/)$/.test(input)) {
           return false;
         }
-
-        // Parse input value
-        const inputValue = input === '' ? 0 : input === 'X' ? 10 : input === '/' ? 10 - getThrowValue(frameScores[frameIndex].firstThrow, frameIndex) : parseInt(input, 10);
-
         // Check if the spare ('/') is not allowed in the first throw
-        if (throwType === 'firstThrow' && input === '/') {
-          return false;
+        if (throwType === 'firstThrow' ) {
+            if ((input === '/' || Number(input) > 10)){
+                return false;
+            }
+            if (( Number(input) + Number(frameScores[frameIndex]['secondThrow']))> 10){
+                return false;
+            }
         }
-        if (throwType === 'secondThrow' && input === 'X') {
-                  console.log('here');
-                  return false;
+        if (throwType === 'secondThrow' ) {
+            if (frameScores[frameIndex]['firstThrow'] === 'X' && input !== '0'){
+                return false
+            }
+            if ((input === 'X' || Number(input) > 10)){
+                return false;
+            }
+            if (( Number(input) + Number(frameScores[frameIndex]['firstThrow']))> 10){
+                return false;
+            }
+            console.log(( Number(input) + Number(frameScores[frameIndex]['firstThrow'])))
         }
 
-        // Check if the total score for the frame doesn't exceed 10
-        if (throwType === 'secondThrow' && frameIndex < 9) {
-          const firstThrowValue = getThrowValue(frameScores[frameIndex].firstThrow, frameIndex);
-          return firstThrowValue + inputValue <= 10 && firstThrowValue !== null;
-        }
+
+
 
         return true;
       };
@@ -39,6 +46,23 @@ const BowlingPage = () => {
         if (isValidInput(value, index, throwType) || value === '') {
           const newFrameScores = [...frameScores];
           newFrameScores[index] = newFrameScores[index] || {};
+          if (value === '10'){
+            if (throwType === 'firstThrow'){
+                value = 'X';
+            }
+            else
+            {
+                value = '/';
+            }
+           }
+          if (throwType === 'secondThrow'){
+            if ((Number(newFrameScores[index]['firstThrow'] )+ Number(value) === 10)){
+                value = '/'
+            }
+
+          }
+
+
           newFrameScores[index][throwType] = value;
           setFrameScores(newFrameScores);
 
@@ -46,81 +70,28 @@ const BowlingPage = () => {
           const newTotalScore = calculateTotalScore();
           setTotalScore(newTotalScore);
         }
+        else{
+            const newFrameScores = [...frameScores];
+              newFrameScores[index] = newFrameScores[index] || {};
+              newFrameScores[index][throwType] = "";
+              setFrameScores(newFrameScores);
+
+              // Recalculate the total score
+              const newTotalScore = calculateTotalScore();
+              setTotalScore(newTotalScore);
+
+        }
       };
+
   const calculateTotalScore = () => {
     let totalScore = 0;
 
     for (let i = 0; i < frameScores.length; i++) {
       const frame = frameScores[i];
-
-      if (frame && frame.firstThrow !== null) {
-        const firstThrowValue = getThrowValue(frame.firstThrow, i);
-        totalScore += firstThrowValue;
-
-        if (frame.secondThrow !== null) {
-          const secondThrowValue = getThrowValue(frame.secondThrow, i);
-          totalScore += secondThrowValue;
-
-          // Check for a strike to calculate the strike bonus
-          if ((frame.firstThrow === 'X' ||frame.firstThrow ==='10') && i < 9) {
-            const nextFrame = frameScores[i + 1];
-            if (nextFrame && nextFrame.firstThrow !== null) {
-              const nextFirstThrowValue = getThrowValue(nextFrame.firstThrow, i + 1);
-              totalScore += nextFirstThrowValue;
-
-              if ((frame.firstThrow === 'X' ||frame.firstThrow ==='10') && i + 1 < 9) {
-                const nextNextFrame = frameScores[i + 2];
-                if (nextNextFrame && nextNextFrame.firstThrow !== null) {
-                  const nextNextFirstThrowValue = getThrowValue(nextNextFrame.firstThrow, i + 2);
-                  totalScore += nextNextFirstThrowValue;
-                }
-              } else {
-                const nextSecondThrowValue = getThrowValue(nextFrame.secondThrow, i + 1);
-                totalScore += nextSecondThrowValue;
-              }
-            }
-          }
-
-          // Check for a spare to calculate the spare bonus
-          if (frame.secondThrow === '/' && i < 9) {
-            const nextFrame = frameScores[i + 1];
-            if (nextFrame && nextFrame.firstThrow !== null) {
-              const nextFirstThrowValue = getThrowValue(nextFrame.firstThrow, i + 1);
-              totalScore += nextFirstThrowValue;
-            }
-          }
-        }
-      }
-    }
+     }
 
     return totalScore;
   };
-
-    const calculateStrikeBonus = (frameIndex) => {
-      const nextFrame = frameScores[frameIndex + 1] || {}; // Make sure nextFrame is an object
-      const nextNextFrame = frameScores[frameIndex + 2] || {}; // Make sure nextNextFrame is an object
-      const firstThrow = getThrowValue(nextFrame.firstThrow, frameIndex + 1);
-      const secondThrow = getThrowValue(nextFrame.secondThrow, frameIndex + 1);
-      const nextNextThrow = getThrowValue(nextNextFrame.firstThrow, frameIndex + 2);
-      return firstThrow + secondThrow + nextNextThrow;
-    };
-
-    const calculateSpareBonus = (frameIndex) => {
-      const nextFrame = frameScores[frameIndex + 1] || {}; // Make sure nextFrame is an object
-      const firstThrow = getThrowValue(nextFrame.firstThrow, frameIndex + 1);
-      return firstThrow;
-    };
-
-    const getThrowValue = (throwValue, currentIndex) => {
-      switch (throwValue) {
-        case 'X':
-          return 10;
-        case '/':
-          return 10 - getThrowValue(frameScores[currentIndex].firstThrow, currentIndex);
-        default:
-          return parseInt(throwValue, 10) || 0;
-      }
-    };
 
 
 
