@@ -88,6 +88,31 @@ const BowlingPage = () => {
 
     for (let i = 0; i < frameScores.length; i++) {
       const frame = frameScores[i];
+      console.log(frame)
+
+      //Strike Logic
+      if (frame === ""){
+        continue
+      }
+      else if (frame['firstThrow'] ==='X' || frame['firstThrow'] ==='10'){
+        frame['frameTotal'] = totalScore + 10;
+        totalScore += 10;
+        console.log('in strike')
+        continue
+      }
+      //Spare Logic
+      else if (frame['secondThrow'] ==='/'){
+          frame['frameTotal'] = totalScore + 10;
+          totalScore += 10;
+          continue
+      }
+      else{
+         const frameTotal = Number(frame['firstThrow']) + Number(frame['secondThrow'])
+         console.log('in else')
+         frame['frameTotal'] = totalScore + frameTotal
+         totalScore += frameTotal;
+      }
+
      }
 
     return totalScore;
@@ -150,7 +175,7 @@ const BowlingPage = () => {
                                  onChange={(e) => handleScoreChange(index, 'secondThrow', e.target.value)}
                             />
                         </FrameThrowsContainer>
-                        <TotalSquare> 10 </TotalSquare>
+                        <TotalSquare> {frameScores[index].frameTotal} </TotalSquare>
                      </TanSquare>
                  </FrameContainerTwo>
                  ))}
