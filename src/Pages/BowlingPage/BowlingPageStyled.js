@@ -99,6 +99,18 @@ export const TanSquare = styled.div`
   background-color: #272727;
   border: 2px solid tan; /* Add a black border with 2 pixels width */
 `;
+export const FinalFrame = styled.div`
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  width: 150px; /* Adjust the width as needed */
+  height: 100px;
+  align-items: flex-start;
+  justify-content: right;
+  background-color: #272727;
+  border: 2px solid tan; /* Add a black border with 2 pixels width */
+`;
 
 export const FrameThrowsContainer = styled.div`
   width: 100%; /* Adjust the width of the number square */

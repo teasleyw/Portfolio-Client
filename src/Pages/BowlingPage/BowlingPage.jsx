@@ -1,6 +1,6 @@
 // BowlingPage.jsx
 import React, { useState } from 'react';
-import {BowlingPageStyled,ScoreSection,FrameScoreInput,CalculateButton,FrameContainer,FrameNumber, BowlingPageContainer,HeroSection, HeroTitle, ThrowsContainer,TanSquare,NumberSquare,SecondNumberSquare,TotalSquare, FrameThrowsContainer,FrameContainerTwo,ScoreContainer,FrameLabel} from './BowlingPageStyled';
+import {BowlingPageStyled,ScoreSection,FrameScoreInput,CalculateButton,FrameContainer,FrameNumber, BowlingPageContainer,HeroSection, HeroTitle, ThrowsContainer,TanSquare,NumberSquare,SecondNumberSquare,TotalSquare, FrameThrowsContainer,FrameContainerTwo,ScoreContainer,FrameLabel, FinalFrame} from './BowlingPageStyled';
 import PinDiagram from '../../Components/PinDiagram/PinDiagram'; // Make sure to adjust the path based on your project structure
 import Header from "../../Components/Header/Header";
 const BowlingPage = () => {
@@ -15,7 +15,7 @@ const BowlingPage = () => {
           return false;
         }
         // Check if the spare ('/') is not allowed in the first throw
-        if (throwType === 'firstThrow' ) {
+        if (throwType === 'firstThrow' && frameIndex != 9 ) {
             if ((input === '/' || Number(input) > 10)){
                 return false;
             }
@@ -23,7 +23,7 @@ const BowlingPage = () => {
                 return false;
             }
         }
-        if (throwType === 'secondThrow' ) {
+        if (throwType === 'secondThrow' && frameIndex != 9) {
             if (frameScores[frameIndex]['firstThrow'] === 'X' && input !== '0'){
                 return false
             }
@@ -85,25 +85,164 @@ const BowlingPage = () => {
 
   const calculateTotalScore = () => {
     let totalScore = 0;
+    let strikeBonus = 0;
 
     for (let i = 0; i < frameScores.length; i++) {
+
       const frame = frameScores[i];
       console.log(frame)
 
-      //Strike Logic
+
+
       if (frame === ""){
         continue
       }
+      else if (frame['firstThrow'] === '' || frame['secondThrow'] === '') {
+        frame['frameTotal'] = ""
+        continue
+      }
+      else if (!('secondThrow' in frame) && frame['firstThrow'] !== 'X' ){
+        frame['frameTotal'] = ""
+        continue;
+      }
+//       else if (i == 9){
+//          //Strike Logic
+//          if (!('firstThrow' in frame) || !('secondThrow' in frame)){
+//              frame['frameTotal'] = ""
+//              continue;
+//          }
+//          else {
+//               if (frame['firstThrow'] == 'X'){
+//                   let firstThrow = 10
+//                   frame['frameTotal'] += firstThrow
+//                   totalScore += firstThrow
+//               }
+//               else if (frame['secondThrow'] == '/'){
+//                     let firstThrow = 10
+//                       frame['frameTotal'] += firstThrow
+//                       totalScore += firstThrow
+//                     if (frame['thirdThrow'] == 'X'){
+//                          let thirdThrow = 10
+//                           frame['frameTotal'] += thirdThrow
+//                           totalScore += thirdThrow
+//                     }
+//                     else{
+//                          let thirdThrow = Number(frame['thirdThrow'])
+//                          frame['frameTotal'] += thirdThrow
+//                          totalScore += thirdThrow
+//                     }
+//               }
+//
+//               else{
+//                     let firstThrow = Number(frame['firstThrow'])
+//                     frame['frameTotal'] += firstThrow
+//                     totalScore += firstThrow
+//                     let secondThrow = Number(frame['secondThrow'])
+//                     frame['frameTotal'] += secondThrow
+//                     totalScore += secondThrow
+//               }
+//               if (frame['secondThrow'] == 'X'){
+//                     let secondThrow = 10
+//                     frame['frameTotal'] += secondThrow
+//                     totalScore += secondThrow
+//               }
+//               else{
+//                   let secondThrow = Number(frame['secondThrow'])
+//                   frame['frameTotal'] += secondThrow
+//                   totalScore += secondThrow
+//                   if (frame['thirdThrow'] == '/'){
+//                      frame['frameTotal'] += 10
+//                      totalScore += 10
+//                   }
+//                   else{
+//                        let thirdThrow = Number(frame['thirdThrow'])
+//                        frame['frameTotal'] += thirdThrow
+//                        totalScore += thirdThrow
+//                   }
+//               }
+//               if (frame['thirdThrow'] == 'X'){
+//                   let thirdThrow = 10
+//                   frame['frameTotal'] += thirdThrow
+//                   totalScore += thirdThrow
+//               }
+//
+//
+//          }
+//
+//
+//       }
+      //Strike Logic
       else if (frame['firstThrow'] ==='X' || frame['firstThrow'] ==='10'){
         frame['frameTotal'] = totalScore + 10;
         totalScore += 10;
-        console.log('in strike')
+        if (Object.keys(frameScores[i+1]).length === 0){
+            frame['frameTotal'] = ""
+            continue;
+        }
+        else if (frameScores[i+1]['firstThrow'] === ''){
+            frame['frameTotal'] = ""
+            continue;
+        }
+        else if (frameScores[i+1]['firstThrow'] !== 'X'){
+             let firstBonus = Number(frameScores[i+1]['firstThrow'])
+             frame['frameTotal'] += firstBonus
+             totalScore += firstBonus
+             if ('secondThrow' in frameScores[i+1]){
+                 if (frameScores[i+1]['secondThrow'] === ''){
+                      frame['frameTotal'] = ""
+                      continue;
+                 }
+                 else if (frameScores[i+1]['secondThrow'] === '/'){
+                    frame['frameTotal'] += 10 - firstBonus
+                    totalScore += 10 - firstBonus
+                 }
+                 else{
+                    frame['frameTotal'] += Number(frameScores[i+1]['secondThrow'])
+                    totalScore += Number(frameScores[i+1]['secondThrow'])
+                 }
+             }
+             else{
+                frame['frameTotal'] = ""
+                continue;
+             }
+        }
+        else{
+            frame['frameTotal'] += 10
+            totalScore += 10
+            if (frameScores[i+2]['firstThrow'] === 'X'){
+                frame['frameTotal'] += 10
+                totalScore += 10
+            }
+            else{
+                 let secondBonus = Number(frameScores[i+2]['firstThrow'])
+                 frame['frameTotal'] += secondBonus
+                 totalScore += secondBonus
+            }
+        }
+
         continue
       }
       //Spare Logic
       else if (frame['secondThrow'] ==='/'){
           frame['frameTotal'] = totalScore + 10;
           totalScore += 10;
+          if (Object.keys(frameScores[i+1]).length === 0){
+              frame['frameTotal'] = ""
+              continue;
+          }
+          else if (frameScores[i+1]['firstThrow'] === ''){
+              frame['frameTotal'] = ""
+              continue;
+          }
+          else if (frameScores[i+1]['firstThrow'] !== 'X'){
+               let firstBonus = Number(frameScores[i+1]['firstThrow'])
+               frame['frameTotal'] += firstBonus
+               totalScore += firstBonus
+          }
+          else{
+              frame['frameTotal'] += 10
+              totalScore += 10
+          }
           continue
       }
       else{
@@ -158,26 +297,59 @@ const BowlingPage = () => {
                 </ScoreSection>
                 <ScoreContainer>
                  {frameScores.map((_, index) => (
+                 <>
+                 {index == 9 &&
+                  <FrameContainerTwo>
+                            <FrameLabel> {index+1} </FrameLabel>
+                                <FinalFrame>
+                                   <FrameThrowsContainer>
+                                       <NumberSquare
+                                          type="text"
+                                          maxLength="2"
+                                          value={frameScores[index].firstThrow}
+                                          onChange={(e) => handleScoreChange(index, 'firstThrow', e.target.value)}
+                                          />
+                                       <SecondNumberSquare
+                                            type="text"
+                                            maxLength="2"
+                                            value={frameScores[index].secondThrow}
+                                            onChange={(e) => handleScoreChange(index, 'secondThrow', e.target.value)}
+                                       />
+                                       <SecondNumberSquare
+                                          type="text"
+                                          maxLength="2"
+                                          value={frameScores[index].thirdThrow}
+                                          onChange={(e) => handleScoreChange(index, 'thirdThrow', e.target.value)}
+                                     />
+                                   </FrameThrowsContainer>
+                                   <TotalSquare> {frameScores[index].frameTotal} </TotalSquare>
+                                </FinalFrame>
+                            </FrameContainerTwo>
+                 }
+                 {index != 9 &&
                  <FrameContainerTwo>
-                 <FrameLabel> {index+1} </FrameLabel>
-                     <TanSquare>
-                        <FrameThrowsContainer>
-                            <NumberSquare
-                               type="text"
-                               maxLength="2"
-                               value={frameScores[index].firstThrow}
-                               onChange={(e) => handleScoreChange(index, 'firstThrow', e.target.value)}
-                               />
-                            <SecondNumberSquare
+                   <FrameLabel> {index+1} </FrameLabel>
+                       <TanSquare>
+                          <FrameThrowsContainer>
+                              <NumberSquare
                                  type="text"
                                  maxLength="2"
-                                 value={frameScores[index].secondThrow}
-                                 onChange={(e) => handleScoreChange(index, 'secondThrow', e.target.value)}
-                            />
-                        </FrameThrowsContainer>
-                        <TotalSquare> {frameScores[index].frameTotal} </TotalSquare>
-                     </TanSquare>
-                 </FrameContainerTwo>
+                                 value={frameScores[index].firstThrow}
+                                 onChange={(e) => handleScoreChange(index, 'firstThrow', e.target.value)}
+                                 />
+                              <SecondNumberSquare
+                                   type="text"
+                                   maxLength="2"
+                                   value={frameScores[index].secondThrow}
+                                   onChange={(e) => handleScoreChange(index, 'secondThrow', e.target.value)}
+                              />
+                          </FrameThrowsContainer>
+                          <TotalSquare> {frameScores[index].frameTotal} </TotalSquare>
+                       </TanSquare>
+                   </FrameContainerTwo>
+                   }
+                   </>
+
                  ))}
                  </ScoreContainer>
 
