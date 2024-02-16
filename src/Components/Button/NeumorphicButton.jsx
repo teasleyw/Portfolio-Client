@@ -1,13 +1,14 @@
 import React from "react";
-import "./NeumorphicButton.scss"
+import {StyledButton} from "./NeumorphicButtonStyled.js"
+
 function NeuMorphicButton({label,onClick}) {
 
     return (
-        <button
+        <StyledButton
             onClick={()=>onClick()}
             className="button primary">
             {label}
-        </button>
+        </StyledButton>
     )
 }
 export default NeuMorphicButton

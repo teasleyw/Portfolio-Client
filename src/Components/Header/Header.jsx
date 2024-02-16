@@ -16,7 +16,8 @@ function Header() {
                 <TabContainer onClick={()=> { setClick(!click) }} click={click}>
                     {/*<TabItem onClick={() => {navigate('/Events')}}> Upcoming Events </TabItem>*/}
                     <TabItem onClick={() => {navigate('/Poetry')}}> Poetry          </TabItem>
-                     <TabItem onClick={() => {navigate('/Bowling')}}> Bowling       </TabItem>
+{/*                      <TabItem onClick={() => {navigate('/Bowling')}}> Bowling       </TabItem> */}
+                     <TabItem onClick={() => {navigate('/Music')}}> Music        </TabItem>
                      <TabItem onClick={() => {navigate('/About')}}> About        </TabItem>
                 </TabContainer>
             </HeaderContainer>

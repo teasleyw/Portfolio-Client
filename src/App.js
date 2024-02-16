@@ -2,6 +2,7 @@ import './App.css';
 //Pages
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import HomePage from "./Pages/HomePage/HomePage";
+import MusicPage from "./Pages/MusicPage/MusicPage";
 import EventsPage from "./Pages/EventsPage/EventsPage";
 import AboutPage from "./Pages/AboutPage/AboutPage";
 import BowlingPage from "./Pages/BowlingPage/BowlingPage";
@@ -29,6 +30,7 @@ function App() {
             <Route path="/Events" element={<EventsPage/>} />
             <Route path="/Poetry" element={<PoetryPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/About" element={<AboutPage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Music" element={<MusicPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Bowling" element={<BowlingPage dispatch={dispatch} customerData={customerData}/>} />
          </Routes>
       </Router>
