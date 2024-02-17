@@ -10,11 +10,12 @@ import {
 
 import flower from "../../Assets/Images/flower.png"
 import {useNavigate} from "react-router";
-
+import AudioPlayer from 'react-h5-audio-player';
 function LandingPage() {
     const navigate = useNavigate()
     return (
         <>
+
         <LandingPageContainer>
             {Array.from({ length: 630}, (_, i) => <BackgroundFlower key={i} src={flower}/>)}
         </LandingPageContainer>
