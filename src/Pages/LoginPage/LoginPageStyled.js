@@ -88,16 +88,21 @@ const fallAnimation = keyframes`
   }
 `;
 
+// Styled component for the icicle
 export const Icicle = styled.div`
   position: absolute;
-  width: 10px;
-  height: 80px;
-  background-color: #9cf;
-  clip-path: polygon(50% 100%, 0% 75%, 25% 0%, 75% 0%, 100% 75%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent; /* Left side transparent */
+  border-right: 10px solid transparent; /* Right side transparent */
+  border-top: 80px solid #99ccff; /* Top side color */
+
+
   bottom: 0;
   top: 0;
   cursor: pointer;
   animation: ${({ isFalling }) => (isFalling ? fallAnimation : 'none')} 2s linear infinite;
+
   &:hover {
     animation: ${shakeAnimation} 0.5s ease-in-out infinite alternate;
   }

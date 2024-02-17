@@ -20,6 +20,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
    const [snowflakes, setSnowflakes] = useState([]);
    const [isShaking, setIsShaking] = useState(false);
     const [showWarning, setShowWarning] = useState(false); // State for warning visibility
+    const MAX_SNOWFLAKES = 500; // Maximum number of snowflakes
 
 
 
@@ -35,11 +36,13 @@ const LoginPage = ({ setIsAuthenticated }) => {
 
     useEffect(() => {
         const addSnowflake = () => {
-          const newSnowflake = {
-            left: getRandomPosition(),
-            duration: getRandomDuration()
-          };
-          setSnowflakes([...snowflakes, newSnowflake]);
+          if (snowflakes.length < MAX_SNOWFLAKES) {
+              const newSnowflake = {
+                left: getRandomPosition(),
+                duration: getRandomDuration()
+              };
+              setSnowflakes(prevSnowflakes => [...prevSnowflakes, newSnowflake]);
+            }
         };
 
         const interval = setInterval(() => {
@@ -64,6 +67,19 @@ const LoginPage = ({ setIsAuthenticated }) => {
      handleIcicleClick("icicle3")
      handleIcicleClick("icicle4")
      handleIcicleClick("icicle5")
+     for (let i = 0; i < 150; i++) {
+           if (snowflakes.length < MAX_SNOWFLAKES) {
+           const newSnowflake = {
+             left: getRandomPosition(),
+             duration: getRandomDuration()
+           };
+           setSnowflakes(prevSnowflakes => [...prevSnowflakes, newSnowflake]);
+         }
+
+         else{
+           break;
+         }
+         }
      setShowWarning(true); // Show the warning on button click
      setTimeout(() => {
        setIsShaking(false);
@@ -98,6 +114,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
                <Snowflake key={index} left={snowflake.left} duration={snowflake.duration} />
              ))}
              {/* Icicles */}
+
              <Icicle isFalling={fallingIcicles['icicle1']} onClick={() => handleIcicleClick('icicle1')} style={{ left: '10%' }} />
              <Icicle isFalling={fallingIcicles['icicle2']} onClick={() => handleIcicleClick('icicle2')} style={{ left: '30%' }} />
              <Icicle isFalling={fallingIcicles['icicle3']} onClick={() => handleIcicleClick('icicle3')} style={{ left: '50%' }} />
