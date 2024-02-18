@@ -83,10 +83,20 @@ const shakeAnimation = keyframes`
 
 const fallAnimation = keyframes`
   0% {
-    transform: translateY(0vh);
+    transform: translateY(0vh) rotate(0deg) translateX(0px);
   }
+  25% {
+      transform: translateY(30vh) rotate(-5deg) translateX(20px);
+    }
+    50% {
+    transform: translateY(60vh) rotate(5deg) translateX(-20px);
+    }
+    75% {
+    transform: translateY(90vh) rotate(-5deg) translateX(-10px);
+    }
+
   100% {
-    transform: translateY(120vh);
+    transform: translateY(120vh) rotate(0deg) translateX(0px);
   }
 `;
 const tearanime = keyframes `

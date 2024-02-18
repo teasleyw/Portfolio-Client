@@ -84,10 +84,15 @@ const LoginPage = ({ setIsAuthenticated }) => {
  const handleButtonClick = () => {
      // Trigger the screen shaking animation
      setIsShaking(true);
-     // Simulate clicks on all icicles
-       for (let i = 1; i <= 25; i++) {
+     for (let i = 1; i <= 25; i++) {
+       // Generate a random delay between 0 and 3000 milliseconds (3 seconds)
+       const delay = Math.random() * 1000;
+
+       // Use setTimeout to simulate clicks with a random delay
+       setTimeout(() => {
          handleIcicleClick(`icicle${i}`);
-       }
+       }, delay);
+     }
      for (let i = 0; i < 150; i++) {
            if (snowflakes.length < MAX_SNOWFLAKES) {
            const newSnowflake = {

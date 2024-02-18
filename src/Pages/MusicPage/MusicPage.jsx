@@ -21,19 +21,23 @@ import starsBackground from '../../Assets/Images/starsBackground.png'
 import musicBackground from '../../Assets/Images/CountryMusic.png'
 // Define your themes array with colors
 const themes = [
+{ name: 'Originals',
+color: '#000', // Gold or yellow color for a retro vibe
+image: 'url('+ starsBackground + ') repeat',
+themeStyles: { color: '#000', fontFamily: 'Comic Sans MS' }  },
   { name: 'Country Theme', color: '#FF6B6B', image: '#FF6B6B' },  // Coral Red
   { name: 'Rock Theme', color: '#00FFFF', image: '#333333' }, // Medium Turquoise
-  { name: 'Originals',
-  color: '#000', // Gold or yellow color for a retro vibe
-  image: 'url('+ starsBackground + ') repeat',
-  themeStyles: { color: '#000', fontFamily: 'Comic Sans MS' }  }, // Yellow
+
+
+
 ];
 
 // Define corresponding font colors for each theme
 const fontColors = [
+'blue', // Font color for Theme 3
   '#FFF', // Font color for Theme 1
   '#00FFFF', // Font color for Theme 2
-  'blue', // Font color for Theme 3
+
 ];
 const opts: YouTubeProps['opts'] = {
     height: '390',
