@@ -6,6 +6,8 @@ import styled, { css, keyframes } from 'styled-components';
 const pushColor = 'hsla(10, 90%, 40%, 1)';
 const pushSize = '240px';
 
+// Define a function to generate a random number within a range
+
 export const ArcadeButton = styled.button`
   /* Arcade button styles */
   padding: 20px 40px;
@@ -66,13 +68,13 @@ const shakeAnimation = keyframes`
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(-10deg);
+    transform: rotate(-.5deg);
   }
   50% {
-    transform: rotate(10deg);
+    transform: rotate(.5deg);
   }
   75% {
-    transform: rotate(-5deg);
+    transform: rotate(-.25deg);
   }
   100% {
     transform: rotate(0deg);
@@ -87,25 +89,56 @@ const fallAnimation = keyframes`
     transform: translateY(120vh);
   }
 `;
+const tearanime = keyframes `
+  0% {top: 0; opacity: 0;}
+  50% {opacity: 1;}
+  80% { opacity: 1; top: 25%; }
+  80%, 100% { top: 25%; opacity: 0; }
+`
+
+export const Tear = styled.div`
+    position: absolute;
+    opacity: 0;
+      top: 0;
+      left: 30px;
+      width: 1.3vw;
+      height: 1.3vw;
+      border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+      background: #82b0e2;
+      animation: ${tearanime} ${({ duration }) => duration}s infinite;
+      animation-delay: ${({ delay }) => delay}s;
+      transform: translateX(-50%) rotate(-45deg);
+`;
 
 // Styled component for the icicle
 export const Icicle = styled.div`
   position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent; /* Left side transparent */
-  border-right: 10px solid transparent; /* Right side transparent */
-  border-top: 80px solid #99ccff; /* Top side color */
-
-
+  display: flex;
+  height: 100vh;
   bottom: 0;
   top: 0;
   cursor: pointer;
   animation: ${({ isFalling }) => (isFalling ? fallAnimation : 'none')} 2s linear infinite;
-
   &:hover {
     animation: ${shakeAnimation} 0.5s ease-in-out infinite alternate;
   }
+    &:after {
+       left: ${({ width }) => width}px;
+       border-style: solid;
+       content: '';
+       position: absolute;
+       border-width: ${({ width }) => width * 5}px ${({ width }) => width}px 0 0; /* Adjust the border-width values as needed */
+       border-color: #a6c4e6 transparent transparent transparent;
+    }
+
+    /* Border on the bottom half */
+    &:before {
+      border-style: solid;
+      content: '';
+      position: absolute;
+      border-width: 0 ${({ width }) => width}px ${({ width }) => width * 5}px 0; /* Adjust the border-width values as needed */
+      border-color: transparent #81abdb transparent transparent;
+    }
 `;
 export const LoginFormContainer = styled.form`
   width: 300px;
@@ -144,16 +177,25 @@ export const ErrorMessage = styled.div`
   margin-top: 10px;
 `;
 export const screenShakeAnimation = keyframes`
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-2px); }
-    40% { transform: translateX(2px); }
-    60% { transform: translateX(-2px); }
-    80% { transform: translateX(2px); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: rotate(0deg) translateX(0px);
+      }
+      25% {
+        transform: rotate(-5deg) translateX(5px);
+      }
+      50% {
+        transform: rotate(5deg) translateX(-5px);
+      }
+      75% {
+        transform: rotate(-5deg) translateX(-3px);
+      }
+      100% {
+        transform: rotate(0deg) translateX(0px);
+      }
 `;
 
 export const Screen = styled.div`
-  ${({ isShaking }) => isShaking && css`animation: ${shakeAnimation} 0.5s ease-in-out;`}
+  ${({ isShaking }) => isShaking && css`animation: ${screenShakeAnimation} 0.5s ease-in-out;`}
 `;
 
 const warningAnimation = keyframes`

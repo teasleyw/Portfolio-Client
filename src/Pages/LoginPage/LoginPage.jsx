@@ -1,7 +1,7 @@
 // Login.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Screen, LoginPageContainer, ArcadeButton, LogoContainer, Logo, Icicle, LoginFormContainer, FormInput, FormButton, ErrorMessage, IcicleAnimation,
+import { Screen, LoginPageContainer, ArcadeButton, Tear, LogoContainer, Logo, Icicle, LoginFormContainer, FormInput, FormButton, ErrorMessage, IcicleAnimation,
  Triangle, AvalancheWarning  } from './LoginPageStyled';
 import Header from "../../Components/Header/Header.jsx"
 import Snowflake from '../../Components/Snowflakes/Snowflakes.jsx';
@@ -19,8 +19,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
 
    const [snowflakes, setSnowflakes] = useState([]);
    const [isShaking, setIsShaking] = useState(false);
+   const [tears, setTears] = useState([]);
+
+    const [icicleWidths, setIcicleWidths] = useState([]);
     const [showWarning, setShowWarning] = useState(false); // State for warning visibility
-    const MAX_SNOWFLAKES = 500; // Maximum number of snowflakes
+    const MAX_SNOWFLAKES = 250; // Maximum number of snowflakes
 
 
 
@@ -33,6 +36,25 @@ const LoginPage = ({ setIsAuthenticated }) => {
      const getRandomPosition = () => {
        return Math.random() * window.innerWidth; // Random position within window width
      };
+     const getRandomNumber = (min, max) => {
+       return Math.floor(Math.random() * (max - min + 1)) + min;
+     };
+     useEffect(() => {
+         // Generate random widths for icicles once during component mount
+         const newWidths = Array.from({ length: 25 }, () => Math.floor(Math.random() * (50 - 10 + 1)) + 10);
+         setIcicleWidths(newWidths);
+       }, []);
+       useEffect(() => {
+           const generateTears = () => {
+             const newTears = Array.from({ length: 25 }, (_, index) => ({
+               duration: getRandomNumber(0, 5) + 3,
+               delay: getRandomNumber(0, 20) / 10 * getRandomNumber(1, 3)
+             }));
+             setTears(newTears);
+           };
+
+           generateTears();
+         }, []);
 
     useEffect(() => {
         const addSnowflake = () => {
@@ -62,11 +84,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
  const handleButtonClick = () => {
      // Trigger the screen shaking animation
      setIsShaking(true);
-     handleIcicleClick("icicle1")
-     handleIcicleClick("icicle2")
-     handleIcicleClick("icicle3")
-     handleIcicleClick("icicle4")
-     handleIcicleClick("icicle5")
+     // Simulate clicks on all icicles
+       for (let i = 1; i <= 25; i++) {
+         handleIcicleClick(`icicle${i}`);
+       }
      for (let i = 0; i < 150; i++) {
            if (snowflakes.length < MAX_SNOWFLAKES) {
            const newSnowflake = {
@@ -100,6 +121,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
        console.error('Error logging in:', error);
      }
    };
+const getRandomWidth = () => {
+    return Math.floor(Math.random() * (50 - 10 + 1)) + 10; // Random width between 10 and 50
+  };
 
    return (
      <Screen isShaking={isShaking}>
@@ -114,13 +138,19 @@ const LoginPage = ({ setIsAuthenticated }) => {
                <Snowflake key={index} left={snowflake.left} duration={snowflake.duration} />
              ))}
              {/* Icicles */}
+{icicleWidths.map((width, index) => (
+        <Icicle
+          key={`icicle-${index + 1}`}
+          isFalling={fallingIcicles[`icicle${index + 1}`]}
+          onClick={() => handleIcicleClick(`icicle${index + 1}`)}
+          width={width} // Use pre-generated width
 
-             <Icicle isFalling={fallingIcicles['icicle1']} onClick={() => handleIcicleClick('icicle1')} style={{ left: '10%' }} />
-             <Icicle isFalling={fallingIcicles['icicle2']} onClick={() => handleIcicleClick('icicle2')} style={{ left: '30%' }} />
-             <Icicle isFalling={fallingIcicles['icicle3']} onClick={() => handleIcicleClick('icicle3')} style={{ left: '50%' }} />
-             <Icicle isFalling={fallingIcicles['icicle4']} onClick={() => handleIcicleClick('icicle4')} style={{ left: '70%' }} />
-             <Icicle isFalling={fallingIcicles['icicle5']} onClick={() => handleIcicleClick('icicle5')} style={{ left: '90%' }} />
-             {/* You can adjust the animationDelay for more icicles or add more icicles as needed */}
+          style={{ left: `${index * (100 / 25)}%` }} // Adjust left positioning as needed
+        > <Tear
+                   key={index} duration={tears[index].duration} delay={tears[index].delay}
+                  /> </Icicle>
+      ))}
+      {/* You can adjust the animationDelay for more icicles or add more icicles as needed */}
              <LoginFormContainer onSubmit={handleSubmit}>
                <FormInput
                  type="text"
