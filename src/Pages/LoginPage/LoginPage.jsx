@@ -20,6 +20,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
    const [snowflakes, setSnowflakes] = useState([]);
    const [isShaking, setIsShaking] = useState(false);
    const [tears, setTears] = useState([]);
+   const [icicleCount, setIcicleCount] = useState();
 
     const [icicleWidths, setIcicleWidths] = useState([]);
     const [showWarning, setShowWarning] = useState(false); // State for warning visibility
@@ -40,21 +41,53 @@ const LoginPage = ({ setIsAuthenticated }) => {
        return Math.floor(Math.random() * (max - min + 1)) + min;
      };
      useEffect(() => {
-         // Generate random widths for icicles once during component mount
-         const newWidths = Array.from({ length: 25 }, () => Math.floor(Math.random() * (50 - 10 + 1)) + 10);
-         setIcicleWidths(newWidths);
-       }, []);
-       useEffect(() => {
-           const generateTears = () => {
-             const newTears = Array.from({ length: 25 }, (_, index) => ({
-               duration: getRandomNumber(0, 5) + 3,
-               delay: getRandomNumber(0, 20) / 10 * getRandomNumber(1, 3)
-             }));
-             setTears(newTears);
-           };
+         // Function to calculate the number of icicles based on screen width
+         const calculateIcicleCount = () => {
+           const screenWidth = window.innerWidth;
+           let count = 0;
 
-           generateTears();
-         }, []);
+           // Determine the number of icicles based on screen width range
+           if (screenWidth < 450) {
+                count = 7; // Example count for smaller screens
+           }
+           else if (screenWidth < 600) {
+             count = 10; // Example count for smaller screens
+           } else if (screenWidth >= 600 && screenWidth < 900) {
+             count = 15; // Example count for medium-sized screens
+           } else {
+             count = 25; // Example count for larger screens
+           }
+
+
+           console.log(count);
+           setIcicleCount(count);
+           console.log(icicleCount);
+
+         };
+         // Call the function initially and on window resize
+         calculateIcicleCount();
+         console.log(icicleCount);
+         // Generate random widths for icicles once during component mount
+         const newWidths = Array.from({ length: icicleCount }, () => Math.floor(Math.random() * (50 - 10 + 1)) + 10);
+
+         setIcicleWidths(newWidths);
+
+         window.addEventListener('resize', calculateIcicleCount);
+         const generateTears = () => {
+         const newTears = Array.from({ length: icicleCount }, (_, index) => ({
+            duration: getRandomNumber(0, 5) + 3,
+            delay: getRandomNumber(0, 20) / 10 * getRandomNumber(1, 3)
+          }));
+          setTears(newTears);
+        };
+
+         generateTears();
+         // Remove the event listener on component unmount
+         return () => {
+                 window.removeEventListener('resize', calculateIcicleCount);
+             };
+       }, [icicleCount]);
+
 
     useEffect(() => {
         const addSnowflake = () => {
@@ -84,7 +117,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
  const handleButtonClick = () => {
      // Trigger the screen shaking animation
      setIsShaking(true);
-     for (let i = 1; i <= 25; i++) {
+     for (let i = 1; i <= icicleCount; i++) {
        // Generate a random delay between 0 and 3000 milliseconds (3 seconds)
        const delay = Math.random() * 1000;
 
@@ -143,16 +176,18 @@ const getRandomWidth = () => {
                <Snowflake key={index} left={snowflake.left} duration={snowflake.duration} />
              ))}
              {/* Icicles */}
-{icicleWidths.map((width, index) => (
+        {icicleWidths.map((width, index) => (
         <Icicle
           key={`icicle-${index + 1}`}
           isFalling={fallingIcicles[`icicle${index + 1}`]}
           onClick={() => handleIcicleClick(`icicle${index + 1}`)}
           width={width} // Use pre-generated width
 
-          style={{ left: `${index * (100 / 25)}%` }} // Adjust left positioning as needed
+          style={{ left: `${index * (100 / icicleCount)}%` }} // Adjust left positioning as needed
         > <Tear
-                   key={index} duration={tears[index].duration} delay={tears[index].delay}
+                   key={index}
+                   isFalling={fallingIcicles[`icicle${index + 1}`]}
+                    duration={tears[index].duration} delay={tears[index].delay}
                   /> </Icicle>
       ))}
       {/* You can adjust the animationDelay for more icicles or add more icicles as needed */}

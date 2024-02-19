@@ -37,6 +37,7 @@ export const ArcadeButton = styled.button`
 export const LoginPageContainer = styled.div`
   height: 100vh;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -100,10 +101,12 @@ const fallAnimation = keyframes`
   }
 `;
 const tearanime = keyframes `
-  0% {top: 0; opacity: 0;}
-  50% {opacity: 1;}
-  80% { opacity: 1; top: 25%; }
-  80%, 100% { top: 25%; opacity: 0; }
+  0% {top: 0; background: #82b0e2; left: 30px; opacity: 0; width: 1.3vw; border-radius: 80% 0 55% 50% / 55% 0 80% 50%; transform: rotate(-45deg) }
+  50% {opacity: 1; width: 1.3vw; left: 30px;background: #82b0e2; border-radius: 80% 0 55% 50% / 55% 0 80% 50%; transform: rotate(-45deg)}
+  89%  { top: 30%; opacity: 1; left: 30px; background: #82b0e2; width: 1.3vw; border-radius: 80% 0 55% 50% / 55% 0 80% 50%;transform: rotate(-45deg) }
+  90% { top: 30%; width: 3vw; left: 15px; background: #ffffff; opacity: .5; border-radius: 50%; transform: rotate(0deg); /* Flattened tear shape */ }
+  //95% { top: 30%; width: 4vw; left: 10px; background: #ffffff; opacity: 0; border-radius: 50%; transform: rotate(0deg) }
+  100% { top: 30%; width: 4vw; left: 10px; background: #ffffff; opacity: 0; border-radius: 50%; transform: rotate(0deg) }
 `
 
 export const Tear = styled.div`
@@ -115,9 +118,11 @@ export const Tear = styled.div`
       height: 1.3vw;
       border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
       background: #82b0e2;
-      animation: ${tearanime} ${({ duration }) => duration}s infinite;
+      animation: ${tearanime} ${({ duration }) => duration}s linear infinite;
       animation-delay: ${({ delay }) => delay}s;
       transform: translateX(-50%) rotate(-45deg);
+    display: ${({ isFalling }) => (isFalling ? 'none' : 'block')};
+
 `;
 
 // Styled component for the icicle
@@ -129,9 +134,15 @@ export const Icicle = styled.div`
   top: 0;
   cursor: pointer;
   animation: ${({ isFalling }) => (isFalling ? fallAnimation : 'none')} 2s linear infinite;
-  &:hover {
-    animation: ${shakeAnimation} 0.5s ease-in-out infinite alternate;
-  }
+
+       &:hover {
+          ${({ isFalling }) =>
+            isFalling
+              ? ``
+              : css`
+              animation: ${shakeAnimation} 0.5s ease-in-out infinite alternate;
+            `};
+        }
     &:after {
        left: ${({ width }) => width}px;
        border-style: solid;
@@ -206,6 +217,7 @@ export const screenShakeAnimation = keyframes`
 
 export const Screen = styled.div`
   ${({ isShaking }) => isShaking && css`animation: ${screenShakeAnimation} 0.5s ease-in-out;`}
+  overflow: hidden;
 `;
 
 const warningAnimation = keyframes`
