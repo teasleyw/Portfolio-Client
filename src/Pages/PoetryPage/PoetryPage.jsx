@@ -5,86 +5,90 @@ import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
 import Modal from "../../Components/Modal/Modal";
 import {updatePoemContent} from "../../redux/app-state-slice";
 import {SuitAndTie} from "../../utils/poems.js"
-import {ColterWallDevil} from "../../utils/poemObjects.js"
+import {VerseCollection} from "../../utils/poemObjects.js"
 
 
-function PoetryPage({dispatch,customerData}) {
-    const [poemHTML, setPoem] = useState("Write me a poem")
-     const [poemTitle, setPoemTitle] = useState("")
-      const [poemAuthor, setAuthor] = useState("")
-    const [changeState, setChangeState] = useState(0)
-    const [showModal, setShowModal] = useState(false)
-    let poem = ""
+
+const PoetryPage = ({ dispatch, customerData }) => {
+    const [poemHTML, setPoemHTML] = useState("Write me a poem");
+    const [poemTitle, setPoemTitle] = useState("");
+    const [poemAuthor, setAuthor] = useState("");
+    const [poemIndex, setPoemIndex] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+    const [prevPoemIndex, setPrevPoemIndex] = useState(-1); // Initialize prevPoemIndex state
+
+    const poemElement = useRef(null);
+
     const handleChangePoem = (value) => {
         if (value) {
-            poem = value
+            setPoemHTML(value);
         }
+    };
 
-    };
     const clearFunction = () => {
-        setAuthor("")
-        setPoemTitle("")
-        if (changeState % 2 === 1) {
-            setPoem("Roses Are Red....")
-        } else {
-            setPoem("Believe In Yourself, Because I Believe in you.")
-        }
-        setChangeState(changeState + 1)
+        setAuthor("");
+        setPoemTitle("");
+        setPoemHTML(poemHTML === "Roses Are Red...." ? "Believe In Yourself, Because I Believe in you." : "Roses Are Red....");
     };
+
     const submitPoem = (dispatch) => {
-        setShowModal(true)
-        if (poem) {
-            setPoem(poem)
-            console.log("submitted poem: " + poemHTML)
+        setShowModal(true);
+        if (poemHTML) {
+            console.log("submitted poem: " + poemHTML);
         } else {
-            console.log("poem not submitted")
+            console.log("poem not submitted");
         }
-        dispatch(updatePoemContent(poemHTML))
-    }
+        dispatch(updatePoemContent(poemHTML));
+    };
+
     const randomPoem = () => {
-            if (changeState % 2 === 1) {
-                setAuthor("by: " + ColterWallDevil.author)
-                setPoemTitle(ColterWallDevil.title)
-                setPoem(ColterWallDevil.poem)
-            } else {
-                setAuthor("")
-                setPoemTitle("")
-                setPoem("Believe In Yourself, Because I Believe in you.")
-            }
-            setChangeState(changeState + 1)
-        };
+        let randomIndex;
+        do {
+            // Get a random index within the VerseCollection array
+            randomIndex = Math.floor(Math.random() * VerseCollection.length);
+        } while (randomIndex === prevPoemIndex); // Repeat until a different poem index is selected
+
+        // Update the previously selected poem index
+        setPrevPoemIndex(randomIndex);
+
+        // Get the poem object at the random index
+        const randomPoem = VerseCollection[randomIndex];
+
+        // Set the author, poem title, and poem content based on the random poem
+        setAuthor("by: " + randomPoem.author);
+        setPoemTitle(randomPoem.title);
+        setPoemHTML(randomPoem.poem);
+    };
+
     const exitModal = () => {
-        setShowModal(false)
-        console.log(customerData)
-    }
+        setShowModal(false);
+        console.log(customerData);
+    };
+
     return (
         <>
             {showModal &&
-            <>
-                <Modal customerData={customerData} dispatch={dispatch} exitModal={() => exitModal()}>
-                </Modal>
-            </>
-
-        }
+                <Modal customerData={customerData} dispatch={dispatch} exitModal={() => exitModal()} />
+            }
             <PoetryPageContainer>
-                <Header/>
+                <Header />
                 <ButtonContainer>
-                    <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit"/>
-                    <NeuMorphicButton onClick={() => randomPoem()} label="Read Other Poems"/>
-                    <NeuMorphicButton onClick={() => clearFunction()} label="Clear"/>
+                    <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit" />
+                    <NeuMorphicButton onClick={() => randomPoem()} label="Read Other Poems" />
+                    <NeuMorphicButton onClick={() => clearFunction()} label="Clear" />
                 </ButtonContainer>
                 <PoemContainer>
-                    <div onChange={handleChangePoem}>
+                    <div>
                         <Poem>
-                        {poemTitle != "" &&
-                            <>
-                            <PoemTitle> {poemTitle} </PoemTitle>
-                            <br/>
-                            <PoemAuthor> {poemAuthor} </PoemAuthor>
-                            <br/>
-                            <br/>
-                            </>
-                        }
+                            {poemTitle !== "" &&
+                                <>
+                                    <PoemTitle>{poemTitle}</PoemTitle>
+                                    <br />
+                                    <PoemAuthor>{poemAuthor}</PoemAuthor>
+                                    <br />
+                                    <br />
+                                </>
+                            }
                             <PoemLogic onChange={handleChangePoem}>
                                 <div>
                                 {poemHTML}
@@ -96,7 +100,7 @@ function PoetryPage({dispatch,customerData}) {
             </PoetryPageContainer>
         </>
     );
-}
+};
 
 const PoemLogic = (props) => {
     const {onChange} = props;
@@ -121,4 +125,5 @@ const PoemLogic = (props) => {
     });
     return elements;
 };
+
 export default PoetryPage;

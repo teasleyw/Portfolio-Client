@@ -25,6 +25,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
     const [icicleWidths, setIcicleWidths] = useState([]);
     const [showWarning, setShowWarning] = useState(false); // State for warning visibility
     const MAX_SNOWFLAKES = 250; // Maximum number of snowflakes
+    const [isMouseDown, setIsMouseDown] = useState(false);
+
+
+
 
 
 
@@ -59,9 +63,8 @@ const LoginPage = ({ setIsAuthenticated }) => {
            }
 
 
-           console.log(count);
+
            setIcicleCount(count);
-           console.log(icicleCount);
 
          };
          // Call the function initially and on window resize
@@ -82,9 +85,16 @@ const LoginPage = ({ setIsAuthenticated }) => {
         };
 
          generateTears();
+         const handleMouseDowns = () => {
+             setIsMouseDown(true)
+           };
+
+
+
          // Remove the event listener on component unmount
          return () => {
                  window.removeEventListener('resize', calculateIcicleCount);
+
              };
        }, [icicleCount]);
 
@@ -144,6 +154,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
        setIsShaking(false);
      }, 1000); // Duration of the animation
    };
+   // Handle mouse up event
+   const handleMouseUp = () => {
+     setIsMouseDown(false);
+   };
 
    const handleSubmit = async (e) => {
      alert("Functionality Under Construction")
@@ -180,7 +194,7 @@ const getRandomWidth = () => {
         <Icicle
           key={`icicle-${index + 1}`}
           isFalling={fallingIcicles[`icicle${index + 1}`]}
-          onClick={() => handleIcicleClick(`icicle${index + 1}`)}
+          onMouseDown={() => handleIcicleClick(`icicle${index + 1}`)}
           width={width} // Use pre-generated width
 
           style={{ left: `${index * (100 / icicleCount)}%` }} // Adjust left positioning as needed

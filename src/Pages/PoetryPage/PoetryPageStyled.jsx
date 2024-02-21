@@ -28,6 +28,7 @@ export const PoemContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 25px;
   @media screen and (max-width: 960px) {
       font-size: 25px;
   }
@@ -36,7 +37,7 @@ export const PoemContainer = styled.div`
 `
 export const PoemTitle = styled.div`
     color: ${poemTitleColor};
-    font-size: 44px;
+    font-size: 35px;
     text-align: center;
     @media screen and (max-width: 960px) {
           font-size: 25px;
@@ -47,7 +48,7 @@ export const PoemTitle = styled.div`
 `
 export const PoemAuthor = styled.div`
     color: ${poemAuthorColor};
-    font-size: 44px;
+    font-size: 35px;
     text-align: center;
     @media screen and (max-width: 960px) {
           font-size: 25px;
@@ -59,9 +60,9 @@ export const PoemAuthor = styled.div`
 export const Poem = styled.div`
     background: #303030;
     border-radius: 25px;
-    padding: 1rem;
+    padding: 2rem;
     color: ${poemColor};
-    font-size: 44px;
+    font-size: 26px;
     text-align: center;
     z-index: 1;
     outline: none;

@@ -14,6 +14,7 @@ const fallAnimation = keyframes`
 
 const SnowflakeWrapper = styled.div`
   position: absolute;
+  user-select: none;
   top: -5px;
   color: white;
   left: ${props => props.left}px;
