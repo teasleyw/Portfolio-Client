@@ -18,10 +18,10 @@ const PoetryPage = ({ dispatch, customerData }) => {
     const [prevPoemIndex, setPrevPoemIndex] = useState(-1); // Initialize prevPoemIndex state
 
     const poemElement = useRef(null);
-
+    let poem = ""
     const handleChangePoem = (value) => {
         if (value) {
-            setPoemHTML(value);
+            poem = value
         }
     };
 
