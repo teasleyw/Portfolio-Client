@@ -1,28 +1,63 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {useNavigate} from "react-router";
-import {HeaderContainer, Logo, HeaderDiv, TabContainer, TabItem, MobileIcon} from "./HeaderStyled";
+import {HeaderContainer, Logo, HeaderDiv, TabContainer, TabItem, MobileIcon, DropdownItem, DropdownMenu} from "./HeaderStyled";
 import { FaBars, FaTimes } from 'react-icons/fa';
-function Header() {
-    const [click, setClick] = useState(false);
+import {updateIsLoggedIn} from "../../redux/app-state-slice";
+import { useMediaQuery } from 'react-responsive';
+function Header({customerData,dispatch}) {
+      const [click, setClick] = useState(false);
+      const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+      const isDesktopOrLaptop = useMediaQuery({ minWidth: 960 });
+      const isTabletOrMobileDevice = useMediaQuery({ maxWidth: 960 });
+      const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    return (
-        <HeaderDiv>
-            <HeaderContainer>
-                <Logo onClick={() => {navigate('/Home')}}>      Will Teasley</Logo>
-                <MobileIcon onClick = {()=> { setClick(!click) }}>
-                    {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
-                </MobileIcon>
-                <TabContainer onClick={()=> { setClick(!click) }} click={click}>
-                    {/*<TabItem onClick={() => {navigate('/Events')}}> Upcoming Events </TabItem>*/}
-                    <TabItem onClick={() => {navigate('/Poetry')}}> Poetry          </TabItem>
-{/*                      <TabItem onClick={() => {navigate('/Bowling')}}> Bowling       </TabItem> */}
-                     <TabItem onClick={() => {navigate('/Music')}}> Music        </TabItem>
-                     <TabItem onClick={() => {navigate('/About')}}> About        </TabItem>
-                     <TabItem onClick={() => {navigate('/Login')}}> Login       </TabItem>
-                </TabContainer>
-            </HeaderContainer>
-        </HeaderDiv>
-    )
-}
+        const handleLogout = () => {
+        console.log('here')
+        console.log(customerData)
+           dispatch(updateIsLoggedIn(false))
+           console.log(customerData.IsLoggedIn)
+        }
+        const handleTabItemClick = () => {
+            if (isDesktopOrLaptop) {
+              setIsDropdownVisible(!isDropdownVisible); // Toggle dropdown visibility on click
+            } else if (isTabletOrMobileDevice) {
+              navigate("/Profile")
+            }
+          };
+
+        return (
+            <HeaderDiv>
+                <HeaderContainer>
+                    <Logo onClick={() => { navigate('/Home') }}>Will Teasley</Logo>
+                    <MobileIcon onClick={() => { setClick(!click) }}>
+                        {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
+                    </MobileIcon>
+                    <TabContainer onClick={() => { setClick(!click) }} click={click}>
+                        <TabItem onClick={() => { navigate('/Poetry') }}>Poetry</TabItem>
+                        <TabItem onClick={() => { navigate('/Music') }}>Music</TabItem>
+                        <TabItem onClick={() => { navigate('/About') }}>About</TabItem>
+                        {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in
+                        <>
+                            <TabItem
+                           onClick={handleTabItemClick}
+                                    >
+                                My Profile
+
+
+                            </TabItem>
+                            <DropdownMenu show={isDropdownVisible}>
+                                <DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
+                                <DropdownItem onClick={() => { navigate('/Profile') }}>Profile Information</DropdownItem>
+{/*                                 <DropdownItem onClick={() => { navigate('/Settings') }}>Settings</DropdownItem> */}
+                            </DropdownMenu>
+
+                            </>
+                        ) : ( // Render "Login" tab if not logged in
+                            <TabItem onClick={() => { navigate('/Login') }}>Login</TabItem>
+                        )}
+                    </TabContainer>
+                </HeaderContainer>
+            </HeaderDiv>
+        );
+    }
 export default Header

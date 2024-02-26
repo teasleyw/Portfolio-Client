@@ -15,7 +15,7 @@ import coding from "../../Assets/Images/Coding.png"
 import {CareerText, GuitarText} from "../../utils/constants.js"
 import Folsom from "../../Assets/Videos/Folsom.MOV"
 
-function AboutPage() {
+function AboutPage({customerData, dispatch}) {
     const [isVisible, setVisible] = useState(false);
     const documentRef = useRef();
 
@@ -34,7 +34,7 @@ function AboutPage() {
     return (
         <>
             <AboutPageContainer>
-                <Header/>
+                <Header customerData={customerData} dispatch={dispatch} />
                 <CoverPhoto/>
                 <MainContentContainer>
                 <HeroSection>

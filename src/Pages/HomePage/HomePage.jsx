@@ -8,12 +8,12 @@ import {
 } from "./HomePageStyle";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-function HomePage() {
+function HomePage({customerData, dispatch}) {
     return (
         <>
 
             <HomePageContainer>
-                <Header/>
+                <Header customerData={customerData} dispatch={dispatch} />
                 <CoverPhoto/>
                 <MainContentContainer>
                     <NameContainer>

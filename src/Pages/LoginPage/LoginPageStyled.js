@@ -161,7 +161,7 @@ export const Icicle = styled.div`
       border-color: transparent #81abdb transparent transparent;
     }
 `;
-export const LoginFormContainer = styled.form`
+export const LoginFormContainer = styled.div`
   width: 300px;
   padding: 20px;
   background-color: #f4f4f4;

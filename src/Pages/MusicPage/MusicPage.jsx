@@ -55,7 +55,7 @@ const videos = [
   { name: 'Annabelle - Frost Milano', videoId: 'JxrelAOvx4E', image: Creek }
 ];
 
-const MusicPage = () => {
+const MusicPage = ({dispatch,customerData}) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -102,7 +102,7 @@ const MusicPage = () => {
 
   return (
     <PageWrapper style={{ backgroundColor: themes[currentThemeIndex].color, background: themes[currentThemeIndex].image} }  theme={themes[currentThemeIndex]}>
-    <Header/>
+    <Header customerData={customerData} dispatch={dispatch} />
     {themes[currentThemeIndex].name == 'Originals' &&  <OriginalsTheme/>}
       <ThemeNameContainer  themeColor={themes[currentThemeIndex].color} >
         <ThemeButton onClick={handlePrevTheme} fontColor={fontColors[currentThemeIndex]}>{'◀'}</ThemeButton>

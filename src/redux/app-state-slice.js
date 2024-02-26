@@ -30,6 +30,9 @@ export const customerDataSlice = createSlice({
     },
     updateEmailConsent : (state, action) => {
       state.emailConsent.value = action.payload;
+    },
+    updateIsLoggedIn : (state, action) => {
+          state.isLoggedIn.value = action.payload;
     }
   },
 });
@@ -40,6 +43,7 @@ export const {
   updatePoemTitle,
   updatePoemContent,
   updateEmail,
+  updateIsLoggedIn
 } = customerDataSlice.actions;
 
 export default customerDataSlice.reducer;

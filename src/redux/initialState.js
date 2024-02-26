@@ -21,4 +21,5 @@ export let initialState = {
   },
   email: { value: "", hasError: false, errorMessage: "" },
   emailConsent: { value: false },
+  isLoggedIn: {value: false},
 };

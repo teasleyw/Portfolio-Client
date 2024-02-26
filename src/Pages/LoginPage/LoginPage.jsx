@@ -1,14 +1,18 @@
 // Login.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import { Screen, LoginPageContainer, ArcadeButton, Tear, LogoContainer, Logo, Icicle, LoginFormContainer, FormInput, FormButton, ErrorMessage, IcicleAnimation,
  Triangle, AvalancheWarning  } from './LoginPageStyled';
 import Header from "../../Components/Header/Header.jsx"
 import Snowflake from '../../Components/Snowflakes/Snowflakes.jsx';
-const LoginPage = ({ setIsAuthenticated }) => {
+import {updateIsLoggedIn} from "../../redux/app-state-slice";
+import {useNavigate} from "react-router";
+
+const LoginPage = ({ setIsAuthenticated,dispatch,customerData }) => {
  const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [error, setError] = useState('');
+   const navigate = useNavigate();
    const [fallingIcicles, setFallingIcicles] = useState({
      icicle1: false,
      icicle2: false,
@@ -21,11 +25,13 @@ const LoginPage = ({ setIsAuthenticated }) => {
    const [isShaking, setIsShaking] = useState(false);
    const [tears, setTears] = useState([]);
    const [icicleCount, setIcicleCount] = useState();
-
     const [icicleWidths, setIcicleWidths] = useState([]);
     const [showWarning, setShowWarning] = useState(false); // State for warning visibility
     const MAX_SNOWFLAKES = 250; // Maximum number of snowflakes
     const [isMouseDown, setIsMouseDown] = useState(false);
+
+
+
 
 
 
@@ -123,7 +129,6 @@ const LoginPage = ({ setIsAuthenticated }) => {
        setFallingIcicles(prevState => ({ ...prevState, [icicleId]: false }));
      }, 2000); // Adjust timeout to match the duration of the falling animation
    };
-
  const handleButtonClick = () => {
      // Trigger the screen shaking animation
      setIsShaking(true);
@@ -159,19 +164,21 @@ const LoginPage = ({ setIsAuthenticated }) => {
      setIsMouseDown(false);
    };
 
-   const handleSubmit = async (e) => {
-     alert("Functionality Under Construction")
-     e.preventDefault();
-     try {
-       const response = await axios.post('/api/login', { username, password });
-       if (response.data.success) {
-         setIsAuthenticated(true);
-       } else {
-         setError('Invalid credentials');
-       }
-     } catch (error) {
-       console.error('Error logging in:', error);
-     }
+   const handleSubmit = async () => {
+        dispatch(updateIsLoggedIn(true))
+        alert("Functionality Under Construction. Only Cosmetic right now (which is also under construction lol)")
+        navigate("/Profile")
+//      e.preventDefault();
+//      try {
+//        const response = await axios.post('/api/login', { username, password });
+//        if (response.data.success) {
+//          setIsAuthenticated(true);
+//        } else {
+//          setError('Invalid credentials');
+//        }
+//      } catch (error) {
+//        console.error('Error logging in:', error);
+//      }
    };
 const getRandomWidth = () => {
     return Math.floor(Math.random() * (50 - 10 + 1)) + 10; // Random width between 10 and 50
@@ -179,7 +186,7 @@ const getRandomWidth = () => {
 
    return (
      <Screen isShaking={isShaking}>
-     <Header/>
+     <Header customerData={customerData} dispatch={dispatch} />
            <LoginPageContainer>
              {/* Logo */}
              <LogoContainer>
@@ -205,7 +212,7 @@ const getRandomWidth = () => {
                   /> </Icicle>
       ))}
       {/* You can adjust the animationDelay for more icicles or add more icicles as needed */}
-             <LoginFormContainer onSubmit={handleSubmit}>
+             <LoginFormContainer>
                <FormInput
                  type="text"
                  placeholder="Username"
@@ -218,7 +225,7 @@ const getRandomWidth = () => {
                  value={password}
                  onChange={(e) => setPassword(e.target.value)}
                />
-               <FormButton type="submit">Login</FormButton>
+               <FormButton onClick={() => handleSubmit()} >Login</FormButton>
                {error && <ErrorMessage>{error}</ErrorMessage>}
              </LoginFormContainer>
 {/*               */}{/* Avalanche Warning */}

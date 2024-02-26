@@ -71,7 +71,7 @@ const PoetryPage = ({ dispatch, customerData }) => {
                 <Modal customerData={customerData} dispatch={dispatch} exitModal={() => exitModal()} />
             }
             <PoetryPageContainer>
-                <Header />
+                <Header customerData={customerData} dispatch={dispatch} />
                 <ButtonContainer>
                     <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit" />
                     <NeuMorphicButton onClick={() => randomPoem()} label="Read Other Poems" />

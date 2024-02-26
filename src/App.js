@@ -13,6 +13,7 @@ import { BrowserRouter as Router,Route,Routes, } from 'react-router-dom';
 import "./Assets/Fonts/ice_caps/IceCaps.ttf"
 import "./Assets/Fonts/Aboreto/Aboreto-Regular.ttf"
 import PoetryPage from "./Pages/PoetryPage/PoetryPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 
 import {useDispatch, useSelector} from "react-redux";
 
@@ -27,13 +28,14 @@ function App() {
         <Router>
         <Routes>
             <Route path="/" exact element={<LandingPage />} />
-            <Route path="/Home" element={<HomePage/>} />
-            <Route path="/Events" element={<EventsPage/>} />
+            <Route path="/Home" element={<HomePage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Events" element={<EventsPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Poetry" element={<PoetryPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/About" element={<AboutPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Music" element={<MusicPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Bowling" element={<BowlingPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Login" element={<LoginPage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Profile" element={<ProfilePage dispatch={dispatch} customerData={customerData}/>} />
          </Routes>
       </Router>
     </div>
