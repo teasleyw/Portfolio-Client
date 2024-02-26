@@ -14,6 +14,8 @@ import "./Assets/Fonts/ice_caps/IceCaps.ttf"
 import "./Assets/Fonts/Aboreto/Aboreto-Regular.ttf"
 import PoetryPage from "./Pages/PoetryPage/PoetryPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import JobListingsPage from "./Pages/JobListingsPage/JobListingsPage";
+
 
 import {useDispatch, useSelector} from "react-redux";
 
@@ -36,6 +38,7 @@ function App() {
             <Route path="/Bowling" element={<BowlingPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Login" element={<LoginPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Profile" element={<ProfilePage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Jobs" element={<JobListingsPage dispatch={dispatch} customerData={customerData}/>} />
          </Routes>
       </Router>
     </div>

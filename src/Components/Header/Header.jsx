@@ -33,6 +33,7 @@ function Header({customerData,dispatch}) {
                         {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
                     </MobileIcon>
                     <TabContainer onClick={() => { setClick(!click) }} click={click}>
+                        <TabItem onClick={() => { navigate('/Jobs') }}>Jobs</TabItem>
                         <TabItem onClick={() => { navigate('/Poetry') }}>Poetry</TabItem>
                         <TabItem onClick={() => { navigate('/Music') }}>Music</TabItem>
                         <TabItem onClick={() => { navigate('/About') }}>About</TabItem>
@@ -42,8 +43,6 @@ function Header({customerData,dispatch}) {
                            onClick={handleTabItemClick}
                                     >
                                 My Profile
-
-
                             </TabItem>
                             <DropdownMenu show={isDropdownVisible}>
                                 <DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
