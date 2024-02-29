@@ -7,6 +7,8 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import EventsPage from "./Pages/EventsPage/EventsPage";
 import AboutPage from "./Pages/AboutPage/AboutPage";
 import BowlingPage from "./Pages/BowlingPage/BowlingPage";
+import FantasyBotPage from "./Pages/FantasyBotPage/FantasyBotPage";
+import CandidatesPage from "./Pages/CandidatesPage/CandidatesPage";
 //Router
 import { BrowserRouter as Router,Route,Routes, } from 'react-router-dom';
 //fonts
@@ -37,6 +39,8 @@ function App() {
             <Route path="/Music" element={<MusicPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Bowling" element={<BowlingPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Login" element={<LoginPage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Fantasy" element={<FantasyBotPage dispatch={dispatch} customerData={customerData}/>}/>
+            <Route path="/Candidates" element={<CandidatesPage dispatch={dispatch} customerData={customerData}/>}/>
             <Route path="/Profile" element={<ProfilePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Jobs" element={<JobListingsPage dispatch={dispatch} customerData={customerData}/>} />
          </Routes>

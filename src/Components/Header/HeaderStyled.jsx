@@ -165,3 +165,20 @@ export const DropdownItem = styled.div`
         background-color: #f9f9f9;
     }
 `;
+export const DropdownMenuJobs = styled.div`
+    position: absolute;
+    top:100%;
+    left: 51vw;
+    background-color: #fff;
+    max-height: ${({ show }) => (show ? '200px' : '0')}; /* Set max-height */
+    z-index: 999;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    transition: max-height 1s ease; /* Transition for smooth sliding effect */
+    color: ${nameColor};
+    font-family: "Aboreto", sans-serif; //Title Font;
+    font-size: 25px;
+    text-shadow: 0 0 0.6em hsl(0 0% 100% / 0.5), 0 0 0.6em ${nameColor};
+    overflow: hidden;
+    text-decoration: none;
+
+`;
