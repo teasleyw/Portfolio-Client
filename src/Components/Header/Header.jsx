@@ -52,7 +52,6 @@ function Header({customerData,dispatch}) {
                     <TabContainer onClick={() => { setClick(!click) }} click={click}>
                         <TabItem  ref={toggleRef} onClick={handleJobBoardClick }>Job Board</TabItem>
                         <DropdownMenuJobs style={{ left: dropdownPosition.left }} show={isDropdownJobsVisible}>
-                                <DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
                                 <DropdownItem onClick={() => { navigate('/Jobs') }}>Jobs</DropdownItem>
                                 <DropdownItem onClick={() => { navigate('/Candidates') }}>Candidates</DropdownItem>
                         </DropdownMenuJobs>
