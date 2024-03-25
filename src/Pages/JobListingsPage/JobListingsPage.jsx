@@ -1,27 +1,62 @@
 // JobListingsPage.js
-import React, { useState } from 'react';
-import {JobListingsPageWrapper,JobListingsContentWrapper,JobListing, ModalContent,ModalOverlay} from './JobListingsPageStyled';
+import React, { useState, useEffect} from 'react';
+import {JobListingsPageWrapper,JobListingsContentWrapper,JobListing,ModalOverlay, Button} from './JobListingsPageStyled';
 import Header from "../../Components/Header/Header";
-const jobsData = [
-    { id: 1, title: 'Software Engineer', type: 'Full-time', experience: 'Mid Level', location: 'San Francisco, CA', description: "" },
-    { id: 2, title: 'Marketing Specialist', type: 'Part-time', experience: 'Entry Level', location: 'New York, NY',description: ""},
-    { id: 3, title: 'Project Manager', type: 'Full-time', experience: 'Senior Level', location: 'Chicago, IL',description: "" },
-    { id: 4, title: 'Kitchen Manager', type: 'Contract', experience: 'Entry Level', location: 'Austin, TX',description: ""},
-    // Add more job listings as needed
-];
+import SignOutButton from "../../Components/Buttons/OutlineButton.jsx";
+import CreateJobForm from "../../Components/CreateJobForm/CreateJobForm";
+import axios from "axios"
+import {getAuthToken} from "../../axiosHelper";
+import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
+// const jobsData = [
+//     { id: 1, title: 'Software Engineer', type: 'Full-time', experience: 'Mid Level', location: 'San Francisco, CA', description: "" },
+//     { id: 2, title: 'Marketing Specialist', type: 'Part-time', experience: 'Entry Level', location: 'New York, NY',description: ""},
+//     { id: 3, title: 'Project Manager', type: 'Full-time', experience: 'Senior Level', location: 'Chicago, IL',description: "" },
+//     { id: 4, title: 'Kitchen Manager', type: 'Contract', experience: 'Entry Level', location: 'Austin, TX',description: ""},
+//     // Add more job listings as needed
+// ];
 
 const JobListingsPage = ({customerData, dispatch}) => {
-   const [jobs, setJobs] = useState(jobsData);
    const [filters, setFilters] = useState({ type: '', experience: '', location: '' });
    const [newJob, setNewJob] = useState({ title: '', type: '', experience: '', location: '', description: '' });
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [isJobModalOpen, setIsJobModalOpen] = useState(false);
+   const [jobs, setJobs] = useState([]);
+    const handleOpenModal = (candidate) => {
+            setIsModalOpen(true);
+      };
+
+      // Function to handle closing the modal
+      const handleCloseModal = () => {
+        setIsModalOpen(false);
+      };
+
 
     const [selectedJob, setSelectedJob] = useState(null);
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters({ ...filters, [name]: value });
     };
+
+    useEffect(() => {
+    const fetchJobs = async () => {
+
+      try {
+        const response = await axios.get('/jobs', {
+        headers: {
+          Authorization: 'Bearer '+ getAuthToken(),
+        },
+      });
+        const data = response.data;
+
+        // Assuming the response is an array of jobs
+        setJobs(data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    fetchJobs();
+    }, []);
     const handleJobClick = (job) => {
             setSelectedJob(job);
             setIsJobModalOpen(true);
@@ -58,7 +93,7 @@ const JobListingsPage = ({customerData, dispatch}) => {
                <h1>Job Listings</h1>
                <div>
                    <label>Job Type:</label>
-                   <select name="type" value={filters.type} onChange={handleFilterChange}>
+                   <select name="type" value={filters.workType} onChange={handleFilterChange}>
                        <option value="">All</option>
                        <option value="Full-time">Full-time</option>
                        <option value="Part-time">Part-time</option>
@@ -79,52 +114,18 @@ const JobListingsPage = ({customerData, dispatch}) => {
                    <input type="text" name="location" value={filters.location} onChange={handleFilterChange} />
                </div>
                <div>
-                   <button onClick={() => setFilters({ type: '', experience: '', location: '' })}>Reset Filters</button>
+                   <SignOutButton onClick={() => setFilters({ type: '', experience: '', location: '' })}>Reset Filters</SignOutButton>
                </div>
                <div>
-                   <button onClick={() => setIsModalOpen(true)}>Add New Job</button>
+                   <SignOutButton onClick={() => setIsModalOpen(true)}>Add New Job</SignOutButton>
                </div>
 
-              {/* Modal for Creating New Job */}
-                  <ModalOverlay isOpen={isModalOpen}>
-                      <ModalContent>
-                          <h2>Create New Job</h2>
-                          <form onSubmit={handleNewJobSubmit}>
-                            <div>
-                                <label>Title:</label>
-                                <input type="text" name="title" value={newJob.title} onChange={handleNewJobChange} />
-                            </div>
-                            <div>
-                                <label>Job Type:</label>
-                                <select name="type" value={newJob.type} onChange={handleNewJobChange}>
-                                    <option value="">Select</option>
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Part-time">Part-time</option>
-                                    <option value="Contract">Contract</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label>Experience Level:</label>
-                                <select name="experience" value={newJob.experience} onChange={handleNewJobChange}>
-                                    <option value="">Select</option>
-                                    <option value="Entry Level">Entry Level</option>
-                                    <option value="Mid Level">Mid Level</option>
-                                    <option value="Senior Level">Senior Level</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label>Location:</label>
-                                <input type="text" name="location" value={newJob.location} onChange={handleNewJobChange} />
-                            </div>
-                            <div>
-                                <label>Description:</label>
-                                <textarea name="description" value={newJob.description} onChange={handleNewJobChange}></textarea>
-                            </div>
-                            <button type="submit">Add New Job</button>
-                          </form>
-                          <button onClick={() => setIsModalOpen(false)}>Close</button>
-                      </ModalContent>
-                  </ModalOverlay>
+                <ModalWrapper isOpen={isModalOpen}>
+                   <ModalContent>
+                     <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
+                      <CreateJobForm customerData={customerData} dispatch={dispatch}/>
+                   </ModalContent>
+                 </ModalWrapper>
 
 
                {/* Display Job Listings */}
@@ -132,7 +133,7 @@ const JobListingsPage = ({customerData, dispatch}) => {
                    {filteredJobs.map(job => (
                        <JobListing key={job.id} onClick={() => handleJobClick(job)}>
                            <h2>{job.title}</h2>
-                           <p>Type: {job.type}</p>
+                           <p>Type: {job.workType}</p>
                            <p>Experience: {job.experience}</p>
                            <p>Location: {job.location}</p>
                        </JobListing>
@@ -142,11 +143,12 @@ const JobListingsPage = ({customerData, dispatch}) => {
                    <ModalOverlay isOpen={isJobModalOpen} onClick={handleCloseJobModal}>
                        <ModalContent onClick={(e) => e.stopPropagation()}>
                            <h2>{selectedJob.title}</h2>
-                           <p>Type: {selectedJob.type}</p>
+                           <p>Type: {selectedJob.workType}</p>
                            <p>Experience: {selectedJob.experience}</p>
                            <p>Location: {selectedJob.location}</p>
                            <p>Description: {selectedJob.description}</p>
-                           <button onClick={handleCloseJobModal}>Close</button>
+                           <SignOutButton > Apply for Job </SignOutButton>
+                           <SignOutButton onClick={handleCloseJobModal}>Close</SignOutButton>
                        </ModalContent>
                    </ModalOverlay>
                )}

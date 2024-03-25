@@ -3,14 +3,19 @@ import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import { Screen, LoginPageContainer, ArcadeButton, Tear, LogoContainer, Logo, Icicle, LoginFormContainer, FormInput, FormButton, ErrorMessage, IcicleAnimation,
  Triangle, AvalancheWarning  } from './LoginPageStyled';
+import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import Header from "../../Components/Header/Header.jsx"
 import Snowflake from '../../Components/Snowflakes/Snowflakes.jsx';
-import {updateIsLoggedIn} from "../../redux/app-state-slice";
+import {updateIsLoggedIn,updateFirstName,updateLastName,updateEmail,updateUserId} from "../../redux/app-state-slice";
 import {useNavigate} from "react-router";
+import {request, setAuthHeader} from "../../axiosHelper";
+import RegisterForm from "../../Components/RegisterForm/RegisterForm.jsx"
+
 
 const LoginPage = ({ setIsAuthenticated,dispatch,customerData }) => {
- const [username, setUsername] = useState('');
+   const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
+   const [isModalOpen, setIsModalOpen] = useState(false);
    const [error, setError] = useState('');
    const navigate = useNavigate();
    const [fallingIcicles, setFallingIcicles] = useState({
@@ -25,18 +30,19 @@ const LoginPage = ({ setIsAuthenticated,dispatch,customerData }) => {
    const [isShaking, setIsShaking] = useState(false);
    const [tears, setTears] = useState([]);
    const [icicleCount, setIcicleCount] = useState();
-    const [icicleWidths, setIcicleWidths] = useState([]);
-    const [showWarning, setShowWarning] = useState(false); // State for warning visibility
-    const MAX_SNOWFLAKES = 250; // Maximum number of snowflakes
-    const [isMouseDown, setIsMouseDown] = useState(false);
+   const [icicleWidths, setIcicleWidths] = useState([]);
+   const [showWarning, setShowWarning] = useState(false); // State for warning visibility
+   const MAX_SNOWFLAKES = 250; // Maximum number of snowflakes
+   const [isMouseDown, setIsMouseDown] = useState(false);
+   const [data,setData] = useState([]);
+   const handleOpenModal = (candidate) => {
+         setIsModalOpen(true);
+   };
 
-
-
-
-
-
-
-
+   // Function to handle closing the modal
+   const handleCloseModal = () => {
+     setIsModalOpen(false);
+   };
 
     // Function to generate random duration for snowflake animation
      const getRandomDuration = () => {
@@ -163,11 +169,37 @@ const LoginPage = ({ setIsAuthenticated,dispatch,customerData }) => {
    const handleMouseUp = () => {
      setIsMouseDown(false);
    };
+   const onLogin = (e, username, password) => {
+           e.preventDefault();
+           request(
+               "POST",
+               "/login",
+               {
+                   login: username,
+                   password: password
+               },{}).then(
+               (response) => {
+                   setAuthHeader(response.data.token);
+                   dispatch(updateFirstName(response.data.firstName));
+                   dispatch(updateLastName(response.data.lastName));
+                   dispatch(updateEmail(response.data.email));
+                   dispatch(updateIsLoggedIn(true));
+                   dispatch(updateUserId(response.data.id));
+                   alert("Functionality Under Construction. Only Cosmetic right now (which is also under construction lol)")
+                   navigate("/Profile")
+               }).catch(
+               (error) => {
+                   setAuthHeader(null);
+               }
+           );
+       };
+
+
 
    const handleSubmit = async () => {
         dispatch(updateIsLoggedIn(true))
         alert("Functionality Under Construction. Only Cosmetic right now (which is also under construction lol)")
-        navigate("/Profile")
+
 //      e.preventDefault();
 //      try {
 //        const response = await axios.post('/api/login', { username, password });
@@ -225,7 +257,8 @@ const getRandomWidth = () => {
                  value={password}
                  onChange={(e) => setPassword(e.target.value)}
                />
-               <FormButton onClick={() => handleSubmit()} >Login</FormButton>
+               <FormButton onClick={(e) => onLogin(e,username,password)} >Login</FormButton>
+               <FormButton onClick={(e) => handleOpenModal()}> Register</FormButton>
                {error && <ErrorMessage>{error}</ErrorMessage>}
              </LoginFormContainer>
 {/*               */}{/* Avalanche Warning */}
@@ -237,7 +270,14 @@ const getRandomWidth = () => {
 {/*                */}{/* Show warning */}
 
               {/* Arcade Button */}
+              <div> {data && data.map((line) => <p>{line}</p>)} </div>
             <ArcadeButton onClick={handleButtonClick}>Don't Push</ArcadeButton>
+            <ModalWrapper isOpen={isModalOpen}>
+            <ModalContent>
+              <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
+               <RegisterForm customerData={customerData} dispatch={dispatch}/>
+            </ModalContent>
+          </ModalWrapper>
 
 
            </LoginPageContainer>

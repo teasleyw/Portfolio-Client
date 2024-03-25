@@ -32,17 +32,6 @@ export const JobListingsContentWrapper = styled.div`
         border: 1px solid #ccc;
     }
 
-    button {
-        padding: 5px 10px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
 `;
 export const ModalOverlay = styled.div`
     display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};

@@ -24,7 +24,7 @@ export const ProfileContainer = styled.div`
 `;
 // Styled sign out button
 export const SignOutButton = styled.button`
-  background-color: transparent; /* Transparent background */
+    background-color: transparent; /* Transparent background */
     color: black; /* Red text color */
     border: 4px solid #ff5555; /* Thick red border */
     padding: 10px 20px; /* Button padding */
@@ -72,4 +72,17 @@ export const ProfileHeader = styled.h2`
 // Name heading
 export const NameHeading = styled.h3`
   color: #555; /* Slightly darker text color */
+   input {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+        &:hover {
+        box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.4); /* Shadow effect */
+         }
+         &:focus {
+                 box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.4); /* Shadow effect */
+                  }
+
+      }
 `;

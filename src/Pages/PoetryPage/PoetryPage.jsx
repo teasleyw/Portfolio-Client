@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ButtonContainer, Poem, PoemAuthor, PoemTitle, PoemContainer, PoetryPageContainer} from "./PoetryPageStyled";
 import Header from "../../Components/Header/Header";
-import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
+import NeuMorphicButton from "../../Components/Buttons/NeumorphicButton.jsx";
 import Modal from "../../Components/Modal/Modal";
 import {updatePoemContent} from "../../redux/app-state-slice";
 import {SuitAndTie} from "../../utils/poems.js"

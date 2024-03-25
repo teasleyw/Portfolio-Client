@@ -58,6 +58,7 @@ function Header({customerData,dispatch}) {
                         <TabItem onClick={() => { navigate('/Poetry') }}>Poetry</TabItem>
                         <TabItem onClick={() => { navigate('/Music') }}>Music</TabItem>
                         <TabItem onClick={() => { navigate('/About') }}>About</TabItem>
+                        <TabItem onClick={() => { navigate('/Inbox') }}>Inbox</TabItem>
                         {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in
                         <>
                             <TabItem

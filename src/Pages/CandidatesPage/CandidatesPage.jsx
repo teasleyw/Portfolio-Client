@@ -1,10 +1,13 @@
-import React, { useState }  from 'react';
+import React, { useState,useEffect }  from 'react';
 import { FaLinkedin } from 'react-icons/fa';
-import { CandidatesPageContainer, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ProfilePicture, ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
+import { CandidatesPageContainer, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
+import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture.jsx"
 import WarrenZeiders from "../../Assets/Images/WarrenZeiders.jpeg"
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import Header from "../../Components/Header/Header";
 import RLBurnside from "../../Assets/Images/RLBurnside.jpeg"
+import axios from "axios";
+import {request, getAuthToken} from "../../axiosHelper.js";
 // Function to generate a random color
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -77,13 +80,46 @@ function CandidatesPage({customerData, dispatch}) {
   const [filterYearsOfExperience, setFilterYearsOfExperience] = useState('');
   const [filterJobTitle, setFilterJobTitle] = useState('');
   const [isValidPicture, setIsValidPicture] = useState(true);
-
+  const [candidates,setCandidates] = useState([]);
 
    const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleToggleTopCandidate = () =>{
         selectedCandidate.status = selectedCandidate.status === "Top Candidate" ? 'Regular Candidate' : 'Top Candidate';
     }
+    const onSetTopCandidate = (e,selectedCandidate) => {
+         e.preventDefault()
+         request(
+             "POST",
+             selectedCandidate.id + "/candidates/status",
+             {
+                 topStatus: !selectedCandidate.topStatus
+             },{"Authorization" : `Bearer ${getAuthToken()}`}).then(
+             (response) => {
+                alert("successful")
+             }).catch(
+             (error) => {
+                alert(error)
+             }
+         );
+     };
+    useEffect(() => {
+        const fetchCandidates = async () => {
+
+          try {
+            const response = await axios.get('/candidates', {
+
+          });
+            const data = response.data;
+
+            // Assuming the response is an array of jobs
+            setCandidates(data);
+          } catch (error) {
+            console.error('Error fetching jobs:', error);
+          }
+        }
+        fetchCandidates();
+           }, []);
     // Function to handle opening the modal and setting the selected candidate
     const handleOpenModal = (candidate) => {
       setSelectedCandidate(candidate);
@@ -108,28 +144,28 @@ function CandidatesPage({customerData, dispatch}) {
 
     const filteredCandidates = candidates.filter(candidate => {
      if (filterYearsOfExperience) {
-       if (filterYearsOfExperience === '0-3' && candidate.yearsOfExperience > 3) {
+       if (filterYearsOfExperience === '0-3' && candidate.experience > 3) {
          return false;
        }
-       if (filterYearsOfExperience === '3-6' && (candidate.yearsOfExperience < 3 || candidate.yearsOfExperience > 6)) {
+       if (filterYearsOfExperience === '3-6' && (candidate.experience < 3 || candidate.experience > 6)) {
          return false;
        }
-       if (filterYearsOfExperience === '6-10' && (candidate.yearsOfExperience < 6 || candidate.yearsOfExperience > 10)) {
+       if (filterYearsOfExperience === '6-10' && (candidate.experience < 6 || candidate.experience > 10)) {
          return false;
        }
-       if (filterYearsOfExperience === '10+' && candidate.yearsOfExperience < 10) {
+       if (filterYearsOfExperience === '10+' && candidate.experience < 10) {
          return false;
        }
      }
-     if (filterJobTitle && candidate.typeOfWorker !== filterJobTitle) {
+     if (filterJobTitle && candidate.job !== filterJobTitle) {
        return false;
      }
      return true;
     });
 
 
-  const topCandidates = filteredCandidates.filter(candidate => candidate.status === 'Top Candidate');
-  const otherCandidates = filteredCandidates.filter(candidate => candidate.status !== 'Top Candidate');
+  const topCandidates = filteredCandidates.filter(candidate => candidate.topStatus === true);
+  const otherCandidates = filteredCandidates.filter(candidate => candidate.topStatus !== true);
 // Function to handle toggling the status of a candidate
 
   return (
@@ -152,7 +188,7 @@ function CandidatesPage({customerData, dispatch}) {
         <label>Filter by Job Title:</label>
         <select value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
           <option value="">All</option>
-          {[...new Set(candidates.map(candidate => candidate.typeOfWorker))].map(jobTitle => (
+          {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
             <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
           ))}
         </select>
@@ -165,18 +201,14 @@ function CandidatesPage({customerData, dispatch}) {
           <CandidateCard key={candidate.id} onClick={() => handleOpenModal(candidate)}>
             <div className="profilePictureContainer">
                 {candidate.profilePicture ? (
-                  <ProfilePicture>
-                    <img src={candidate.profilePicture} alt={candidate.name} onError={() => handleInvalidPicture(candidate)} />
-                  </ProfilePicture>
+                 <ProfilePicture  userId={candidate?.id} img={candidate?.profilePicture} name={candidate?.firstName} onError={() => handleInvalidPicture(candidate)}/>
                 ) : (
-                  <ProfilePicture style={{ backgroundColor: "blue" }}>
-                    {candidate.name.substring(0, 1)}
-                  </ProfilePicture>
+                   <ProfilePicture userId={candidate?.id} name={candidate.firstName} style={{ backgroundColor: "blue" }}/>
                 )}
             </div>
             <h3>{candidate.name}</h3>
-            <p>Job: {candidate.typeOfWorker}</p>
-            <p>Years of Experience: {candidate.yearsOfExperience}</p>
+            <p>Job: {candidate.job}</p>
+            <p>Years of Experience: {candidate.experience}</p>
             <a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
           </CandidateCard>
         ))}
@@ -196,9 +228,9 @@ function CandidatesPage({customerData, dispatch}) {
         <tbody>
           {otherCandidates.map(candidate => (
             <tr key={candidate.id} onClick={() => handleOpenModal(candidate)}>
-              <td>{candidate.name}</td>
-              <td>{candidate.typeOfWorker}</td>
-              <td>{candidate.yearsOfExperience}</td>
+              <td>{candidate.firstName} {candidate.lastName} </td>
+              <td>{candidate.job}</td>
+              <td>{candidate.experience}</td>
               <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
             </tr>
           ))}
@@ -209,24 +241,20 @@ function CandidatesPage({customerData, dispatch}) {
         <ModalContent>
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
           <ModalHeader>
-          {selectedCandidate && selectedCandidate.profilePicture ? (
-            <ProfilePicture>
-              <img src={selectedCandidate?.profilePicture} alt={selectedCandidate?.name} onError={() => handleInvalidPicture(selectedCandidate)} />
-            </ProfilePicture>
+          {selectedCandidate && selectedCandidate?.profilePicture ? (
+           <ProfilePicture  userId={selectedCandidate?.id} img={selectedCandidate?.profilePicture} name={selectedCandidate?.firstName} onError={() => handleInvalidPicture(selectedCandidate)}/>
           ) : (
-            <ProfilePicture style={{ backgroundColor: "blue" }}>
-              {selectedCandidate?.name.substring(0, 1)}
-            </ProfilePicture>
+           <ProfilePicture userId={selectedCandidate?.id} name={selectedCandidate?.firstName} style={{ backgroundColor: "blue" }}/>
           )}
-          <h2>{selectedCandidate?.name}</h2>
+          <h2>{selectedCandidate?.firstName} {selectedCandidate?.lastName}</h2>
           </ModalHeader>
-          <p>Main Title: {selectedCandidate?.typeOfWorker}</p>
-          <p>Years of Professional Experience: {selectedCandidate?.yearsOfExperience}</p>
+          <p>Main Title: {selectedCandidate?.job}</p>
+          <p>Years of Professional Experience: {selectedCandidate?.experience}</p>
           <CandidateDescription> {selectedCandidate?.description} </CandidateDescription>
           <LinkedInIconLink href={selectedCandidate?.linkedInProfile} target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />
           </LinkedInIconLink>
-          <TopCandidateButton onClick = {handleToggleTopCandidate}> Toggle Top Candidate </TopCandidateButton>
+          <TopCandidateButton onClick = {(e) => onSetTopCandidate(e,selectedCandidate)}> Toggle Top Candidate </TopCandidateButton>
 
         </ModalContent>
       </ModalWrapper>

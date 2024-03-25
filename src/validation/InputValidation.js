@@ -1,6 +1,6 @@
 import {
   isValidEmail,
-  isValidName, isValidPoemTitle
+  isValidName, isValidPoemTitle,isValidUserName
 } from "./PatternValidation";
 
 export const validateAndUpdateEmail = (state) => {
@@ -16,6 +16,36 @@ export const validateAndUpdateEmail = (state) => {
     state.email.hasError =false;
     state.email.errorMessage = ''
   }
+}
+export const validateAndUpdateConfirmPassword = (state) => {
+  if (state.registerConfirmPassword.value !== state.registerPassword.value) {
+    state.registerConfirmPassword.hasError = true;
+    state.registerConfirmPassword.errorMessage = "Passwords must be the same";
+  }
+  else{
+      state.registerConfirmPassword.hasError  =false;
+      state.registerConfirmPassword.errorMessage = '';
+  }
+
+}
+export const validateAndUpdateUserName = (state) => {
+  if (!isValidUserName(state.registerUserName.value)){
+    state.registerUserName.hasError = true;
+    state.registerUserName.errorMessage = "First name is invalid. Only Use Letters and Numbers";
+  }
+  else if (state.registerUserName.value.length > 15) {
+    state.registerUserName.hasError = true;
+    state.registerUserName.errorMessage = "User name must be below 15 characters";
+  }
+  else if (state.registerUserName.value == "") {
+      state.registerUserName.hasError = true;
+      state.registerUserName.errorMessage = "User name is empty";
+    }
+  else{
+      state.registerUserName.hasError  =false;
+      state.registerUserName.errorMessage = '';
+  }
+
 }
 export const validateAndUpdateFirstName = (state) => {
   if (!isValidName(state.firstName.value)){
