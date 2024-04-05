@@ -1,12 +1,18 @@
-
 import React,{useState, useEffect} from 'react';
 import { connect } from 'react-redux'; // Import connect if using Redux
-import { ProfilePageContainer, ProfileContainer,SignOutButton, ProfileInfo, ProfileImage, ProfileHeader, NameHeading } from './ProfilePageStyled';
+import { ProfilePageContainer, HeaderLinks, ProfilePictureContainer,PreviewButton,BodyInfoWrapper,ProfileInfoContainer,ProfileJobTitle,ProfileHeaderInfo,ProfilePageContentContainer,ProfileName, ProfileCategoriesContainer, ProfileCategoriesItems, ProfileCategoriesContent, ProfileContainer,SignOutButton, ProfileInfo, ProfileImage, ProfileHeader, NameHeading } from './ProfilePageStyled';
 import Header from "../../Components/Header/Header";
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import {updateIsLoggedIn} from "../../redux/app-state-slice";
+import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture"
 import {useNavigate} from "react-router";
+import {getAuthToken} from "../../axiosHelper.js"
+import WorkHistoryItem from "../../Components/WorkHistoryItem/WorkHistoryItem"
+import { FaEdit, FaEye,FaPhone } from 'react-icons/fa'
+import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import axios from 'axios';
+import { Document, Page } from 'react-pdf';
+
 // Profile page component
 const ProfilePage = ({ customerData,dispatch }) => {
   const { name } = { name: "Johnny Cash"};
@@ -16,6 +22,21 @@ const ProfilePage = ({ customerData,dispatch }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [tempFirstName, setTempFirstName] = useState(customerData.firstName.value);
   const [tempLastName, setTempLastName] = useState(customerData.lastName.value);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [userInfo,setUserInfo] = useState(null);
+  const [resumeUrl,setResume] = useState(null);
+  const [isResumeModalOpened,setResumeModalOpened] = useState(false)
+
+  const profileStyle= {
+    border:'5px solid #e0e0e0',
+    background: 'blue',
+    boxShadow: '0'
+  }
+
+
+
+
+
 
   useEffect(() => {
       if (!isEditMode) {
@@ -47,17 +68,72 @@ const ProfilePage = ({ customerData,dispatch }) => {
    const handleToggleEditMode = () => {
       setIsEditMode(prevEditMode => !prevEditMode);
     };
+     const handleItemClick = (item) => {
+            setSelectedItem(item);
+     };
+
 
     const fetchProfilePictureUrl = async () => {
       axios.get(`1/profile-picture`,{responseType:'blob'})
         .then(response => {
         const imageUrl = URL.createObjectURL(response.data);
         setProfilePictureUrl(imageUrl);
+        console.log(imageUrl)
         })
         .catch(error => {
           console.log(error)
         });
     };
+    const fetchResumeUrl = async () => {
+          axios.get('1/resume', {
+            responseType: 'blob', // Set the response type to 'blob' to receive a binary response
+            headers: {
+              'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
+              'Content-Type': 'multipart/form-data', // Set the content type if required by the API
+            },
+          })
+            .then(response => {
+            let base64String;
+
+            const file = URL.createObjectURL(response.data);
+            let reader = new FileReader();
+                reader.readAsDataURL(response.data);
+                reader.onloadend = () => {
+                  base64String = reader.result;
+                  setResume(base64String.substr(base64String.indexOf(',') + 1));
+
+                };
+                setResume(file)
+                console.log("resume" + resumeUrl)
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        };
+    useEffect(() => {
+    const fetchUserInfo = async () => {
+    fetchResumeUrl()
+     axios.get(
+         `${customerData.userId.value}/candidates/info`,
+         {
+           headers: {
+             'Content-Type': 'multipart/form-data',
+             'Authorization': "Bearer " + getAuthToken()
+           }
+         }
+       ).then(response => {
+        setUserInfo(response.data);
+        console.log("user Info" + userInfo.job)
+
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    };
+    fetchUserInfo();
+    console.log(userInfo)
+    },[]
+    );
     const uploadImage = async (userId) => {
       try {
         const formData = new FormData();
@@ -66,7 +142,8 @@ const ProfilePage = ({ customerData,dispatch }) => {
         // Make a POST request to your backend endpoint
         const response = await axios.post(userId + "/profile-picture", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            'Authorization': "Bearer " + getAuthToken()
           }
         });
 
@@ -85,55 +162,144 @@ const ProfilePage = ({ customerData,dispatch }) => {
     };
 
 
-  return (
-       <ProfilePageContainer>
-         <Header customerData={customerData} dispatch={dispatch} />
-         <ProfileContainer>
-           <ProfileHeader>Profile Page</ProfileHeader>
-           <ProfileInfo>
-             <ProfileImage src={profilePictureUrl} alt="Profile" onClick={handleProfilePhotoClick} />
-             <input id="fileInput" type="file" onChange={handleFileChange} style={{ display: 'none' }} />
-             <div>
-            <NameHeading>
-               {isEditMode ? (
-                <>
-                   <label>
-                   First Name:
-                   </label>
-                  <input type="text" value={tempFirstName} onChange={handleFirstNameChange} />
-                  <label>
-                  Last Name:
-                  </label>
-                  <input type="text" value={tempLastName} onChange={handleLastNameChange} />
-                </>
-              ) : (
-                <>
-                  Your Name:
-                  {customerData.firstName.value} {customerData.lastName.value}
-                </>
-              )}
-            </NameHeading>
-             <NameHeading>Location: Saginaw, Michigan</NameHeading>
-             <NameHeading>Hobbies: Guitar </NameHeading>
-             <NameHeading>Email: {customerData.email.value}</NameHeading>
-             <NameHeading>Occupation: Saginaw Fisherman</NameHeading>
-             </div>
-             <SignOutButton onClick={() => handleSignOut()}>
-                   Sign Out
-             </SignOutButton>
-             <SignOutButton onClick={() => fetchProfilePictureUrl()}>
-                    Get Picture
-              </SignOutButton>
-              <SignOutButton onClick={() => uploadImage("1")}>
-                  Save Picture
-              </SignOutButton>
 
-           </ProfileInfo>
-           <SignOutButton onClick={handleToggleEditMode}>
-             {isEditMode ? 'Cancel Edit' : 'Edit Profile'}
-           </SignOutButton>
-         </ProfileContainer>
+  return (
+  <>
+
+       <ProfilePageContainer>
+        <ModalWrapper isOpen={isResumeModalOpened}>
+          <ModalContent>
+
+                    <a href={resumeUrl} target="_blank"
+                                        rel="noreferrer">
+                                        Open First PDF
+                                    </a>
+            </ModalContent>
+         </ModalWrapper>
+       <Header customerData={customerData} dispatch={dispatch} />
+       <ProfilePageContentContainer>
+       <ProfileCategoriesContainer>
+
+           <ProfileCategoriesContent>
+            <ProfileCategoriesItems
+            active={selectedItem === 'Job'}
+            onClick={() => handleItemClick('Job')}
+            >
+
+                Job Info
+            </ProfileCategoriesItems>
+             <ProfileCategoriesItems
+             active={selectedItem === 'Personal'}
+             onClick={() => handleItemClick('Personal')}
+             >
+                Personal Info
+            </ProfileCategoriesItems>
+            <ProfileCategoriesItems
+             active={selectedItem === 'Edit'}
+             onClick={() => handleItemClick('Edit')}
+             >
+                Edit
+            </ProfileCategoriesItems>
+           </ProfileCategoriesContent>
+       </ProfileCategoriesContainer>
+       <ProfileContainer>
+
+            <ProfileHeader>
+            <ProfilePictureContainer>
+                <ProfilePicture Style={profileStyle} size={"100px"} userId={customerData.userId.value} name={customerData.firstName.value}/>
+            </ProfilePictureContainer>
+                <ProfileHeaderInfo>
+
+                <ProfileName>  {customerData.firstName.value} {customerData.lastName.value} </ProfileName>
+                <ProfileJobTitle> Austin, Texas, United States </ProfileJobTitle>
+                 <ProfileJobTitle> Occupation: {userInfo?.job}</ProfileJobTitle>
+
+
+                 </ProfileHeaderInfo>
+                 <HeaderLinks>
+                        <PreviewButton onClick={e=> {setResumeModalOpened(true)}} > Resume  &nbsp;
+                         <FaEye/>
+                       </PreviewButton>
+                        <PreviewButton > Contact Info  &nbsp;
+                            <FaPhone/>
+                         </PreviewButton>
+                 </HeaderLinks>
+
+            </ProfileHeader>
+            <ProfileInfoContainer>
+            <BodyInfoWrapper>
+
+                  <h2>Work History</h2>
+
+                  <WorkHistoryItem
+                    logoSrc={JohnnyCash}
+                    companyName="ABC Company"
+                    positionTitle="Software Engineer"
+                    startDate="January 2019"
+                    endDate="Present"
+                  />
+                  <WorkHistoryItem
+                    logoSrc={JohnnyCash}
+                    companyName="XYZ Corporation"
+                    positionTitle="Web Developer"
+                    startDate="June 2017"
+                    endDate="December 2018"
+                  />
+                  {/* Add more WorkHistoryItem components as needed */}
+            </BodyInfoWrapper>
+
+
+            </ProfileInfoContainer>
+       </ProfileContainer>
+
+{/*          <ProfileContainer> */}
+{/*            <ProfileHeader>Profile Page</ProfileHeader> */}
+{/*            <ProfileInfo> */}
+{/*              <ProfileImage src={profilePictureUrl} alt="Profile" onClick={handleProfilePhotoClick} /> */}
+{/*              <input id="fileInput" type="file" onChange={handleFileChange} style={{ display: 'none' }} /> */}
+{/*              <div> */}
+{/*             <NameHeading> */}
+{/*                {isEditMode ? ( */}
+{/*                 <> */}
+{/*                    <label> */}
+{/*                    First Name: */}
+{/*                    </label> */}
+{/*                   <input type="text" value={tempFirstName} onChange={handleFirstNameChange} /> */}
+{/*                   <label> */}
+{/*                   Last Name: */}
+{/*                   </label> */}
+{/*                   <input type="text" value={tempLastName} onChange={handleLastNameChange} /> */}
+{/*                 </> */}
+{/*               ) : ( */}
+{/*                 <> */}
+{/*                   Your Name: */}
+{/*                   {customerData.firstName.value} {customerData.lastName.value} */}
+{/*                 </> */}
+{/*               )} */}
+{/*             </NameHeading> */}
+{/*              <NameHeading>Location: Saginaw, Michigan</NameHeading> */}
+{/*              <NameHeading>Hobbies: Guitar </NameHeading> */}
+{/*              <NameHeading>Email: {customerData.email.value}</NameHeading> */}
+{/*              <NameHeading>Occupation: Saginaw Fisherman</NameHeading> */}
+{/*              </div> */}
+{/*              <SignOutButton onClick={() => handleSignOut()}> */}
+{/*                    Sign Out */}
+{/*              </SignOutButton> */}
+{/*              <SignOutButton onClick={() => fetchProfilePictureUrl()}> */}
+{/*                     Get Picture */}
+{/*               </SignOutButton> */}
+{/*               <SignOutButton onClick={() => uploadImage("1")}> */}
+{/*                   Save Picture */}
+{/*               </SignOutButton> */}
+
+{/*            </ProfileInfo> */}
+{/*            <SignOutButton onClick={handleToggleEditMode}> */}
+{/*              {isEditMode ? 'Cancel Edit' : 'Edit Profile'} */}
+{/*            </SignOutButton> */}
+{/*          </ProfileContainer> */}
+         </ProfilePageContentContainer>
        </ProfilePageContainer>
+       </>
   );
 };
 export default ProfilePage

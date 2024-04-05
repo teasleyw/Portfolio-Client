@@ -1,15 +1,16 @@
 import React from "react";
-import {SignOutButton} from "./ButtonStyled.jsx"
+import {BlockButton} from "./ButtonStyled.jsx"
 
 function NeuMorphicButton({label,onClick,primaryColor,secondaryColor}) {
 
     return (
-        <SignOutButton
+        <BlockButton
+            onClick={()=>onClick()}
             primaryColor={primaryColor}
             secondaryColor={secondaryColor}
             className="button primary">
             {label}
-        </SignOutButton>
+        </BlockButton>
     )
 }
-export default SignOutButton
+export default BlockButton

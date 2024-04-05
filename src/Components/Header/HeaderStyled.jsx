@@ -112,7 +112,7 @@ export const Logo = styled.a`
     display: flex;
     align-items: center;
     color: ${titleColor};
-    font-family: "IceCaps", sans-serif; //Title Font;
+    font-family: "TimeBurner", sans-serif; //Title Font;
     font-size: 3rem;
     text-shadow: 0 0 0.6em hsl(0 0% 100% / 0.5), 0 0 0.6em ${titleColor};
   &:hover {

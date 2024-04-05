@@ -1,10 +1,19 @@
 import React, { useState,useEffect } from 'react';
 import {ProfileIcon} from "./ProfilePictureStyled.jsx"
 import axios from "axios"
-const ProfilePicture = ({dispatch, customerData, name, img,userId}) => {
+const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) => {
     const [imageUrl,setImageUrl] = useState('')
+       if (Style==null) {
+                   Style = {
+                      background: 'blue'
+                  }
+          }
+
       useEffect(() => {
+
       const fetchProfilePictureUrl = async () => {
+            console.log(Style)
+            console.log(userId);
             axios.get(userId + `/profile-picture`,{responseType:'blob'})
               .then(response => {
               const imageUrl = URL.createObjectURL(response.data);
@@ -28,13 +37,13 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId}) => {
 
     return(
             <>
-            {img &&
-                <ProfileIcon>
+            {imageUrl &&
+                <ProfileIcon style={Style} size={size}>
                   <img src={imageUrl} alt={name} />
                 </ProfileIcon>
              }
-             {!img &&
-                <ProfileIcon style={{ backgroundColor: "blue" }}>
+             {!imageUrl &&
+                <ProfileIcon size={size} style={Style}>
                   {name?.substring(0, 1)}
                 </ProfileIcon>
 }

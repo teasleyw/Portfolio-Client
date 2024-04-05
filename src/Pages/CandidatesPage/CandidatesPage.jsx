@@ -1,6 +1,6 @@
 import React, { useState,useEffect }  from 'react';
 import { FaLinkedin } from 'react-icons/fa';
-import { CandidatesPageContainer, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
+import { CandidatesPageContainer, RecentlyActive, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture.jsx"
 import WarrenZeiders from "../../Assets/Images/WarrenZeiders.jpeg"
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
@@ -195,7 +195,7 @@ function CandidatesPage({customerData, dispatch}) {
       </div>
 
       {/* Display top candidates */}
-      <h2>Top Candidates</h2>
+      <h2>My Shortlist</h2>
       <TopCandidatesContainer>
         {topCandidates.map(candidate => (
           <CandidateCard key={candidate.id} onClick={() => handleOpenModal(candidate)}>
@@ -222,17 +222,30 @@ function CandidatesPage({customerData, dispatch}) {
             <th>Name</th>
             <th>Job</th>
             <th>Years of Experience</th>
+            <th> Location </th>
+            <th> Comp Range </th>
+            <th> Industry </th>
+            <th> Quota </th>
+            <th> Attainment </th>
             <th>LinkedIn Profile</th>
           </tr>
         </thead>
         <tbody>
           {otherCandidates.map(candidate => (
             <tr key={candidate.id} onClick={() => handleOpenModal(candidate)}>
-              <td>{candidate.firstName} {candidate.lastName} </td>
+              <td><div>{candidate.firstName} {candidate.lastName} &nbsp; {candidate.firstName == "will" &&
+                    <RecentlyActive/>
+              }  </div></td>
               <td>{candidate.job}</td>
               <td>{candidate.experience}</td>
+              <td> Austin </td>
+              <td> 60k+ </td>
+              <td> Automotive </td>
+              <td> 100k </td>
+              <td> 117% </td>
               <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
-            </tr>
+            <
+            /tr>
           ))}
         </tbody>
       </OtherCandidatesTable>
@@ -250,6 +263,8 @@ function CandidatesPage({customerData, dispatch}) {
           </ModalHeader>
           <p>Main Title: {selectedCandidate?.job}</p>
           <p>Years of Professional Experience: {selectedCandidate?.experience}</p>
+
+
           <CandidateDescription> {selectedCandidate?.description} </CandidateDescription>
           <LinkedInIconLink href={selectedCandidate?.linkedInProfile} target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />

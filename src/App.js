@@ -10,6 +10,7 @@ import BowlingPage from "./Pages/BowlingPage/BowlingPage";
 import FantasyBotPage from "./Pages/FantasyBotPage/FantasyBotPage";
 import CandidatesPage from "./Pages/CandidatesPage/CandidatesPage";
 import InboxPage from "./Pages/InboxPage/InboxPage";
+import LinkedInRedirect from "./Pages/LinkedInRedirect/LinkedInRedirect.jsx"
 //Router
 import { BrowserRouter as Router,Route,Routes, } from 'react-router-dom';
 //fonts
@@ -32,12 +33,11 @@ function App() {
     <div>
         <Router>
         <Routes>
-            <Route path="/" exact element={<LandingPage />} />
+            <Route path="/" exact element={<LandingPage dispatch={dispatch} customerData={customerData} />} />
             <Route path="/Home" element={<HomePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Events" element={<EventsPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Poetry" element={<PoetryPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/About" element={<AboutPage dispatch={dispatch} customerData={customerData}/>} />
-            <Route path="/Music" element={<MusicPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Bowling" element={<BowlingPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Login" element={<LoginPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Fantasy" element={<FantasyBotPage dispatch={dispatch} customerData={customerData}/>}/>
@@ -45,6 +45,7 @@ function App() {
             <Route path="/Profile" element={<ProfilePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Jobs" element={<JobListingsPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Inbox" element={<InboxPage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/auth/linkedIn/callback" element={<LinkedInRedirect dispatch={dispatch} customerData={customerData}/>} />
          </Routes>
       </Router>
     </div>

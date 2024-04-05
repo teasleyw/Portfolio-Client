@@ -1,7 +1,8 @@
 // JobListingsPage.js
 import React, { useState, useEffect} from 'react';
-import {JobListingsPageWrapper,JobListingsContentWrapper,JobListing,ModalOverlay, Button} from './JobListingsPageStyled';
+import {JobListingsPageWrapper,JobListingWrapper,JobListingContent, CenterFlex, JobListingsContentWrapper,JobListing,ModalOverlay, Button} from './JobListingsPageStyled';
 import Header from "../../Components/Header/Header";
+import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture";
 import SignOutButton from "../../Components/Buttons/OutlineButton.jsx";
 import CreateJobForm from "../../Components/CreateJobForm/CreateJobForm";
 import axios from "axios"
@@ -129,16 +130,21 @@ const JobListingsPage = ({customerData, dispatch}) => {
 
 
                {/* Display Job Listings */}
-               <div>
+               <JobListingWrapper>
                    {filteredJobs.map(job => (
                        <JobListing key={job.id} onClick={() => handleJobClick(job)}>
-                           <h2>{job.title}</h2>
-                           <p>Type: {job.workType}</p>
-                           <p>Experience: {job.experience}</p>
-                           <p>Location: {job.location}</p>
+                           <CenterFlex>
+                           <ProfilePicture size={"100px"}name={"brian"} userId={"1"}/>
+                           </CenterFlex>
+                           <JobListingContent>
+                               <label>{job.title}</label>
+                               <div>Type: {job.workType}</div>
+                               <div>Experience: {job.experience}</div>
+                               <div>Location: {job.location}</div>
+                           </JobListingContent>
                        </JobListing>
                    ))}
-               </div>
+               </JobListingWrapper>
                {selectedJob && (
                    <ModalOverlay isOpen={isJobModalOpen} onClick={handleCloseJobModal}>
                        <ModalContent onClick={(e) => e.stopPropagation()}>

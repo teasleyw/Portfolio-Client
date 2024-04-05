@@ -45,19 +45,18 @@ function Header({customerData,dispatch}) {
         return (
             <HeaderDiv>
                 <HeaderContainer>
-                    <Logo onClick={() => { navigate('/Home') }}>Will Teasley</Logo>
+                    <Logo onClick={() => { navigate('/') }}>GTM TEAM</Logo>
                     <MobileIcon onClick={() => { setClick(!click) }}>
                         {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
                     </MobileIcon>
                     <TabContainer onClick={() => { setClick(!click) }} click={click}>
-                        <TabItem  ref={toggleRef} onClick={handleJobBoardClick }>Job Board</TabItem>
-                        <DropdownMenuJobs style={{ left: dropdownPosition.left }} show={isDropdownJobsVisible}>
-                                <DropdownItem onClick={() => { navigate('/Jobs') }}>Jobs</DropdownItem>
-                                <DropdownItem onClick={() => { navigate('/Candidates') }}>Candidates</DropdownItem>
-                        </DropdownMenuJobs>
-                        <TabItem onClick={() => { navigate('/Poetry') }}>Poetry</TabItem>
-                        <TabItem onClick={() => { navigate('/Music') }}>Music</TabItem>
-                        <TabItem onClick={() => { navigate('/About') }}>About</TabItem>
+{/*                         <TabItem  ref={toggleRef} onClick={handleJobBoardClick }>Job Board</TabItem> */}
+                        <TabItem onClick={() => { navigate('/Jobs') }}>Job Board</TabItem>
+{/*                         <DropdownMenuJobs style={{ left: dropdownPosition.left }} show={isDropdownJobsVisible}> */}
+{/*                                  */}
+
+{/*                         </DropdownMenuJobs> */}
+                        <TabItem onClick={() => { navigate('/Candidates') }}>Sourcing</TabItem>
                         <TabItem onClick={() => { navigate('/Inbox') }}>Inbox</TabItem>
                         {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in
                         <>

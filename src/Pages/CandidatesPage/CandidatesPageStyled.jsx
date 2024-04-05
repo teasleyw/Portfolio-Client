@@ -99,7 +99,17 @@ export const OtherCandidatesTable = styled.table`
     padding: 8px;
     text-align: left;
 
+
   }
+  td{
+    div{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    }
+
+  }
+
   tr{
   transition: background-color 0.2s ease;
   &:hover {
@@ -122,6 +132,14 @@ export const OtherCandidatesTable = styled.table`
     text-decoration: underline;
   }
 `;
+export const RecentlyActive = styled.div`
+
+    background-color: green;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+
+`
 export const ModalWrapper = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: fixed;

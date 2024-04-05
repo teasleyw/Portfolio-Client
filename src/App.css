@@ -53,3 +53,11 @@
   font-family: 'LetterMagic';
   src: local("LetterMagic"), url("./Assets/Fonts/Letter_Magic/LetterMagic.ttf") format("truetype")
 }
+@font-face {
+  font-family: 'TimeBurner';
+  src: local("TimeBurner"), url("./Assets/Fonts/timeburner-font/Timeburner-xJB8.ttf") format("truetype")
+}
+@font-face {
+  font-family: 'TimeBurner-bold';
+  src: local("TimeBurner-bold"), url("./Assets/Fonts/timeburner-font/TimeburnerBold-peGR.ttf") format("truetype")
+}

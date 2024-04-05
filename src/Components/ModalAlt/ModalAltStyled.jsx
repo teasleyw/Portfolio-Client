@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
   position: fixed;
-  z-index: 1;
+
+  z-index: 999;
   left: 0;
-  top: 0;
+  top:0;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 `;
 
@@ -17,7 +19,7 @@ export const ModalContent = styled.div`
   display: flex;
   gap: 20px;
   flex-direction: column;
-  margin: 15% auto;
+  margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
