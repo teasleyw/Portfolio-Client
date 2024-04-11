@@ -1,12 +1,13 @@
 import React, { useState,useEffect }  from 'react';
 import { FaLinkedin } from 'react-icons/fa';
-import { CandidatesPageContainer, RecentlyActive, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
+import { CandidatesPageContainer, Shortlist,RecentlyActive, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture.jsx"
 import WarrenZeiders from "../../Assets/Images/WarrenZeiders.jpeg"
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import Header from "../../Components/Header/Header";
 import RLBurnside from "../../Assets/Images/RLBurnside.jpeg"
 import axios from "axios";
+import CandidateProfile from "../../Components/CandidateProfile/CandidateProfile"
 import {request, getAuthToken} from "../../axiosHelper.js";
 // Function to generate a random color
 const getRandomColor = () => {
@@ -173,26 +174,26 @@ function CandidatesPage({customerData, dispatch}) {
   <Header customerData={customerData} dispatch={dispatch} />
     <CandidatesPageContainer>
 
-      <h2>Filter Candidates</h2>
-      <div>
-        <label>Filter by Years of Experience:</label>
-        <select value={filterYearsOfExperience} onChange={e => setFilterYearsOfExperience(e.target.value)}>
-              <option value="">All</option>
-              <option value="0-3">0-3 years</option>
-              <option value="3-6">3-6 years</option>
-              <option value="6-10">6-10 years</option>
-              <option value="10+">10+ years</option>
-            </select>
-      </div>
-      <div>
-        <label>Filter by Job Title:</label>
-        <select value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
-          <option value="">All</option>
-          {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
-            <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
-          ))}
-        </select>
-      </div>
+{/*       <h2>Filter Candidates</h2> */}
+{/*       <div> */}
+{/*         <label>Filter by Years of Experience:</label> */}
+{/*         <select value={filterYearsOfExperience} onChange={e => setFilterYearsOfExperience(e.target.value)}> */}
+{/*               <option value="">All</option> */}
+{/*               <option value="0-3">0-3 years</option> */}
+{/*               <option value="3-6">3-6 years</option> */}
+{/*               <option value="6-10">6-10 years</option> */}
+{/*               <option value="10+">10+ years</option> */}
+{/*             </select> */}
+{/*       </div> */}
+{/*       <div> */}
+{/*         <label>Filter by Job Title:</label> */}
+{/*         <select value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}> */}
+{/*           <option value="">All</option> */}
+{/*           {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => ( */}
+{/*             <option key={jobTitle} value={jobTitle}>{jobTitle}</option> */}
+{/*           ))} */}
+{/*         </select> */}
+{/*       </div> */}
 
       {/* Display top candidates */}
       <h2>My Shortlist</h2>
@@ -206,10 +207,17 @@ function CandidatesPage({customerData, dispatch}) {
                    <ProfilePicture userId={candidate?.id} name={candidate.firstName} style={{ backgroundColor: "blue" }}/>
                 )}
             </div>
+            <Shortlist>
             <h3>{candidate.name}</h3>
-            <p>Job: {candidate.job}</p>
-            <p>Years of Experience: {candidate.experience}</p>
-            <a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+            <div><label>Location:</label> {candidate.location}</div>
+            <div><label>Company:</label> {candidate.company} </div>
+{/*             <div><label>Job: </label>{candidate.job} </div> */}
+            <div><label>Experience: </label>{candidate.experience}</div>
+            <div><label>Quota: </label>{candidate.quota}</div>
+            <div><label>Attainment: </label>{candidate.attainment}</div>
+
+            </Shortlist>
+{/*             <a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a> */}
           </CandidateCard>
         ))}
       </TopCandidatesContainer>
@@ -238,11 +246,11 @@ function CandidatesPage({customerData, dispatch}) {
               }  </div></td>
               <td>{candidate.job}</td>
               <td>{candidate.experience}</td>
-              <td> Austin </td>
-              <td> 60k+ </td>
-              <td> Automotive </td>
-              <td> 100k </td>
-              <td> 117% </td>
+              <td> {candidate.location} </td>
+              <td> {candidate.compRange} </td>
+              <td> {candidate.industry} </td>
+              <td> {candidate.quota} </td>
+              <td> {candidate.attainment} </td>
               <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
             <
             /tr>
@@ -253,23 +261,24 @@ function CandidatesPage({customerData, dispatch}) {
         <ModalWrapper isOpen={isModalOpen}>
         <ModalContent>
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
-          <ModalHeader>
-          {selectedCandidate && selectedCandidate?.profilePicture ? (
-           <ProfilePicture  userId={selectedCandidate?.id} img={selectedCandidate?.profilePicture} name={selectedCandidate?.firstName} onError={() => handleInvalidPicture(selectedCandidate)}/>
-          ) : (
-           <ProfilePicture userId={selectedCandidate?.id} name={selectedCandidate?.firstName} style={{ backgroundColor: "blue" }}/>
-          )}
-          <h2>{selectedCandidate?.firstName} {selectedCandidate?.lastName}</h2>
-          </ModalHeader>
-          <p>Main Title: {selectedCandidate?.job}</p>
-          <p>Years of Professional Experience: {selectedCandidate?.experience}</p>
+          <CandidateProfile customerData={customerData} dispatch={dispatch}/>
+{/*           <ModalHeader> */}
+{/*           {selectedCandidate && selectedCandidate?.profilePicture ? ( */}
+{/*            <ProfilePicture  userId={selectedCandidate?.id} img={selectedCandidate?.profilePicture} name={selectedCandidate?.firstName} onError={() => handleInvalidPicture(selectedCandidate)}/> */}
+{/*           ) : ( */}
+{/*            <ProfilePicture userId={selectedCandidate?.id} name={selectedCandidate?.firstName} style={{ backgroundColor: "blue" }}/> */}
+{/*           )} */}
+{/*           <h2>{selectedCandidate?.firstName} {selectedCandidate?.lastName}</h2> */}
+{/*           </ModalHeader> */}
+{/*           <p>Main Title: {selectedCandidate?.job}</p> */}
+{/*           <p>Years of Professional Experience: {selectedCandidate?.experience}</p> */}
 
 
-          <CandidateDescription> {selectedCandidate?.description} </CandidateDescription>
-          <LinkedInIconLink href={selectedCandidate?.linkedInProfile} target="_blank" rel="noopener noreferrer">
-                <FaLinkedin />
-          </LinkedInIconLink>
-          <TopCandidateButton onClick = {(e) => onSetTopCandidate(e,selectedCandidate)}> Toggle Top Candidate </TopCandidateButton>
+{/*           <CandidateDescription> {selectedCandidate?.description} </CandidateDescription> */}
+{/*           <LinkedInIconLink href={selectedCandidate?.linkedInProfile} target="_blank" rel="noopener noreferrer"> */}
+{/*                 <FaLinkedin /> */}
+{/*           </LinkedInIconLink> */}
+{/*           <TopCandidateButton onClick = {(e) => onSetTopCandidate(e,selectedCandidate)}> Toggle Top Candidate </TopCandidateButton> */}
 
         </ModalContent>
       </ModalWrapper>

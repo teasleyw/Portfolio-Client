@@ -1,52 +1,12 @@
 import styled from 'styled-components';
 const backgroundColor = "#f8f9fa";
 // Container for the entire profile page
-export const ProfilePageContainer= styled.div`
-   background: ${backgroundColor};
-   min-height: 100vh;
-   max-height: 100vh;
-   overflow:hidden;
-   display: flex;
-   flex-direction: column;
-`;
-export const ProfilePageContentContainer= styled.div`
-  @media screen and (max-width: 960px) {
-    flex-direction: column;
-  }
-   background: ${backgroundColor};
-   height: 100vh;
-   overflow:hidden;
-   padding-top:80px;
-   width: 100vw;
-   color: white;
-   height: fit-content;
-   max-height: 100vh;
-   overflow: hidden;
-   position: absolute;
-   justify-content: top;
-   align-items: start;
-   top: 0;
-   display: flex;
-   flex-direction: row;
-   left: 0;
-   opacity: ${props => props.opacity};
-`;
-
-export const ProfileCategoriesContainer = styled.div`
-     @media screen and (max-width: 960px) {
-       width:100vw;
-     }
 
 
-    height: 100%;
-    color: black;
-    width: 15vw;
-    background: #f0f0f0;
-`
 export const ProfilePictureContainer = styled.div`
     position: absolute;
-    top: 10vh;
-    left: calc(50% + 50px);
+    top: 5vh;
+    left: calc(42%);
     @media screen and (max-width: 960px) {
       left: calc(50% - 50px);
       top: 25vh;
@@ -55,8 +15,8 @@ export const ProfilePictureContainer = styled.div`
 `
 export const ProfileHeader =  styled.div`
     margin-top:40px;
-    width: 75vw;
-    height: 25vh;
+    width: 100%;
+    height: 18vh;
     background: white;
     display: flex;
     justify-content: space-between;
@@ -65,7 +25,7 @@ export const ProfileHeader =  styled.div`
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4); /* Shadow effect */
       @media screen and (max-width: 960px) {
         padding-top:10px;
-        width: 100vw;
+        width: 100%;
         height: 15vh;
         border-radius: 0px;
         margin-top: 0;
@@ -78,7 +38,7 @@ export const HeaderLinks = styled.div`
     flex-direction: column;
     align-items: end;
     gap: 20px;
-    justify-content: space-between;
+    justify-content: end;
     width: 25%;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -93,7 +53,8 @@ export const HeaderLinks = styled.div`
 `
 
 
-export const BodyInfoWrapper= styled.div`
+
+export const WorkHistoryWrapper= styled.div`
     width: 100%;
     background:transparent;
     margin-left: 10%;
@@ -109,59 +70,34 @@ export const ProfileInfoContainer = styled.div`
     justify-content: start;
     align-items: center;
     color: black;
+    gap: 20px;
     background-color: white;
     border-radius: 20px;
-    width: 75vw;
-    height: 75vh;
+    width: calc(100%-20px);
+    display: flex;
+    height: 100%;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     @media screen and (max-width: 960px) {
     margin-top: 0;
     border-radius: 0;
     box-shadow: none;
-    width: 100vw;
+    width: 100%;
   }
 
 
 `
 export const ProfileName=  styled.div`
-    font-size: 60px;
+    font-size: 40px;
     color: black;
     font-family: Times;
     @media screen and (max-width: 960px) {
-            font-size: 30px;
+            font-size: 25px;
          }
 
 `
-export const ProfileCategoriesContent = styled.div`
-  @media screen and (max-width: 960px) {
-    flex-direction: row;
-  }
-    display: flex;
-    flex-direction: column;
-`
-export const ProfileCategoriesItems= styled.div`
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Aboreto;
-    font-size: 22px;
-    height: 5vh;
-    border: 1px solid black;
-    /* Hover effect */
-    &:hover {
-        background-color: #e0e0e0; /* Lighter shade on hover */
-    }
-    /* Active effect */
-    /* Conditional active state */
-    ${({ active }) => active && `
-        background-color: #c0c0c0; /* Darker shade when active */
-    `}
-    @media screen and (max-width: 960px) {
-            width:100%;
-          }
-`
+
 
 // Container for the profile content
 export const ProfileContainer = styled.div`
@@ -170,9 +106,9 @@ export const ProfileContainer = styled.div`
   justify-content: start;
   flex-direction: column;
   background: #e0e0e0;
-  width: 85vw;
+  width: 85%;
   @media screen and (max-width: 960px) {
-          width: 100vw;
+          width: 100%;
         }
 
 
@@ -181,7 +117,7 @@ export const ProfileContainer = styled.div`
 // Container for the profile content
 export const ProfileJobTitle = styled.div`
     color: black;
-    font-size: 30px;
+    font-size: 25px;
      @media screen and (max-width: 960px) {
         color: #606060;
         font-size: 20px;
@@ -191,8 +127,11 @@ export const ProfileJobTitle = styled.div`
 export const ProfileHeaderInfo = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: start;
+    justify-content: end;
     font-family: Times;
     margin-left: 5%;
+    margin-bottom: 20px;
     gap: 5px;
 
 `
@@ -203,7 +142,7 @@ export const PreviewButton = styled.button`
     height: 40px;
     width: 100%;
     cursor: pointer; /* Show pointer cursor on hover */
-    font-size: 18px;
+    font-size: 15px;
     border-radius: 20px;
     /* Transition effect for hover */
     transition: background-color 0.3s, color 0.3s;
@@ -281,3 +220,26 @@ export const NameHeading = styled.h3`
 
       }
 `;
+export const TableContainer = styled.div`
+   width: 100%;
+`;
+
+export const TableRow = styled.div`
+  display: flex;
+`;
+
+export const TableCell = styled.div`
+  overflow-x: wrap; /* Add horizontal scroll if the content overflows */
+  width: 25%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  ${({ isKey }) => isKey && 'background-color: lightblue;'}
+`;
+export const TableHeaderCell = styled.div`
+  width: 25%;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border-left: 1px solid #ccc;
+  font-weight: bold;
+`;
+

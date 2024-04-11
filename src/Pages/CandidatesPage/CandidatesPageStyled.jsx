@@ -9,8 +9,10 @@ export const TopCandidatesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  text-align: left;
   justify-content: center;
   flex-direction: row;
+
 `;
 export const CandidateDescription = styled.div`
 
@@ -58,7 +60,7 @@ export const CandidateCard = styled.div`
 
   border-radius: 8px;
   padding: 20px;
-  width: 200px; /* Adjust the width as needed */
+  width: 222px; /* Adjust the width as needed */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -88,6 +90,24 @@ export const CandidateCard = styled.div`
   }
 `;
 
+export const Shortlist = styled.div`
+    display: flex;
+    align-items: start;
+    gap: 5px;
+    width: 100%;
+    text-align: left;
+    justify-content: start;
+    div {
+        display: flex;
+
+        label{
+            min-width: 100px;
+            margin-right: 5px;
+        }
+
+    }
+    flex-direction: column;
+`
 export const OtherCandidatesTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -143,7 +163,7 @@ export const RecentlyActive = styled.div`
 export const ModalWrapper = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
@@ -161,7 +181,7 @@ export const ModalContent = styled.div`
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 600px;
+  max-width: 800px;
   position: relative;
 `;
 export const ModalHeader = styled.div`
