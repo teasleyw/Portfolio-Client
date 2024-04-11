@@ -38,7 +38,7 @@ function Header({customerData,dispatch}) {
               if (isDesktopOrLaptop) {
                 setIsDropdownJobsVisible(!isDropdownJobsVisible); // Toggle dropdown visibility on click
               } else if (isTabletOrMobileDevice) {
-                navigate("/Jobs")
+                navigate("/Candidates")
               }
             };
 
