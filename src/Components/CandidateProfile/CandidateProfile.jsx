@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { connect } from 'react-redux'; // Import connect if using Redux
-import { ProfilePageContainer, TableContainer, TableRow, TableCell, TableHeaderCell, HeaderLinks, ProfilePictureContainer,PreviewButton,WorkHistoryWrapper,ProfileInfoContainer,ProfileJobTitle,ProfileHeaderInfo,ProfilePageContentContainer,ProfileName, ProfileCategoriesContainer, ProfileCategoriesItems, ProfileCategoriesContent, ProfileContainer,SignOutButton, ProfileInfo, ProfileImage, ProfileHeader, NameHeading } from './CandidateProfileStyled';
+import { ProfilePageContainer, TableContainer, ContactInfoBubble, CandidatePrimaryInfoWrapper, QuestionsWrapper, TableRow, TableCell, TableHeaderCell, HeaderLinks, ProfilePictureContainer,PreviewButton,WorkHistoryWrapper,ProfileInfoContainer,ProfileJobTitle,ProfileHeaderInfo,ProfilePageContentContainer,ProfileName, ProfileCategoriesContainer, ProfileCategoriesItems, ProfileCategoriesContent, ProfileContainer,SignOutButton, ProfileInfo, ProfileImage, ProfileHeader, NameHeading } from './CandidateProfileStyled';
 import Header from "../../Components/Header/Header";
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import {updateIsLoggedIn} from "../../redux/app-state-slice";
@@ -13,7 +13,7 @@ import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Component
 import axios from 'axios';
 import { Document, Page } from 'react-pdf';
 
-const CandidateProfile = ({customerData,dispatch}) => {
+const CandidateProfile = ({customerData,dispatch,userId,leftOffset=false}) => {
   const { name } = { name: "Johnny Cash"};
   const navigate = useNavigate();
   const [profilePictureUrl, setProfilePictureUrl] = useState(JohnnyCash);
@@ -24,6 +24,7 @@ const CandidateProfile = ({customerData,dispatch}) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [userInfo,setUserInfo] = useState(null);
   const [resumeUrl,setResume] = useState(null);
+  const [isContactInfoOpen, setContactInfoOpen] = useState(false)
   const [isResumeModalOpened,setResumeModalOpened] = useState(false)
 
   const profileStyle= {
@@ -77,6 +78,16 @@ const CandidateProfile = ({customerData,dispatch}) => {
           console.log(error)
         });
     };
+     const fetchUserData = async () => {
+          axios.get(`/${userId}/candidates/info`)
+            .then(response => {
+
+            console.log(response.data)
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        };
     const fetchResumeUrl = async () => {
           axios.get('1/resume', {
             responseType: 'blob', // Set the response type to 'blob' to receive a binary response
@@ -107,7 +118,7 @@ const CandidateProfile = ({customerData,dispatch}) => {
     const fetchUserInfo = async () => {
     fetchResumeUrl()
      axios.get(
-         `${customerData.userId.value}/candidates/info`,
+         `${userId}/candidates/info`,
          {
            headers: {
              'Content-Type': 'multipart/form-data',
@@ -125,7 +136,7 @@ const CandidateProfile = ({customerData,dispatch}) => {
     };
     fetchUserInfo();
     console.log(userInfo)
-    },[]
+    },[userId]
     );
     const uploadImage = async (userId) => {
       try {
@@ -207,14 +218,14 @@ return (
 
 
             <ProfileHeader>
-            <ProfilePictureContainer>
-                <ProfilePicture Style={profileStyle} size={"100px"} userId={customerData.userId.value} name={customerData.firstName.value}/>
+            <ProfilePictureContainer leftOffset= {leftOffset}>
+                <ProfilePicture Style={profileStyle} size={"100px"} userId={userId} name={userInfo?.firstName}/>
             </ProfilePictureContainer>
                 <ProfileHeaderInfo>
 
-                <ProfileName>  {customerData.firstName.value} {customerData.lastName.value} </ProfileName>
-                <ProfileJobTitle> Austin, Texas, United States </ProfileJobTitle>
-                 <ProfileJobTitle> Occupation: {userInfo?.job}</ProfileJobTitle>
+                <ProfileName>  {userInfo?.firstName} {userInfo?.lastName} </ProfileName>
+                <ProfileJobTitle> {userInfo?.location} </ProfileJobTitle>
+                <ProfileJobTitle> Occupation: {userInfo?.job}</ProfileJobTitle>
 
 
                  </ProfileHeaderInfo>
@@ -222,15 +233,17 @@ return (
                         <PreviewButton onClick={e=> {setResumeModalOpened(true)}} > Resume  &nbsp;
                          <FaEye/>
                        </PreviewButton>
-                        <PreviewButton > Contact Info  &nbsp;
+                        <PreviewButton onClick={(e) => setContactInfoOpen(true)}> Contact Info  &nbsp;
                             <FaPhone/>
                          </PreviewButton>
+                         <ContactInfoBubble visible={isContactInfoOpen}>  <CloseButton onClick={(e) => setContactInfoOpen(false)}>&times;</CloseButton>  Phone Number: 512-512-5122 <br/> Email Address: Email@gmail.com </ContactInfoBubble>
                  </HeaderLinks>
             </ProfileHeader>
             <ProfileInfoContainer>
+            <CandidatePrimaryInfoWrapper>
             <WorkHistoryWrapper>
                   <h2>Work History</h2>
-                  <div style={{display: "flex"}}>
+
                       <WorkHistoryItem
                         style={{flex: "4"}}
                         logoSrc={JohnnyCash}
@@ -239,24 +252,28 @@ return (
                         startDate="January 2019"
                         endDate="Present"
                       />
-                      <div style={{flex: "1",marginLeft: "113px",maxWidth: "400px"}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet ornare euismod.
-                      </div>
-                  </div>
-                  <div style={{display: "flex"}}>
-                  <WorkHistoryItem
-                    style={{flex: "4"}}
-                    logoSrc={JohnnyCash}
-                    companyName="Apple"
-                    positionTitle="Enterprise Account Executive"
-                    startDate="June 2016"
-                    endDate="December 2018"
-                  />
-                  <div style={{flex: "1",marginLeft: "114px",maxWidth: "400px"}}>
+                      <WorkHistoryItem
+                          style={{flex: "4"}}
+                          logoSrc={JohnnyCash}
+                          companyName="Apple"
+                          positionTitle="Enterprise Account Executive"
+                          startDate="June 2016"
+                          endDate="December 2018"
+                        />
+             </WorkHistoryWrapper>
+            <QuestionsWrapper>
+                    <h2> Why I’m Looking? </h2>
+                    <div style={{flex: "1",maxWidth: "400px"}}>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet ornare euismod.
+                     </div>
+                     <h2> Top Priorities </h2>
+
+                  <div style={{flex: "1",maxWidth: "400px"}}>
                       Proin purus augue, auctor commodo libero et, vestibulum pellentesque nulla.
                   </div>
-                  </div>
-            </WorkHistoryWrapper>
+             </QuestionsWrapper>
+             </CandidatePrimaryInfoWrapper>
+
       <TableContainer>
         <TableRow>
           <TableHeaderCell> Year </TableHeaderCell>

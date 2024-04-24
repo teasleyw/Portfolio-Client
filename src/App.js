@@ -11,6 +11,7 @@ import FantasyBotPage from "./Pages/FantasyBotPage/FantasyBotPage";
 import CandidatesPage from "./Pages/CandidatesPage/CandidatesPage";
 import InboxPage from "./Pages/InboxPage/InboxPage";
 import LinkedInRedirect from "./Pages/LinkedInRedirect/LinkedInRedirect.jsx"
+import ManageCandidatesPage from "./Pages/ManageCandidatesPage/ManageCandidatesPage.jsx"
 //Router
 import { BrowserRouter as Router,Route,Routes, } from 'react-router-dom';
 //fonts
@@ -44,6 +45,7 @@ function App() {
             <Route path="/Candidates" element={<CandidatesPage dispatch={dispatch} customerData={customerData}/>}/>
             <Route path="/Profile" element={<ProfilePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Jobs" element={<JobListingsPage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Manage" element={<ManageCandidatesPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Inbox" element={<InboxPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/auth/linkedIn/callback" element={<LinkedInRedirect dispatch={dispatch} customerData={customerData}/>} />
          </Routes>

@@ -12,15 +12,14 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) =
       useEffect(() => {
 
       const fetchProfilePictureUrl = async () => {
-            console.log(Style)
-            console.log(userId);
             axios.get(userId + `/profile-picture`,{responseType:'blob'})
               .then(response => {
               const imageUrl = URL.createObjectURL(response.data);
               setImageUrl(imageUrl);
               })
               .catch(error => {
-                console.log(error)
+              setImageUrl(null);
+                console.log("profile picture" + error)
               });
           };
           fetchProfilePictureUrl()
@@ -33,7 +32,7 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) =
 //                 console.log(imageUrl);
 //             }
 //             createUrl();
-               }, [img]);
+               }, [userId]);
 
     return(
             <>

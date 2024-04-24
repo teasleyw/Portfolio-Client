@@ -1,6 +1,7 @@
 import React, { useState,useEffect }  from 'react';
 import { FaLinkedin } from 'react-icons/fa';
-import { CandidatesPageContainer, Shortlist,RecentlyActive, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
+import { FiFilter } from 'react-icons/fi';
+import { CandidatesPageContainer,KeyLabel, KeyIcon, FilterSelect,FilterTitle,FilterLabel,FilterItem, PageContainer,FilterInfoContainer, FilterContainer, Shortlist,RecentlyActive, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture.jsx"
 import WarrenZeiders from "../../Assets/Images/WarrenZeiders.jpeg"
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
@@ -170,30 +171,104 @@ function CandidatesPage({customerData, dispatch}) {
 // Function to handle toggling the status of a candidate
 
   return (
-  <>
+  <div style={{overflow: "hidden"}}>
+
   <Header customerData={customerData} dispatch={dispatch} />
+    <PageContainer>
+    <FilterContainer>
+
+        <FilterInfoContainer>
+
+           <FilterTitle> <FiFilter/> Filters </FilterTitle>
+           <FilterItem>
+           <FilterLabel> Experience: &nbsp;</FilterLabel>
+                  <FilterSelect value={filterYearsOfExperience} onChange={e => setFilterYearsOfExperience(e.target.value)}>
+                        <option value="">All</option>
+                        <option value="0-3">0-3 years</option>
+                        <option value="3-6">3-6 years</option>
+                        <option value="6-10">6-10 years</option>
+                        <option value="10+">10+ years</option>
+                      </FilterSelect>
+           </FilterItem>
+           <FilterItem>
+                  <FilterLabel> Job Title: &nbsp;</FilterLabel>
+                  <FilterSelect value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
+                    <option value="">All</option>
+                    {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
+                      <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
+                    ))}
+                  </FilterSelect>
+           </FilterItem>
+           <FilterItem>
+                 <FilterLabel> Location: &nbsp;</FilterLabel>
+                 <FilterSelect value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
+                   <option value="">All</option>
+                   {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
+                     <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
+                   ))}
+                 </FilterSelect>
+          </FilterItem>
+          <FilterItem>
+                <FilterLabel> Comp Range: &nbsp;</FilterLabel>
+                <FilterSelect value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
+                  <option value="">All</option>
+                  {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
+                    <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
+                  ))}
+                </FilterSelect>
+         </FilterItem>
+         <FilterItem>
+                 <FilterLabel> Industry: &nbsp;</FilterLabel>
+                 <FilterSelect value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
+                   <option value="">All</option>
+                   {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
+                     <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
+                   ))}
+                 </FilterSelect>
+          </FilterItem>
+          <FilterItem>
+               <FilterLabel> Quota: &nbsp;</FilterLabel>
+               <FilterSelect value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
+                 <option value="">All</option>
+                 {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
+                   <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
+                 ))}
+               </FilterSelect>
+        </FilterItem>
+         <FilterItem>
+               <FilterLabel> Attainment: &nbsp;</FilterLabel>
+               <FilterSelect value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}>
+                 <option value="">All</option>
+                 {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => (
+                   <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
+                 ))}
+               </FilterSelect>
+        </FilterItem>
+         <FilterTitle> Key </FilterTitle>
+         <FilterItem>
+
+               <KeyLabel> Actively Looking: </KeyLabel>
+               <KeyIcon>
+               <RecentlyActive isLooking={true}/>
+               </KeyIcon>
+
+        </FilterItem>
+        <FilterItem>
+
+               <KeyLabel> Open To Offers: </KeyLabel>
+               <KeyIcon>
+               <RecentlyActive isLooking={false}/>
+               </KeyIcon>
+
+        </FilterItem>
+
+
+
+        </FilterInfoContainer>
+    </FilterContainer>
     <CandidatesPageContainer>
 
-{/*       <h2>Filter Candidates</h2> */}
-{/*       <div> */}
-{/*         <label>Filter by Years of Experience:</label> */}
-{/*         <select value={filterYearsOfExperience} onChange={e => setFilterYearsOfExperience(e.target.value)}> */}
-{/*               <option value="">All</option> */}
-{/*               <option value="0-3">0-3 years</option> */}
-{/*               <option value="3-6">3-6 years</option> */}
-{/*               <option value="6-10">6-10 years</option> */}
-{/*               <option value="10+">10+ years</option> */}
-{/*             </select> */}
-{/*       </div> */}
-{/*       <div> */}
-{/*         <label>Filter by Job Title:</label> */}
-{/*         <select value={filterJobTitle} onChange={e => setFilterJobTitle(e.target.value)}> */}
-{/*           <option value="">All</option> */}
-{/*           {[...new Set(candidates.map(candidate => candidate.job))].map(jobTitle => ( */}
-{/*             <option key={jobTitle} value={jobTitle}>{jobTitle}</option> */}
-{/*           ))} */}
-{/*         </select> */}
-{/*       </div> */}
+
 
       {/* Display top candidates */}
       <h2>My Shortlist</h2>
@@ -231,27 +306,31 @@ function CandidatesPage({customerData, dispatch}) {
             <th>Job</th>
             <th>Years of Experience</th>
             <th> Location </th>
-            <th> Comp Range </th>
+            <th> Target Base </th>
+            <th> Target OTE </th>
             <th> Industry </th>
             <th> Quota </th>
             <th> Attainment </th>
-            <th>LinkedIn Profile</th>
+{/*             <th>LinkedIn Profile</th> */}
+
           </tr>
         </thead>
         <tbody>
           {otherCandidates.map(candidate => (
             <tr key={candidate.id} onClick={() => handleOpenModal(candidate)}>
-              <td><div>{candidate.firstName} {candidate.lastName} &nbsp; {candidate.firstName == "will" &&
-                    <RecentlyActive/>
-              }  </div></td>
-              <td>{candidate.job}</td>
-              <td>{candidate.experience}</td>
+              <td>
+              {candidate.firstName} {candidate.lastName} &nbsp; {candidate.firstName == "will" &&
+                    <div style={{display: 'flex'}}> <div style={{flex: "1"}}>Last Active: 4/19/24 </div> <RecentlyActive/> </div>
+              }</td>
+              <td> {candidate.job} </td>
+              <td> {candidate.experience} </td>
               <td> {candidate.location} </td>
-              <td> {candidate.compRange} </td>
+              <td> 100k-150k </td>
+              <td> 200k-300k </td>
               <td> {candidate.industry} </td>
               <td> {candidate.quota} </td>
               <td> {candidate.attainment} </td>
-              <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
+{/*               <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td> */}
             <
             /tr>
           ))}
@@ -261,7 +340,7 @@ function CandidatesPage({customerData, dispatch}) {
         <ModalWrapper isOpen={isModalOpen}>
         <ModalContent>
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
-          <CandidateProfile customerData={customerData} dispatch={dispatch}/>
+          <CandidateProfile userId={selectedCandidate?.id} customerData={customerData} dispatch={dispatch}/>
 {/*           <ModalHeader> */}
 {/*           {selectedCandidate && selectedCandidate?.profilePicture ? ( */}
 {/*            <ProfilePicture  userId={selectedCandidate?.id} img={selectedCandidate?.profilePicture} name={selectedCandidate?.firstName} onError={() => handleInvalidPicture(selectedCandidate)}/> */}
@@ -282,8 +361,9 @@ function CandidatesPage({customerData, dispatch}) {
 
         </ModalContent>
       </ModalWrapper>
-    </CandidatesPageContainer>
-    </>
+        </CandidatesPageContainer>
+      </PageContainer>
+    </div>
   );
 }
 

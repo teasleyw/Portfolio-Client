@@ -38,7 +38,6 @@ export const ModalHeader = styled.div`
 
 export const CloseButton = styled.span`
   color: #aaa;
-  float: right;
   font-size: 28px;
   font-weight: bold;
   width: 5%;

@@ -2,6 +2,7 @@ import React, {useState,useRef, useEffect , useContext} from "react";
 import {useNavigate} from "react-router";
 import {HeaderContainer, Logo, HeaderDiv, TabContainer, TabItem, MobileIcon, DropdownItem, DropdownMenu,DropdownMenuJobs} from "./HeaderStyled";
 import { FaBars, FaTimes } from 'react-icons/fa';
+import LionLogo from '../../Assets/Images/lionseye.jpeg'
 import {updateIsLoggedIn} from "../../redux/app-state-slice";
 import { useMediaQuery } from 'react-responsive';
 function Header({customerData,dispatch}) {
@@ -45,7 +46,7 @@ function Header({customerData,dispatch}) {
         return (
             <HeaderDiv>
                 <HeaderContainer>
-                    <Logo onClick={() => { navigate('/') }}>GTM TEAM</Logo>
+                    <Logo onClick={() => { navigate('/') }}><img style={{width: '75px',height: '75px', marginRight: '10px'}}src={LionLogo} />LionsEye Jobs</Logo>
                     <MobileIcon onClick={() => { setClick(!click) }}>
                         {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
                     </MobileIcon>
@@ -57,7 +58,8 @@ function Header({customerData,dispatch}) {
 
 {/*                         </DropdownMenuJobs> */}
                         <TabItem onClick={() => { navigate('/Candidates') }}>Sourcing</TabItem>
-                        <TabItem onClick={() => { navigate('/Inbox') }}>Inbox</TabItem>
+{/*                         <TabItem onClick={() => { navigate('/Inbox') }}>Inbox</TabItem> */}
+                         <TabItem onClick={() => { navigate('/Manage') }}>Manage Jobs</TabItem>
                         {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in
                         <>
                             <TabItem

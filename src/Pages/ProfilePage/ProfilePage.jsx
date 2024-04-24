@@ -195,8 +195,10 @@ const ProfilePage = ({ customerData,dispatch }) => {
                    </ProfileCategoriesItems>
                   </ProfileCategoriesContent>
               </ProfileCategoriesContainer>
-              <ProfileContainer>
-                <CandidateProfile customerData={customerData} dispatch={dispatch}/>
+              <ProfileContainer style={{paddingTop: "50px"}}>
+               <div style={{width: "75%"}}>
+                <CandidateProfile leftOffset={200} userId={customerData.userId.value}customerData={customerData} dispatch={dispatch}/>
+               </div>
               </ProfileContainer>
 
          </ProfilePageContentContainer>

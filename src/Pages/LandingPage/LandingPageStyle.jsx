@@ -43,6 +43,7 @@ export const HeroSection =  styled.div`
     background: #f4f4f4;
     opacity:100%;
     color:black;
+    margin-bottom: 25px;
 
     font: TimeBurner-bold;
     font-size: 50px;
@@ -59,6 +60,11 @@ export const HeroSection =  styled.div`
         height: 50h;
       }
 
+`
+export const LionsLogo = styled.img`
+    padding-top: 30px;
+    height: 200px;
+    width: 200px;
 `
 export const ButtonContainer = styled.div`
     display: flex;

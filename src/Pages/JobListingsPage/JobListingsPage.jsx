@@ -1,7 +1,8 @@
 // JobListingsPage.js
 import React, { useState, useEffect} from 'react';
-import {JobListingsPageWrapper,JobListingWrapper,JobListingContent, CenterFlex, JobListingsContentWrapper,JobListing,ModalOverlay, Button} from './JobListingsPageStyled';
+import {JobListingsPageWrapper,JobListingWrapper,FilterInput,FilterInfoContainer,FilterContainer,FilterLabel,FilterSelect,FilterItem,FilterTitle,JobListingContent, CenterFlex, JobListingsContentWrapper,JobListing,ModalOverlay, Button} from './JobListingsPageStyled';
 import Header from "../../Components/Header/Header";
+import { FiFilter } from 'react-icons/fi';
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture";
 import SignOutButton from "../../Components/Buttons/OutlineButton.jsx";
 import CreateJobForm from "../../Components/CreateJobForm/CreateJobForm";
@@ -90,34 +91,47 @@ const JobListingsPage = ({customerData, dispatch}) => {
        <>
        <JobListingsPageWrapper>
         <Header customerData={customerData} dispatch={dispatch} />
+        <FilterContainer>
+        <FilterInfoContainer>
+        <FilterTitle>
+
+        <FiFilter/> Filters </FilterTitle>
+           <FilterItem>
+           <FilterLabel> Job Type: &nbsp;</FilterLabel>
+                <FilterSelect name="type" value={filters.workType} onChange={handleFilterChange}>
+                    <option value="">All</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                </FilterSelect>
+           </FilterItem>
+           <FilterItem>
+               <FilterLabel>Experience Level:</FilterLabel>
+               <FilterSelect name="experience" value={filters.experience} onChange={handleFilterChange}>
+                   <option value="">All</option>
+                   <option value="Entry Level">Entry Level</option>
+                   <option value="Mid Level">Mid Level</option>
+                   <option value="Senior Level">Senior Level</option>
+               </FilterSelect>
+
+           </FilterItem>
+           <FilterItem>
+                 <FilterLabel>Location:</FilterLabel>
+                 <FilterInput type="text" name="location" value={filters.location} onChange={handleFilterChange} />
+             </FilterItem>
+             <div style={{width: "100%", display: "flex", justifyContent: "end"}}>
+                <SignOutButton primaryColor={"white"} secondaryColor={"#003366"} onClick={() => setFilters({ type: '', experience: '', location: '' })}>Reset Filters</SignOutButton>
+             </div>
+           </FilterInfoContainer>
+        </FilterContainer>
+
            <JobListingsContentWrapper>
-               <h1>Job Listings</h1>
-               <div>
-                   <label>Job Type:</label>
-                   <select name="type" value={filters.workType} onChange={handleFilterChange}>
-                       <option value="">All</option>
-                       <option value="Full-time">Full-time</option>
-                       <option value="Part-time">Part-time</option>
-                       <option value="Contract">Contract</option>
-                   </select>
-               </div>
-               <div>
-                   <label>Experience Level:</label>
-                   <select name="experience" value={filters.experience} onChange={handleFilterChange}>
-                       <option value="">All</option>
-                       <option value="Entry Level">Entry Level</option>
-                       <option value="Mid Level">Mid Level</option>
-                       <option value="Senior Level">Senior Level</option>
-                   </select>
-               </div>
-               <div>
-                   <label>Location:</label>
-                   <input type="text" name="location" value={filters.location} onChange={handleFilterChange} />
-               </div>
-               <div>
-                   <SignOutButton onClick={() => setFilters({ type: '', experience: '', location: '' })}>Reset Filters</SignOutButton>
-               </div>
-               <div>
+                <div style={{display: "flex",justifyContent: "center"}}>
+                              <h1>Job Listings</h1>
+                </div>
+
+
+               <div style={{display: "flex",justifyContent: "center"}}>
                    <SignOutButton onClick={() => setIsModalOpen(true)}>Add New Job</SignOutButton>
                </div>
 
@@ -134,10 +148,11 @@ const JobListingsPage = ({customerData, dispatch}) => {
                    {filteredJobs.map(job => (
                        <JobListing key={job.id} onClick={() => handleJobClick(job)}>
                            <CenterFlex>
-                           <ProfilePicture size={"100px"}name={"brian"} userId={"1"}/>
+                           <ProfilePicture size={"100px"}name={job.company} userId={"13"}/>
                            </CenterFlex>
                            <JobListingContent>
                                <label>{job.title}</label>
+                               <div>Company: {job.company}</div>
                                <div>Type: {job.workType}</div>
                                <div>Experience: {job.experience}</div>
                                <div>Location: {job.location}</div>

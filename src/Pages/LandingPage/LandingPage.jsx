@@ -11,11 +11,12 @@ import {
     ButtonContainer,
     HeroSection,
     InfoSection,
-    LoginButtonContainer
+    LoginButtonContainer,
+    LionsLogo
 } from "./LandingPageStyle";
 
 import flower from "../../Assets/Images/flower.png"
-import Logo from "../../Assets/Images/gtm_team_logo.jpeg"
+import Logo from "../../Assets/Images/lionseye.jpeg"
 import {useNavigate} from "react-router";
 import AudioPlayer from 'react-h5-audio-player';
 import OutlineButton from "../../Components/Buttons/OutlineButton"
@@ -34,8 +35,8 @@ function LandingPage({customerData, dispatch}) {
         <LandingPageContainer>
         <Header customerData={customerData} dispatch={dispatch}/>
         <HeroSection>
-         <img src={Logo} alt={"GTM Team"}/>
-         GTM TEAM
+         <LionsLogo src={Logo} alt={"GTM Team"}/>
+         Lions Eye
          </HeroSection>
         <InfoSection>
         <LandingPageContent>

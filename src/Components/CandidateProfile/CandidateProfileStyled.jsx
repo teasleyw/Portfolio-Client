@@ -2,11 +2,34 @@ import styled from 'styled-components';
 const backgroundColor = "#f8f9fa";
 // Container for the entire profile page
 
-
-export const ProfilePictureContainer = styled.div`
+export const ContactInfoBubble = styled.div`
+    visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    top: 20px;
     position: absolute;
-    top: 5vh;
-    left: calc(42%);
+    z-index: 1000;
+    opacity: ${({ visible }) => (visible ? '1' : '0')};
+    transition: opacity 0.3s;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+    }
+`
+export const ProfilePictureContainer = styled.div`
+    position: relative;
+    top: -33%;
+    left: -150px;
     @media screen and (max-width: 960px) {
       left: calc(50% - 50px);
       top: 25vh;
@@ -54,16 +77,35 @@ export const HeaderLinks = styled.div`
 
 
 
-export const WorkHistoryWrapper= styled.div`
+export const CandidatePrimaryInfoWrapper= styled.div`
     width: 100%;
+    display: flex;
     background:transparent;
-    margin-left: 10%;
     @media screen and (max-width: 960px) {
            width:100%;
     }
 
 `
+export const WorkHistoryWrapper= styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background:transparent;
+    @media screen and (max-width: 960px) {
+           width:100%;
+    }
 
+`
+export const QuestionsWrapper= styled.div`
+    width: 100%;
+    display: flex;
+    background: transparent;
+    flex-direction: column;
+    @media screen and (max-width: 960px) {
+           width:100%;
+    }
+
+`
 export const ProfileInfoContainer = styled.div`
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4); /* Shadow effect */
     margin-top: 20px;
@@ -126,6 +168,9 @@ export const ProfileJobTitle = styled.div`
 `;
 export const ProfileHeaderInfo = styled.div`
     display: flex;
+    order: -1;
+    width: 66%;
+
     flex-direction: column;
     align-items: start;
     justify-content: end;

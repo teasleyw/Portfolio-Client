@@ -12,8 +12,9 @@ export const SignOutButton = styled.button`
   transition: background-color 0.3s, color 0.3s;
   /* Hover effect */
   &:hover {
+
     background-color: ${props => props.primaryColor || '#003366'}; /* Change background color to dark blue on hover */
-    color: #fff; /* Change text color to white on hover */
+    color: ${props => props.secondaryColor || 'white'}; /* Change text color to white on hover */
   }
 `;
 export const BlockButton = styled.button`
