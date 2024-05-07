@@ -35,7 +35,7 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) =
                }, [userId]);
 
     return(
-            <>
+            <div style={{flexShrink: "0"}}>
             {imageUrl &&
                 <ProfileIcon style={Style} size={size}>
                   <img src={imageUrl} alt={name} />
@@ -46,7 +46,7 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) =
                   {name?.substring(0, 1)}
                 </ProfileIcon>
 }
-            </>
+            </div>
         )
 
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {FormContainer,FormTitle,FormGroup,SubmitButton,Form,ErrorMessage} from "./CreateJobFormStyled.jsx"
 import {updateEmail, updateRegisterConfirmPassword,updateRegisterPassword,updateRegisterUserName,updateFirstName,updateLastName} from "../../redux/app-state-slice";
-import {request, setAuthHeader} from "../../axiosHelper";
+import {request, setAuthHeader,getAuthToken} from "../../axiosHelper";
 const CreateJobForm = ({dispatch,customerData}) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -32,8 +32,9 @@ const CreateJobForm = ({dispatch,customerData}) => {
              workType: formData.workType,
              company: formData.company,
              description: formData.description,
-             location: formData.location
-         }).then(
+             location: formData.location,
+             companyId: customerData.userId.value
+         },{"Authorization" : `Bearer ${getAuthToken()}`}).then(
          (response) => {
              alert("Successfully created job")
          }).catch(

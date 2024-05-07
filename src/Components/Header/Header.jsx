@@ -59,7 +59,7 @@ function Header({customerData,dispatch}) {
 {/*                         </DropdownMenuJobs> */}
                         <TabItem onClick={() => { navigate('/Candidates') }}>Sourcing</TabItem>
 {/*                         <TabItem onClick={() => { navigate('/Inbox') }}>Inbox</TabItem> */}
-                         <TabItem onClick={() => { navigate('/Manage') }}>Manage Jobs</TabItem>
+                         <TabItem onClick={() => { navigate('/ManageJobs') }}>Manage Jobs</TabItem>
                         {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in
                         <>
                             <TabItem

@@ -10,6 +10,7 @@ import BowlingPage from "./Pages/BowlingPage/BowlingPage";
 import FantasyBotPage from "./Pages/FantasyBotPage/FantasyBotPage";
 import CandidatesPage from "./Pages/CandidatesPage/CandidatesPage";
 import InboxPage from "./Pages/InboxPage/InboxPage";
+import ManageJobs from "./Pages/ManageJobs/ManageJobs";
 import LinkedInRedirect from "./Pages/LinkedInRedirect/LinkedInRedirect.jsx"
 import ManageCandidatesPage from "./Pages/ManageCandidatesPage/ManageCandidatesPage.jsx"
 //Router
@@ -35,6 +36,7 @@ function App() {
         <Router>
         <Routes>
             <Route path="/" exact element={<LandingPage dispatch={dispatch} customerData={customerData} />} />
+            <Route path="/ManageJobs" exact element={<ManageJobs dispatch={dispatch} customerData={customerData} />} />
             <Route path="/Home" element={<HomePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Events" element={<EventsPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Poetry" element={<PoetryPage dispatch={dispatch} customerData={customerData}/>} />
@@ -45,7 +47,7 @@ function App() {
             <Route path="/Candidates" element={<CandidatesPage dispatch={dispatch} customerData={customerData}/>}/>
             <Route path="/Profile" element={<ProfilePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Jobs" element={<JobListingsPage dispatch={dispatch} customerData={customerData}/>} />
-            <Route path="/Manage" element={<ManageCandidatesPage dispatch={dispatch} customerData={customerData}/>} />
+            <Route path="/Manage/:jobId" element={<ManageCandidatesPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Inbox" element={<InboxPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/auth/linkedIn/callback" element={<LinkedInRedirect dispatch={dispatch} customerData={customerData}/>} />
          </Routes>

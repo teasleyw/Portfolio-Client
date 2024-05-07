@@ -12,6 +12,10 @@ export const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
+  overflow: auto;
+  @media screen and (max-width: 960px) {
+
+     }
 `;
 
 export const ModalContent = styled.div`
@@ -25,6 +29,14 @@ export const ModalContent = styled.div`
   width: 80%;
   max-width: 600px;
   position: relative;
+
+  @media screen and (max-width: 960px) {
+        max-width: 1200px;
+        width: 100%;
+        padding: 0;
+        overflow-x: auto;
+   }
+
 `;
 export const ModalHeader = styled.div`
     display: flex;
@@ -41,6 +53,7 @@ export const CloseButton = styled.span`
   font-size: 28px;
   font-weight: bold;
   width: 5%;
+  position: absolute;
 
   &:hover {
     color: black;

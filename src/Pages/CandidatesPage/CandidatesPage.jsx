@@ -1,14 +1,17 @@
 import React, { useState,useEffect }  from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { FiFilter } from 'react-icons/fi';
-import { CandidatesPageContainer,KeyLabel, KeyIcon, FilterSelect,FilterTitle,FilterLabel,FilterItem, PageContainer,FilterInfoContainer, FilterContainer, Shortlist,RecentlyActive, CandidateDescription, ModalHeader, CandidateCard, OtherCandidatesTable,TopCandidatesContainer,ModalWrapper, ModalContent, CloseButton,TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
+import { CandidatesPageContainer,KeyLabel, KeyIcon, FilterSelect,FilterTitle,FilterLabel,FilterItem, PageContainer,FilterInfoContainer, FilterContainer, Shortlist,RecentlyActive, CandidateDescription,  CandidateCard, OtherCandidatesTable,TopCandidatesContainer, TopCandidateButton,LinkedInIconLink} from './CandidatesPageStyled';
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture.jsx"
+import CreateCandidateButton from "../../Components/Buttons/OutlineButton"
 import WarrenZeiders from "../../Assets/Images/WarrenZeiders.jpeg"
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import Header from "../../Components/Header/Header";
 import RLBurnside from "../../Assets/Images/RLBurnside.jpeg"
 import axios from "axios";
+import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import CandidateProfile from "../../Components/CandidateProfile/CandidateProfile"
+import CreateCandidateForm from "../../Components/CreateCandidateForm/CreateCandidateForm"
 import {request, getAuthToken} from "../../axiosHelper.js";
 // Function to generate a random color
 const getRandomColor = () => {
@@ -83,10 +86,10 @@ function CandidatesPage({customerData, dispatch}) {
   const [filterJobTitle, setFilterJobTitle] = useState('');
   const [isValidPicture, setIsValidPicture] = useState(true);
   const [candidates,setCandidates] = useState([]);
-
-   const [selectedCandidate, setSelectedCandidate] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleToggleTopCandidate = () =>{
+  const [isCreateCandidateOpen,setIsCreateCandidateOpen] = useState(false)
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleToggleTopCandidate = () =>{
         selectedCandidate.status = selectedCandidate.status === "Top Candidate" ? 'Regular Candidate' : 'Top Candidate';
     }
     const onSetTopCandidate = (e,selectedCandidate) => {
@@ -272,6 +275,7 @@ function CandidatesPage({customerData, dispatch}) {
 
       {/* Display top candidates */}
       <h2>My Shortlist</h2>
+      <CreateCandidateButton onClick={(e) => {setIsCreateCandidateOpen(true)}}> Create Candidate </CreateCandidateButton>
       <TopCandidatesContainer>
         {topCandidates.map(candidate => (
           <CandidateCard key={candidate.id} onClick={() => handleOpenModal(candidate)}>
@@ -341,26 +345,14 @@ function CandidatesPage({customerData, dispatch}) {
         <ModalContent>
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
           <CandidateProfile userId={selectedCandidate?.id} customerData={customerData} dispatch={dispatch}/>
-{/*           <ModalHeader> */}
-{/*           {selectedCandidate && selectedCandidate?.profilePicture ? ( */}
-{/*            <ProfilePicture  userId={selectedCandidate?.id} img={selectedCandidate?.profilePicture} name={selectedCandidate?.firstName} onError={() => handleInvalidPicture(selectedCandidate)}/> */}
-{/*           ) : ( */}
-{/*            <ProfilePicture userId={selectedCandidate?.id} name={selectedCandidate?.firstName} style={{ backgroundColor: "blue" }}/> */}
-{/*           )} */}
-{/*           <h2>{selectedCandidate?.firstName} {selectedCandidate?.lastName}</h2> */}
-{/*           </ModalHeader> */}
-{/*           <p>Main Title: {selectedCandidate?.job}</p> */}
-{/*           <p>Years of Professional Experience: {selectedCandidate?.experience}</p> */}
-
-
-{/*           <CandidateDescription> {selectedCandidate?.description} </CandidateDescription> */}
-{/*           <LinkedInIconLink href={selectedCandidate?.linkedInProfile} target="_blank" rel="noopener noreferrer"> */}
-{/*                 <FaLinkedin /> */}
-{/*           </LinkedInIconLink> */}
-{/*           <TopCandidateButton onClick = {(e) => onSetTopCandidate(e,selectedCandidate)}> Toggle Top Candidate </TopCandidateButton> */}
-
-        </ModalContent>
+            </ModalContent>
       </ModalWrapper>
+       <ModalWrapper isOpen={isCreateCandidateOpen}>
+              <ModalContent>
+                <CloseButton onClick={(e) => {setIsCreateCandidateOpen(false)}}> &times; </CloseButton>
+                <CreateCandidateForm customerData={customerData} dispatch={dispatch}/>
+                </ModalContent>
+       </ModalWrapper>
         </CandidatesPageContainer>
       </PageContainer>
     </div>

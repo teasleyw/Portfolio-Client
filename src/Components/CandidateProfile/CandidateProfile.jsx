@@ -1,17 +1,18 @@
 import React,{useState, useEffect} from 'react';
 import { connect } from 'react-redux'; // Import connect if using Redux
-import { ProfilePageContainer, TableContainer, ContactInfoBubble, CandidatePrimaryInfoWrapper, QuestionsWrapper, TableRow, TableCell, TableHeaderCell, HeaderLinks, ProfilePictureContainer,PreviewButton,WorkHistoryWrapper,ProfileInfoContainer,ProfileJobTitle,ProfileHeaderInfo,ProfilePageContentContainer,ProfileName, ProfileCategoriesContainer, ProfileCategoriesItems, ProfileCategoriesContent, ProfileContainer,SignOutButton, ProfileInfo, ProfileImage, ProfileHeader, NameHeading } from './CandidateProfileStyled';
+import { ProfilePageContainer, TableContainer, Question, Answer, ContactInfoBubble, CandidatePrimaryInfoWrapper, QuestionsWrapper, TableRow, TableCell, TableHeaderCell, HeaderLinks, ProfilePictureContainer,PreviewButton,WorkHistoryWrapper,ProfileInfoContainer,ProfileJobTitle,ProfileHeaderInfo,ProfilePageContentContainer,ProfileName, ProfileCategoriesContainer, ProfileCategoriesItems, ProfileCategoriesContent, ProfileContainer,SignOutButton, ProfileInfo, ProfileImage, ProfileHeader, NameHeading } from './CandidateProfileStyled';
 import Header from "../../Components/Header/Header";
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import {updateIsLoggedIn} from "../../redux/app-state-slice";
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture"
 import {useNavigate} from "react-router";
-import {getAuthToken} from "../../axiosHelper.js"
+import {getAuthToken,request} from "../../axiosHelper.js"
 import WorkHistoryItem from "../../Components/WorkHistoryItem/WorkHistoryItem"
-import { FaEdit, FaEye,FaPhone } from 'react-icons/fa'
+import { FaEdit, FaEye,FaPhone,FaPlus } from 'react-icons/fa'
 import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import axios from 'axios';
 import { Document, Page } from 'react-pdf';
+import ManageJobs from '../../Components/ManageJobs/ManageJobs'
 
 const CandidateProfile = ({customerData,dispatch,userId,leftOffset=false}) => {
   const { name } = { name: "Johnny Cash"};
@@ -26,6 +27,7 @@ const CandidateProfile = ({customerData,dispatch,userId,leftOffset=false}) => {
   const [resumeUrl,setResume] = useState(null);
   const [isContactInfoOpen, setContactInfoOpen] = useState(false)
   const [isResumeModalOpened,setResumeModalOpened] = useState(false)
+  const [isJobModalOpened,setJobModalOpened] = useState(false)
 
   const profileStyle= {
     border:'5px solid #e0e0e0',
@@ -164,6 +166,24 @@ const CandidateProfile = ({customerData,dispatch,userId,leftOffset=false}) => {
         console.error('Error uploading image:', error);
       }
     };
+      const onAddToJob = async (user) => {
+      const payload = {
+              "jobId": 1,
+              "userId": user,
+              status: "Shortlist"
+          };
+
+         request(
+        "POST",
+        "/jobs/candidates",
+       payload,{Authorization: `Bearer ${getAuthToken()}`}).then(
+        (response) => {
+            alert("added user to job")
+        }).catch(
+        (error) => {
+        }
+    );
+        };
     const data = {
       "2020": {
           "Quota": "$1,000,000",
@@ -203,15 +223,13 @@ const CandidateProfile = ({customerData,dispatch,userId,leftOffset=false}) => {
 return (
 <>
 
- {/*         <ModalWrapper isOpen={isResumeModalOpened}> */}
- {/*           <ModalContent> */}
+         <ModalWrapper isOpen={isJobModalOpened}>
 
- {/*                     <a href={resumeUrl} target="_blank" */}
- {/*                                         rel="noreferrer"> */}
- {/*                                         Open First PDF */}
- {/*                                     </a> */}
- {/*             </ModalContent> */}
- {/*          </ModalWrapper> */}
+           <ModalContent>
+                <CloseButton onClick={e => {setJobModalOpened(false)}}>&times;</CloseButton>
+                <ManageJobs userId={userId}customerData={customerData} dispatch={dispatch}/>
+           </ModalContent>
+          </ModalWrapper>
 
 
 
@@ -232,6 +250,9 @@ return (
                  <HeaderLinks>
                         <PreviewButton onClick={e=> {setResumeModalOpened(true)}} > Resume  &nbsp;
                          <FaEye/>
+                       </PreviewButton>
+                       <PreviewButton onClick={e=> {setJobModalOpened(true)}} > Add to Job  &nbsp;
+                            <FaPlus/>
                        </PreviewButton>
                         <PreviewButton onClick={(e) => setContactInfoOpen(true)}> Contact Info  &nbsp;
                             <FaPhone/>
@@ -262,15 +283,15 @@ return (
                         />
              </WorkHistoryWrapper>
             <QuestionsWrapper>
-                    <h2> Why I’m Looking? </h2>
-                    <div style={{flex: "1",maxWidth: "400px"}}>
+                    <Question> Why I’m Looking? </Question>
+                    <Answer style={{flex: "1",maxWidth: "400px"}}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet ornare euismod.
-                     </div>
-                     <h2> Top Priorities </h2>
+                     </Answer>
+                     <Question> Top Priorities </Question>
 
-                  <div style={{flex: "1",maxWidth: "400px"}}>
+                  <Answer style={{flex: "1",maxWidth: "400px"}}>
                       Proin purus augue, auctor commodo libero et, vestibulum pellentesque nulla.
-                  </div>
+                  </Answer>
              </QuestionsWrapper>
              </CandidatePrimaryInfoWrapper>
 

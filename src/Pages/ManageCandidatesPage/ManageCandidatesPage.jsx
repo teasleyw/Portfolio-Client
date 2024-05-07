@@ -1,18 +1,25 @@
 import React, { useState, useEffect,useContext } from 'react';
 import Header from "../../Components/Header/Header.jsx"
+import axios from 'axios';
+import {getAuthToken} from "../../axiosHelper.js"
 import CandidateProfile from "../../Components/CandidateProfile/CandidateProfile"
+import {request, setAuthHeader} from "../../axiosHelper";
 import ProfilePicture from "../../Components/ProfilePicture/ProfilePicture.jsx"
 import CandidateCardComponent from "../../Components/CandidateCard/CandidateCard.jsx"
+import { useParams } from 'react-router-dom'; // Import useParams from react-router-dom
 import {ManageCandidatesPageContainer,StatusSelectContainer,CandidateCard, StatusColumn, Shortlist, CandidatesIconContainer, StatusItem,CandidatesContainer,CandidatesTitleContainer,CandidatesTitle} from "./ManageCandidatesStyled"
-const ManageCandidatesPage = ({customerData,dispatch}) => {
+const ManageCandidatesPage = ({ customerData,dispatch}) => {
+    const { jobId } = useParams(); // Extract jobId from URL parameter
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [candidates,setCandidates] = useState()
     const [columns, setColumns] = useState({
-        "Shortlist-Column": ["1"],
-        "Reviewing-Column": [],
-        "Interviewing-Column": [],
-        "Hired-Column": []
+        "Shortlist": [],
+        "Reviewing": [],
+        "Interviewing": [],
+        "Hired": []
     });
+
 
     const candidate = {
         firstName: "Will",
@@ -28,6 +35,51 @@ const ManageCandidatesPage = ({customerData,dispatch}) => {
 
 
        };
+//         const fetchCandidates= async () => {
+//              axios.get(`jobs/candidates`,{responseType:'blob'})
+//                .then(response => {
+//                 setCandidates(response)
+//
+//                })
+//                .catch(error => {
+//                  console.log(error)
+//                });
+//            };
+           useEffect(() => {
+                 const fetchCandidate = async () => {
+                   try {
+                     const response = await axios.get(`jobs/candidates/${jobId}`, {
+
+                       headers: {
+                         'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
+                         'Content-Type': 'multipart/form-data', // Set the content type if required by the API
+                       },
+                     });
+                     const updatedColumns = {
+                             "Shortlist": [],
+                             "Reviewing": [],
+                             "Interviewing": [],
+                             "Hired": []
+                           };
+
+                           response.data.forEach(candidate => {
+                             updatedColumns[candidate.status].push(candidate.userId);
+                           });
+                           console.log(columns)
+
+                           setColumns(updatedColumns);
+                   } catch (error) {
+                     console.log(error);
+                   }
+                 };
+
+                 fetchCandidate();
+
+                 // Cleanup function (if needed)
+                 return () => {
+                   // Cleanup code here, if any
+                 };
+               }, []);
 
 
     const handleOpenModal = (candidate) => {
@@ -39,24 +91,60 @@ const ManageCandidatesPage = ({customerData,dispatch}) => {
 
     const handleDrop = (columnId,e) => {
        const itemId = e.dataTransfer.getData("text/plain");
-         setColumns((prevColumns) => {
-             const updatedColumns = { ...prevColumns };
-             const sourceColumnId = Object.keys(prevColumns).find(
-               (key) => prevColumns[key].includes(itemId)
-             );
+       request(
+              "POST",
+              "/jobs/candidates",
+              {
+                  jobId: 1,
+                  userId: itemId,
+                  status: columnId
 
-             if (sourceColumnId) {
-               // Remove the item from the source column
-               updatedColumns[sourceColumnId] = updatedColumns[sourceColumnId].filter(
-                 (item) => item !== itemId
-               );
-             }
+              },{"Authorization" : `Bearer ${getAuthToken()}`}).then(
+              (response) => {
+              setColumns((prevColumns) => {
+                  const updatedColumns = { ...prevColumns };
+                  // Remove the item from the source column
+                  const sourceColumnId = Object.keys(prevColumns).find(
+                      (key) => prevColumns[key].some((item) => parseInt(item) === parseInt(itemId))
+                  );
+                  if (sourceColumnId) {
+                      updatedColumns[sourceColumnId] = updatedColumns[sourceColumnId].filter(
+                          (item) => parseInt(item) !== parseInt(itemId)
+                      );
+                  }
+                  // Add the item to the destination column
+                  updatedColumns[columnId] = [...(updatedColumns[columnId] || []), itemId];
+                  console.log(updatedColumns);
+                  return updatedColumns;
+              });
 
-             // Add the item to the destination column
-             updatedColumns[columnId] = [...(updatedColumns[columnId] || []), itemId];
 
-             return updatedColumns;
-           });
+
+              }).catch(
+              (error) => {
+              }
+          );
+
+
+
+//          setColumns((prevColumns) => {
+//              const updatedColumns = { ...prevColumns };
+//              const sourceColumnId = Object.keys(prevColumns).find(
+//                (key) => prevColumns[key].includes(itemId)
+//              );
+//
+//              if (sourceColumnId) {
+//                // Remove the item from the source column
+//                updatedColumns[sourceColumnId] = updatedColumns[sourceColumnId].filter(
+//                  (item) => item !== itemId
+//                );
+//              }
+//
+//              // Add the item to the destination column
+//              updatedColumns[columnId] = [...(updatedColumns[columnId] || []), itemId];
+//
+//              return updatedColumns;
+//            });
           console.log("Item dropped:", itemId, "into column:", columnId);
         };
 
@@ -82,24 +170,24 @@ const ManageCandidatesPage = ({customerData,dispatch}) => {
 
 
             <CandidatesIconContainer>
-                <StatusColumn id="Shortlist-Column" onDrop={(e) => handleDrop("Shortlist-Column",e)} onDragOver={handleDragOver} >
-                    {columns["Shortlist-Column"].map((item) => (
-                      <CandidateCardComponent draggable={true} key={item} id={item} content={`Candidate ${item}`} />
+                <StatusColumn id="Shortlist" onDrop={(e) => handleDrop("Shortlist",e)} onDragOver={handleDragOver} >
+                    {columns["Shortlist"].map((item) => (
+                      <CandidateCardComponent draggable={true} key={item} id={item} userId={item} content={`Candidate ${item}`} />
                     ))}
                   </StatusColumn>
-                  <StatusColumn id="Reviewing-Column" onDrop={(e) => handleDrop("Reviewing-Column",e)} onDragOver={handleDragOver}>
-                    {columns["Reviewing-Column"].map((item) => (
-                      <CandidateCardComponent draggable={true} key={item} id={item} content={`Candidate ${item}`} />
+                  <StatusColumn id="Reviewing" onDrop={(e) => handleDrop("Reviewing",e)} onDragOver={handleDragOver}>
+                    {columns["Reviewing"].map((item) => (
+                      <CandidateCardComponent draggable={true} key={item} id={item} userId={item} content={`Candidate ${item}`} />
                     ))}
                   </StatusColumn>
-                  <StatusColumn id="Interviewing-Column" onDrop={(e) => handleDrop("Interviewing-Column",e )} onDragOver={handleDragOver}>
-                    {columns["Interviewing-Column"].map((item) => (
-                      <CandidateCardComponent draggable={true} key={item} id={item} content={`Candidate ${item}`} />
+                  <StatusColumn id="Interviewing" onDrop={(e) => handleDrop("Interviewing",e )} onDragOver={handleDragOver}>
+                    {columns["Interviewing"].map((item) => (
+                      <CandidateCardComponent draggable={true} key={item} id={item} userId={item} content={`Candidate ${item}`} />
                     ))}
                   </StatusColumn>
-                  <StatusColumn id="Hired-Column" onDrop={(e) => handleDrop("Hired-Column",e)} onDragOver={handleDragOver}>
-                    {columns["Hired-Column"].map((item) => (
-                      <CandidateCardComponent draggable={true} key={item} id={item} content={`Candidate ${item}`} />
+                  <StatusColumn id="Hired" onDrop={(e) => handleDrop("Hired",e)} onDragOver={handleDragOver}>
+                    {columns["Hired"].map((item) => (
+                      <CandidateCardComponent draggable={true} key={item} id={item} userId={item} content={`Candidate ${item}`} />
                     ))}
                   </StatusColumn>
 

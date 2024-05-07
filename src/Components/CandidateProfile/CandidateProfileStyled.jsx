@@ -29,10 +29,12 @@ export const ContactInfoBubble = styled.div`
 export const ProfilePictureContainer = styled.div`
     position: relative;
     top: -33%;
-    left: -150px;
+    left: -100px;
     @media screen and (max-width: 960px) {
-      left: calc(50% - 50px);
-      top: 25vh;
+        position: absolute;
+        left: calc(50% - 50px);
+        top: 0px;
+        order: -1;
     }
 
 `
@@ -43,36 +45,40 @@ export const ProfileHeader =  styled.div`
     background: white;
     display: flex;
     justify-content: space-between;
-
     border-radius: 20px;
+    border-bottom: solid navy 10px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4); /* Shadow effect */
-      @media screen and (max-width: 960px) {
-        padding-top:10px;
+
+    @media screen and (max-width: 960px) {
+        justify-content: start;
+        align-items: center;
+        padding-top: 80px;
+        gap: 15px;
+        flex-direction: column;
         width: 100%;
-        height: 15vh;
+        height: 23vh;
         border-radius: 0px;
         margin-top: 0;
         box-shadow: none; /* Shadow effect */
-      }
+    }
 
 `
 export const HeaderLinks = styled.div`
     display: flex;
     flex-direction: column;
     align-items: end;
-    gap: 20px;
+    gap: 10px;
     justify-content: end;
     width: 25%;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: 20px;
-     @media screen and (max-width: 960px) {
-                margin: 0;
-                width: 40%;
-                justify-content: start;
-
-             }
-
+    @media screen and (max-width: 960px) {
+        margin: 0;
+        flex-direction: row;
+        justify-content: start;
+        width: 80%;
+    }
 `
 
 
@@ -89,23 +95,26 @@ export const CandidatePrimaryInfoWrapper= styled.div`
 export const WorkHistoryWrapper= styled.div`
     width: 100%;
     display: flex;
+
     flex-direction: column;
     background:transparent;
     @media screen and (max-width: 960px) {
            width:100%;
+           margin-left: 10px;
     }
 
 `
 export const QuestionsWrapper= styled.div`
     width: 100%;
     display: flex;
-    background: transparent;
+
     flex-direction: column;
     @media screen and (max-width: 960px) {
            width:100%;
-    }
 
+    }
 `
+
 export const ProfileInfoContainer = styled.div`
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4); /* Shadow effect */
     margin-top: 20px;
@@ -121,8 +130,10 @@ export const ProfileInfoContainer = styled.div`
     padding: 20px;
     display: flex;
     flex-direction: column;
+
     @media screen and (max-width: 960px) {
     margin-top: 0;
+    padding: 0;
     border-radius: 0;
     box-shadow: none;
     width: 100%;
@@ -136,7 +147,7 @@ export const ProfileName=  styled.div`
     font-family: Times;
     @media screen and (max-width: 960px) {
             font-size: 25px;
-         }
+    }
 
 `
 
@@ -166,11 +177,19 @@ export const ProfileJobTitle = styled.div`
      }
 
 `;
+export const Question =  styled.h2`
+    @media screen and (max-width: 960px) {
+        font-size: 20px;
+    }
+`
+export const Answer =  styled.div`
+    font-size: 13px;
+    width: 90%;
+`
 export const ProfileHeaderInfo = styled.div`
     display: flex;
     order: -1;
     width: 66%;
-
     flex-direction: column;
     align-items: start;
     justify-content: end;
@@ -178,6 +197,13 @@ export const ProfileHeaderInfo = styled.div`
     margin-left: 5%;
     margin-bottom: 20px;
     gap: 5px;
+    @media screen and (max-width: 960px) {
+            align-items: center;
+            padding-top: 40px;
+
+            width: 100%;
+            margin: 0;
+     }
 
 `
 export const PreviewButton = styled.button`
@@ -226,12 +252,11 @@ export const ProfileInfo = styled.div`
     border-radius: 8px; /* Rounded corners */
     display: flex;
     align-items: center;
-      justify-content: center;
-      flex-direction: column;
-
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4); /* Shadow effect */
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4); /* Shadow effect */
 `;
 
 // Profile image
@@ -271,6 +296,7 @@ export const TableContainer = styled.div`
 
 export const TableRow = styled.div`
   display: flex;
+
 `;
 
 export const TableCell = styled.div`
@@ -279,6 +305,9 @@ export const TableCell = styled.div`
   padding: 8px;
   border: 1px solid #ccc;
   ${({ isKey }) => isKey && 'background-color: lightblue;'}
+  @media screen and (max-width: 960px) {
+
+  }
 `;
 export const TableHeaderCell = styled.div`
   width: 25%;
