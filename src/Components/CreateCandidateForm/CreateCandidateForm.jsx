@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import {FormContainer,Input,LabelInput,FormTitle, LinkedInButton, Label,FormGroup,SubmitButton,Form,ErrorMessage} from "./CreateCandidateFormStyled.jsx"
 import {updateEmail,updateIsLoggedIn,updateUserId, updateRegisterConfirmPassword,updateRegisterPassword,updateRegisterUserName,updateFirstName,updateLastName} from "../../redux/app-state-slice";
-import {request, setAuthHeader} from "../../axiosHelper";
+import {request, setAuthHeader,getAuthToken} from "../../axiosHelper";
 import {FaPlus,FaArrowLeft,FaArrowRight} from 'react-icons/fa'
 import ErrorPopup from "../../Components/ErrorPopup/ErrorPopup.jsx"
 import OutlineButton from "../../Components/Buttons/OutlineButton.jsx"
 import CreateWorkHistoryItem from "./CreateWorkHistoryItem"
+import CreateCandidateQuestionItem from "./CreateCandidateQuestionItem"
+import CreateCandidateMetrics from "./CreateCandidateMetrics"
+import MetricsTable from "../../Components/MetricsTable/MetricsTable"
 import WorkHistoryItem from "../../Components/WorkHistoryItem/WorkHistoryItem"
 import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import {useNavigate} from "react-router";
@@ -30,11 +33,46 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
   const [errorMessage, setErrorMessage] = useState(''); // State to manage error message
   const [showError, setShowError] = useState(false); // State to manage visibility of the error popup
   const [isWorkHistoryOpen, setIsWorkHistoryOpen] = useState(false);
+  const [isQuestionFormOpen, setIsQuestionFormOpen] = useState(false);
+  const [isMetricFormOpen, setIsMetricFormOpen] = useState(false);
   const [workHistoryList, setWorkHistoryList] = useState([]);
+  const [QuestionAnswerList, setQuestionAnswer] = useState([]);
+  const [metricList, setMetricList] = useState([]);
   const navigate = useNavigate();
-  const addWorkHistoryItemToList = (workHistoryData) => {
-        // Add formData to the workHistoryList
-        setWorkHistoryList([...workHistoryList, workHistoryData]);
+    const addWorkHistoryItemToList = (workHistoryData) => {
+      // Generate a unique ID for the new item using the current length of the list
+      const newItem = { id: workHistoryList.length, ...workHistoryData };
+
+      // Add the new item to the workHistoryList
+      setWorkHistoryList([...workHistoryList, newItem]);
+    };
+    const addQuestionAnswerItemToList = (questionAnswerData) => {
+          // Generate a unique ID for the new item using the current length of the list
+          const newItem = { id: QuestionAnswerList.length, ...questionAnswerData};
+
+          // Add the new item to the workHistoryList
+          setQuestionAnswer([...QuestionAnswerList, newItem]);
+        };
+
+    const addMetricItemToList= (metricData) => {
+
+              // Generate a unique ID for the new item using the current length of the list
+              const newItem = { id: metricList.length, ...metricData};
+
+              // Add the new item to the workHistoryList
+              setMetricList([...metricList, newItem]);
+            };
+
+  const updateWorkHistoryList = (updatedItem) => {
+
+    const updatedList = workHistoryList.map(item => {
+      if (item.id === updatedItem.id) {
+        return updatedItem; // Replace the updated item
+      }
+      return item;
+    });
+    setWorkHistoryList(updatedList.filter(item => item !== null)); // Remove null entries (deleted items)
+    console.log(workHistoryList)
   };
 
     const handleShowError = (message) => { // Function to show error popup
@@ -53,13 +91,6 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
         };
       const handleLinkedInRegister = async () => {
          {
-//            const params = new URLSearchParams({
-//              grant_type: 'authorization_code',
-//              code: authorizationCode,
-//              redirect_uri: 'your_redirect_uri',
-//            });
-
-
            try {
              // Construct the authorization URL
                   const authUrl = `https://www.linkedin.com/oauth/v2/authorization?` +
@@ -77,17 +108,72 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
      }
 
   const handleSubmit = () => {
-    onRegister(formData.firstName,formData.lastName,formData.userName,formData.password)
+    onRegister(formData.firstName,formData.lastName,formData.userName,"PASSWORD")
   };
 
   const handleWorkHistoryItemSubmit = (formData) => {
     setWorkHistoryList([...workHistoryList, formData]);
     setIsWorkHistoryOpen(false); // Close the modal
   };
+   const handleQuestionAnswerItemSubmit = (formData) => {
+      setQuestionAnswer([...workHistoryList, formData]);
+      setIsQuestionFormOpen(false); // Close the modal
+    };
 
   const checkValidity = () => {
         return setIsFormInvalid(customerData.registerConfirmPassword.hasError)
   }
+  const workHistoryRequest = (userId,company,startDate,endDate,jobTitle) =>{
+  request(
+       "POST",
+       "/workhistory",
+       {
+           userId: userId,
+           startDate: startDate,
+           endDate: endDate,
+           company: company,
+           jobTitle: jobTitle,
+       },{"Authorization" : `Bearer ${getAuthToken()}`}).then(
+       (response) => {
+
+       }).catch(
+       (error) => {
+           setAuthHeader(null);
+           if(error.response === undefined){
+              handleShowError("Error Creating User")
+           }
+           else{
+              handleShowError(error.response.data.message)
+           }
+       }
+   )
+   }
+   const questionAnswerRequest = (userId,question,answer) =>{
+      request(
+           "POST",
+           "/QandA",
+           {
+               userId: userId,
+               question: question,
+               answer: answer,
+           },{"Authorization" : `Bearer ${getAuthToken()}`}).then(
+           (response) => {
+
+           }).catch(
+           (error) => {
+               setAuthHeader(null);
+               if(error.response === undefined){
+                  handleShowError("Error Creating User")
+               }
+               else{
+                  handleShowError(error.response.data.message)
+               }
+           }
+       )
+       }
+
+
+
    const onRegister = (firstName, lastName, username, password) => {
      request(
          "POST",
@@ -99,14 +185,31 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
              login: formData.email,
              role: "candidate",
              job: formData.jobTitle,
-             password: formData.password,
-             experience: formData.experience
+             password: "PASSWORD",
+             experience: "42"
          },{}).then(
          (response) => {
+            const tempUserId = response.data.id
+            // Loop through workHistoryList and call workHistoryRequest
+                workHistoryList.forEach((workHistoryItem) => {
+                    workHistoryRequest(
+                        tempUserId,
+                        workHistoryItem.company,
+                        workHistoryItem.startDate,
+                        workHistoryItem.endDate,
+                        workHistoryItem.jobTitle
+                    );
+                });
+                QuestionAnswerList.forEach((questionAnswerItem) => {
+                        questionAnswerRequest(
+                            tempUserId,
+                            questionAnswerItem.question,
+                            questionAnswerItem.answer,
+                        );
+                    });
 
          }).catch(
          (error) => {
-             setAuthHeader(null);
              if(error.response === undefined){
                 handleShowError("Error Creating User")
              }
@@ -132,9 +235,22 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
 
          <ModalContent>
               <CloseButton onClick={e => {setIsWorkHistoryOpen(false)}}>&times;</CloseButton>
-              <CreateWorkHistoryItem addWorkHistoryItem={addWorkHistoryItemToList} customerData={customerData} dispatch={dispatch}/>
+              <CreateWorkHistoryItem setModalOpen={setIsWorkHistoryOpen} addWorkHistoryItem={addWorkHistoryItemToList} customerData={customerData} dispatch={dispatch}/>
          </ModalContent>
    </ModalWrapper>
+
+   <ModalWrapper isOpen={isQuestionFormOpen}>
+        <ModalContent>
+             <CloseButton onClick={e => {setIsQuestionFormOpen(false)}}>&times;</CloseButton>
+             <CreateCandidateQuestionItem setModalOpen={setIsQuestionFormOpen} addQuestionAnswerItem={addQuestionAnswerItemToList}  customerData={customerData} dispatch={dispatch}/>
+        </ModalContent>
+   </ModalWrapper>
+   <ModalWrapper isOpen={isMetricFormOpen}>
+           <ModalContent>
+                <CloseButton onClick={e => {setIsMetricFormOpen(false)}}>&times;</CloseButton>
+                <CreateCandidateMetrics setModalOpen={setIsMetricFormOpen} addMetricItem={addMetricItemToList}  customerData={customerData} dispatch={dispatch}/>
+           </ModalContent>
+      </ModalWrapper>
 
     <FormContainer>
 
@@ -218,20 +334,45 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
                   }
                 {workHistoryList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((item, index) => (
                  <WorkHistoryItem
-                   companyName={item.company}
+                   editable={true}
+                   id={item.id}
+                   company={item.company}
                    startDate={item.startDate}
                    endDate={item.endDate}
-                   positionTitle={item.jobTitle}
+                   jobTitle={item.jobTitle}
+                   updateWorkHistoryList={updateWorkHistoryList}
                    key={index} />
                ))}
+
         </div>
+        {QuestionAnswerList.map((item, index) => (
+                           <div style={{display: "flex", flexDirection:"column"}}>
+                                <h3>
+                                    {item.question}
+                                </h3>
+                                <div>
+                                    {item.answer}
+                                </div>
+                           </div>
+                           ))}
+
+        <MetricsTable metrics={metricList}/>
 
 
       </Form>
       <LabelInput>
-      Create Work History Item
+
       <OutlineButton onClick={(e) => {setIsWorkHistoryOpen(true)}} disabled={false}>
-        <FaPlus/>
+        Create Work History Item <FaPlus/>
+      </OutlineButton>
+      <OutlineButton onClick={(e) => {setIsQuestionFormOpen(true)}} disabled={false}>
+        Create Q&A Item    <FaPlus/>
+      </OutlineButton>
+      <OutlineButton onClick={(e) => {setIsMetricFormOpen(true)}} disabled={false}>
+        Create Metric Data <FaPlus/>
+      </OutlineButton>
+      <OutlineButton onClick={(e) => {handleSubmit()}} disabled={false}>
+              Submit Candidate
       </OutlineButton>
       <LinkedInButton onClick={handleLinkedInRegister}>  </LinkedInButton>
       </LabelInput>

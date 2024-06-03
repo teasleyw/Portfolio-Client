@@ -7,6 +7,10 @@ export const SignOutButton = styled.button`
   padding: 10px 20px; /* Button padding */
   border-radius: 20px; /* Button border radius */
   cursor: pointer; /* Show pointer cursor on hover */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
   font-size: 1rem;
   /* Transition effect for hover */
   transition: background-color 0.3s, color 0.3s;

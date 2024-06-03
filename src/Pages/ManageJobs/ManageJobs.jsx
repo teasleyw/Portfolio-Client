@@ -27,9 +27,9 @@ const ManageJobs = ({customerData,dispatch}) => {
       },[])
 
      return(
-     <div>
 
      <ManageJobsContainer>
+     { jobs.length > 0 &&
         <JobContainer>
         <JobContainerTitle>
             Your Jobs
@@ -39,10 +39,19 @@ const ManageJobs = ({customerData,dispatch}) => {
                         {job.title}
                     </JobItem>
                 ))}
-
         </JobContainer>
-
+      }
+      { jobs.length === 0 &&
+              <JobContainer>
+              No Jobs Found Please Create a job listing first
+              {jobs.map(job => (
+                          <JobItem onClick={(e) => {navigate(`/Manage/${job.id}`)}}key={job.id}>
+                              {job.title}
+                          </JobItem>
+                      ))}
+              </JobContainer>
+            }
      </ManageJobsContainer>
-     </div>)
+     )
 }
 export default ManageJobs

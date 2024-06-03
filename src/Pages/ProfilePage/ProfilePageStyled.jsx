@@ -4,7 +4,7 @@ const backgroundColor = "#f8f9fa";
 export const ProfilePageContainer= styled.div`
    background: ${backgroundColor};
    min-height: 100vh;
-   max-height: 100vh;
+   height: fit-content;
    overflow:hidden;
    display: flex;
    flex-direction: column;
@@ -14,7 +14,7 @@ export const ProfilePageContentContainer= styled.div`
     flex-direction: column;
   }
    background: ${backgroundColor};
-   height: 100vh;
+   min-height: 100vh;
    overflow:hidden;
    padding-top:80px;
    width: 100vw;
@@ -24,10 +24,10 @@ export const ProfilePageContentContainer= styled.div`
    overflow: hidden;
    position: absolute;
    justify-content: top;
-   align-items: start;
+   align-items: center;
    top: 0;
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    left: 0;
    opacity: ${props => props.opacity};
 `;
@@ -170,7 +170,7 @@ export const ProfileContainer = styled.div`
   justify-content: start;
   flex-direction: column;
   background: #e0e0e0;
-  width: 85vw;
+  width: 100vw;
   @media screen and (max-width: 960px) {
           width: 100vw;
         }

@@ -10,7 +10,7 @@ import BowlingPage from "./Pages/BowlingPage/BowlingPage";
 import FantasyBotPage from "./Pages/FantasyBotPage/FantasyBotPage";
 import CandidatesPage from "./Pages/CandidatesPage/CandidatesPage";
 import InboxPage from "./Pages/InboxPage/InboxPage";
-import ManageJobs from "./Pages/ManageJobs/ManageJobs";
+import ManageJobsPage from "./Pages/ManageJobsPage/ManageJobsPage";
 import LinkedInRedirect from "./Pages/LinkedInRedirect/LinkedInRedirect.jsx"
 import ManageCandidatesPage from "./Pages/ManageCandidatesPage/ManageCandidatesPage.jsx"
 //Router
@@ -36,7 +36,7 @@ function App() {
         <Router>
         <Routes>
             <Route path="/" exact element={<LandingPage dispatch={dispatch} customerData={customerData} />} />
-            <Route path="/ManageJobs" exact element={<ManageJobs dispatch={dispatch} customerData={customerData} />} />
+            <Route path="/ManageJobs" exact element={<ManageJobsPage dispatch={dispatch} customerData={customerData} />} />
             <Route path="/Home" element={<HomePage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Events" element={<EventsPage dispatch={dispatch} customerData={customerData}/>} />
             <Route path="/Poetry" element={<PoetryPage dispatch={dispatch} customerData={customerData}/>} />

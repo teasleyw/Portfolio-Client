@@ -88,6 +88,7 @@ function CandidatesPage({customerData, dispatch}) {
   const [candidates,setCandidates] = useState([]);
   const [isCreateCandidateOpen,setIsCreateCandidateOpen] = useState(false)
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleToggleTopCandidate = () =>{
         selectedCandidate.status = selectedCandidate.status === "Top Candidate" ? 'Regular Candidate' : 'Top Candidate';
@@ -276,6 +277,14 @@ function CandidatesPage({customerData, dispatch}) {
       {/* Display top candidates */}
       <h2>My Shortlist</h2>
       <CreateCandidateButton onClick={(e) => {setIsCreateCandidateOpen(true)}}> Create Candidate </CreateCandidateButton>
+      {isEditing ? (
+            <>
+              <CreateCandidateButton onClick={(e) => setIsEditing(false)}>Save</CreateCandidateButton>
+              <CreateCandidateButton onClick={(e) => setIsEditing(false)}>Cancel</CreateCandidateButton>
+            </>
+          ) : (
+            <CreateCandidateButton onClick={(e) => setIsEditing(true)}>Edit Candidates</CreateCandidateButton>
+          )}
       <TopCandidatesContainer>
         {topCandidates.map(candidate => (
           <CandidateCard key={candidate.id} onClick={() => handleOpenModal(candidate)}>
@@ -308,14 +317,14 @@ function CandidatesPage({customerData, dispatch}) {
           <tr>
             <th>Name</th>
             <th>Job</th>
-            <th>Years of Experience</th>
+{/*             <th>Years of Experience</th> */}
             <th> Location </th>
-            <th> Target Base </th>
-            <th> Target OTE </th>
-            <th> Industry </th>
-            <th> Quota </th>
-            <th> Attainment </th>
-{/*             <th>LinkedIn Profile</th> */}
+{/*             <th> Target Base </th> */}
+{/*             <th> Target OTE </th> */}
+{/*             <th> Industry </th> */}
+{/*             <th> Quota </th> */}
+{/*             <th> Attainment </th> */}
+            <th>LinkedIn Profile</th>
 
           </tr>
         </thead>
@@ -327,14 +336,14 @@ function CandidatesPage({customerData, dispatch}) {
                     <div style={{display: 'flex'}}> <div style={{flex: "1"}}>Last Active: 4/19/24 </div> <RecentlyActive/> </div>
               }</td>
               <td> {candidate.job} </td>
-              <td> {candidate.experience} </td>
+{/*               <td> {candidate.experience} </td> */}
               <td> {candidate.location} </td>
-              <td> 100k-150k </td>
-              <td> 200k-300k </td>
-              <td> {candidate.industry} </td>
-              <td> {candidate.quota} </td>
-              <td> {candidate.attainment} </td>
-{/*               <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td> */}
+{/*               <td> 100k-150k </td> */}
+{/*               <td> 200k-300k </td> */}
+{/*               <td> {candidate.industry} </td> */}
+{/*               <td> {candidate.quota} </td> */}
+{/*               <td> {candidate.attainment} </td> */}
+              <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
             <
             /tr>
           ))}
@@ -344,7 +353,7 @@ function CandidatesPage({customerData, dispatch}) {
         <ModalWrapper isOpen={isModalOpen}>
         <ModalContent>
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
-          <CandidateProfile userId={selectedCandidate?.id} customerData={customerData} dispatch={dispatch}/>
+          <CandidateProfile editable={isEditing} userId={selectedCandidate?.id} customerData={customerData} dispatch={dispatch}/>
             </ModalContent>
       </ModalWrapper>
        <ModalWrapper isOpen={isCreateCandidateOpen}>

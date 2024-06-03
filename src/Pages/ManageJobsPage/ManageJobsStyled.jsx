@@ -3,24 +3,27 @@ import styled from 'styled-components'
 
 export const ManageJobsContainer = styled.div`
      background: #f4f4f4;
-     width: 100%;
-     height: 100%;
+     width: 100vw;
+     padding-top: 20px;
+     height: 100vh;
      overflow: hidden;
      display: flex;
+     flex-direction: column;
      align-items: center;
      justify-content: center;
 `
+export const ManageJobsTitle = styled.div`
+    font-size: 30px;
+    color: black;
 
+`
 export const JobContainer = styled.div`
-   background: #e4e4e4;
-   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   gap: 25px;
-   height: 75vh;
+    display: flex;
+    background: blue;
+    max-width: 1100px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
 `
 
 export const JobContainerTitle = styled.div`

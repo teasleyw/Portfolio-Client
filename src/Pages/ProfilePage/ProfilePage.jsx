@@ -171,36 +171,7 @@ const ProfilePage = ({ customerData,dispatch }) => {
        <Header customerData={customerData} dispatch={dispatch} />
 
        <ProfilePageContentContainer>
-       <ProfileCategoriesContainer>
-
-                  <ProfileCategoriesContent>
-                   <ProfileCategoriesItems
-                   active={selectedItem === 'Job'}
-                   onClick={() => handleItemClick('Job')}
-                   >
-
-                       Job Info
-                   </ProfileCategoriesItems>
-                    <ProfileCategoriesItems
-                    active={selectedItem === 'Personal'}
-                    onClick={() => handleItemClick('Personal')}
-                    >
-                       Personal Info
-                   </ProfileCategoriesItems>
-                   <ProfileCategoriesItems
-                    active={selectedItem === 'Edit'}
-                    onClick={() => handleItemClick('Edit')}
-                    >
-                       Edit
-                   </ProfileCategoriesItems>
-                  </ProfileCategoriesContent>
-              </ProfileCategoriesContainer>
-              <ProfileContainer style={{paddingTop: "50px"}}>
-               <div style={{width: "75%"}}>
-                <CandidateProfile leftOffset={200} userId={customerData.userId.value}customerData={customerData} dispatch={dispatch}/>
-               </div>
-              </ProfileContainer>
-
+          <CandidateProfile profilePictureYPadding={"75px"} userId={customerData.userId.value}customerData={customerData} dispatch={dispatch}/>
          </ProfilePageContentContainer>
        </ProfilePageContainer>
        </>

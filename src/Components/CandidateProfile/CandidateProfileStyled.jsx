@@ -27,9 +27,10 @@ export const ContactInfoBubble = styled.div`
     }
 `
 export const ProfilePictureContainer = styled.div`
-    position: relative;
-    top: -33%;
-    left: -100px;
+    position: absolute;
+    top: 20px;
+    left: calc(50% - 50px);
+    padding-top: ${({ profilePictureYPadding }) => (profilePictureYPadding ? profilePictureYPadding : '0')};
     @media screen and (max-width: 960px) {
         position: absolute;
         left: calc(50% - 50px);
@@ -42,6 +43,7 @@ export const ProfileHeader =  styled.div`
     margin-top:40px;
     width: 100%;
     height: 18vh;
+    max-width: 950px;
     background: white;
     display: flex;
     justify-content: space-between;
@@ -89,18 +91,23 @@ export const CandidatePrimaryInfoWrapper= styled.div`
     background:transparent;
     @media screen and (max-width: 960px) {
            width:100%;
+           flex-direction: column;
     }
 
 `
 export const WorkHistoryWrapper= styled.div`
     width: 100%;
     display: flex;
-
     flex-direction: column;
     background:transparent;
     @media screen and (max-width: 960px) {
            width:100%;
-           margin-left: 10px;
+    }
+
+`
+export const WorkHistoryItemWrapper= styled.div`
+    @media screen and (max-width: 960px) {
+           padding-left: 20px;
     }
 
 `
@@ -111,6 +118,7 @@ export const QuestionsWrapper= styled.div`
     flex-direction: column;
     @media screen and (max-width: 960px) {
            width:100%;
+           text-align: center;
 
     }
 `
@@ -125,6 +133,7 @@ export const ProfileInfoContainer = styled.div`
     background-color: white;
     border-radius: 20px;
     width: calc(100%-20px);
+    max-width: 900px;
     display: flex;
     height: 100%;
     padding: 20px;
@@ -185,6 +194,10 @@ export const Question =  styled.h2`
 export const Answer =  styled.div`
     font-size: 13px;
     width: 90%;
+     @media screen and (max-width: 960px) {
+        text-align: left;
+        padding-left: 20px;
+     }
 `
 export const ProfileHeaderInfo = styled.div`
     display: flex;

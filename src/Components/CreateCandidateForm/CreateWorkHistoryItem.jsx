@@ -6,7 +6,7 @@ import ErrorPopup from "../../Components/ErrorPopup/ErrorPopup.jsx"
 import OutlineButton from "../../Components/Buttons/OutlineButton.jsx"
 import {useNavigate} from "react-router";
 import axios from "axios";
-const CreateWorkHistoryItem = ({dispatch,customerData, addWorkHistoryItem}) => {
+const CreateWorkHistoryItem = ({dispatch,customerData, addWorkHistoryItem,setModalOpen}) => {
   const [formData, setFormData] = useState({
         company: '',
         jobTitle: '',
@@ -32,6 +32,7 @@ const handleSubmit = () => {
       startDate: '',
       endDate: ''
     });
+     setModalOpen(false)
   };
 
   return (

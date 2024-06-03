@@ -27,7 +27,7 @@ export const ModalContent = styled.div`
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 600px;
+  max-width: 800px;
   position: relative;
 
   @media screen and (max-width: 960px) {

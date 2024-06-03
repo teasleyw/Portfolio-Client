@@ -46,7 +46,7 @@ function Header({customerData,dispatch}) {
         return (
             <HeaderDiv>
                 <HeaderContainer>
-                    <Logo onClick={() => { navigate('/') }}><img style={{width: '75px',height: '75px', marginRight: '10px'}}src={LionLogo} />LionsEye Jobs</Logo>
+                    <Logo onClick={() => { navigate('/') }}><img style={{width: '75px',height: '75px', marginRight: '10px'}}src={LionLogo} />LionsEye </Logo>
                     <MobileIcon onClick={() => { setClick(!click) }}>
                         {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
                     </MobileIcon>
