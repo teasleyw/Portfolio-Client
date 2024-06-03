@@ -15,6 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: Set User Configurations
+        run: |
+            git config --global user.name "William Teasley"
+            git config --global user.email "teasleyw@msu.edu"
+            chmod -R 777 .  # Change permissions as necessary
       - uses: actions/checkout@v3
         with:
           submodules: true
