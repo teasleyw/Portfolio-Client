@@ -20,6 +20,9 @@ jobs:
             git config --global user.name "William Teasley"
             git config --global user.email "teasleyw@msu.edu"
             chmod -R 777 .  # Change permissions as necessary
+
+      - name: Disable  CI
+        run: echo  "CI=false" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           submodules: true
