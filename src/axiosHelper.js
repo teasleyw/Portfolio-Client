@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = "http://localhost:8080"
+//axios.defaults.baseURL = "http://localhost:8080"
+axios.defaults.baseURL = "https://lionseyebackend.azurewebsites.net";
 axios.defaults.headers.post["content-type"] = "application/json"
 
 export const getAuthToken = () => {
