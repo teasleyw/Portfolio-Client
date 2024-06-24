@@ -130,10 +130,13 @@ const JobListingsPage = ({customerData, dispatch}) => {
                               <h1>Job Listings</h1>
                 </div>
 
-
+               { customerData.userRole.value == "Company" &&
+               <>
                <div style={{display: "flex",justifyContent: "center"}}>
                    <SignOutButton onClick={() => setIsModalOpen(true)}>Add New Job</SignOutButton>
                </div>
+               </>
+               }
 
                 <ModalWrapper isOpen={isModalOpen}>
                    <ModalContent>

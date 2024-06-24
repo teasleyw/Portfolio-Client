@@ -6,7 +6,7 @@ import { Screen, LoginPageContainer, ArcadeButton, Tear, LogoContainer, Logo, Ic
 import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import Header from "../../Components/Header/Header.jsx"
 import Snowflake from '../../Components/Snowflakes/Snowflakes.jsx';
-import {updateIsLoggedIn,updateFirstName,updateLastName,updateEmail,updateUserId} from "../../redux/app-state-slice";
+import {updateIsLoggedIn,updateFirstName,updateLastName,updateEmail,updateUserId,updateUserRole} from "../../redux/app-state-slice";
 import {useNavigate} from "react-router";
 import {request, setAuthHeader} from "../../axiosHelper";
 import RegisterForm from "../../Components/RegisterForm/RegisterForm.jsx"
@@ -184,6 +184,7 @@ const LoginPage = ({ setIsAuthenticated,dispatch,customerData }) => {
                    dispatch(updateLastName(response.data.lastName));
                    dispatch(updateEmail(response.data.email));
                    dispatch(updateIsLoggedIn(true));
+                   dispatch(updateUserRole(response.data.role));
                    dispatch(updateUserId(response.data.id));
                    alert("Functionality Under Construction. Only Cosmetic right now (which is also under construction lol)")
                    navigate("/Profile")

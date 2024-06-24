@@ -56,13 +56,16 @@ export const customerDataSlice = createSlice({
        state.registerUserName.value = action.payload;
        validateAndUpdateUserName(state);
        state.isRegisterValid.value = checkIfRegisterIsValid(state)
-
-    }
+    },
+     updateUserRole : (state, action) => {
+           state.userRole.value = action.payload;
+     }
   },
 });
 
 export const {
   updateFirstName,
+  updateUserRole,
   updateUserId,
   updateRegisterUserName,
   updateRegisterPassword,

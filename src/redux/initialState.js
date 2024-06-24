@@ -23,6 +23,7 @@ export let initialState = {
   emailConsent: { value: false },
   isLoggedIn: {value: false},
   userId: {value: null},
+  userRole: {value: null},
   registerPassword: {value: "", hasError: true, errorMessage: ""},
   registerConfirmPassword: {value: "", hasError: true, errorMessage: ""},
   registerUserName: {value: "", hasError: true, errorMessage: ""},

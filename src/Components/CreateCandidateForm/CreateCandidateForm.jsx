@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {FormContainer,Input,LabelInput,FormTitle, LinkedInButton, Label,FormGroup,SubmitButton,Form,ErrorMessage} from "./CreateCandidateFormStyled.jsx"
+import {Select,FormContainer,Input,LabelInput,FormTitle, LinkedInButton, Label,FormGroup,SubmitButton,Form,ErrorMessage} from "./CreateCandidateFormStyled.jsx"
 import {updateEmail,updateIsLoggedIn,updateUserId, updateRegisterConfirmPassword,updateRegisterPassword,updateRegisterUserName,updateFirstName,updateLastName} from "../../redux/app-state-slice";
 import {request, setAuthHeader,getAuthToken} from "../../axiosHelper";
 import {FaPlus,FaArrowLeft,FaArrowRight} from 'react-icons/fa'
@@ -183,7 +183,7 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
              firstName: formData.firstName,
              lastName: formData.lastName,
              login: formData.email,
-             role: "candidate",
+             role: formData.role,
              job: formData.jobTitle,
              password: "PASSWORD",
              experience: "42"
@@ -325,6 +325,22 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
           />
           </LabelInput>
         </FormGroup>
+         <FormGroup>
+                <LabelInput htmlFor="role">Role</LabelInput>
+                <Select
+                  id="role"
+                  name="role"
+                  onChange={(e) => handleChange('role', e.target.value)}
+                  value={formData.role}
+                  required
+                >
+                  <option value="" disabled>
+                    Select Role
+                  </option>
+                  <option value="Candidate">Candidate</option>
+                  <option value="Company">Company</option>
+                </Select>
+              </FormGroup>
         <div>
         {workHistoryList.length > itemsPerPage &&
                     <div style={{width: "100%",display: "flex", gap: "25px",justifyContent: "center"}}>

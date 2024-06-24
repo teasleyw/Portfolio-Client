@@ -13,6 +13,7 @@ import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Component
 import CandidateProfile from "../../Components/CandidateProfile/CandidateProfile"
 import CreateCandidateForm from "../../Components/CreateCandidateForm/CreateCandidateForm"
 import {request, getAuthToken} from "../../axiosHelper.js";
+import LoadingRing from "../../Components/LoadingRing/LoadingRing.jsx"
 // Function to generate a random color
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -89,6 +90,7 @@ function CandidatesPage({customerData, dispatch}) {
   const [isCreateCandidateOpen,setIsCreateCandidateOpen] = useState(false)
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleToggleTopCandidate = () =>{
         selectedCandidate.status = selectedCandidate.status === "Top Candidate" ? 'Regular Candidate' : 'Top Candidate';
@@ -109,23 +111,22 @@ function CandidatesPage({customerData, dispatch}) {
              }
          );
      };
-    useEffect(() => {
-        const fetchCandidates = async () => {
+   useEffect(() => {
+       const fetchCandidates = async () => {
+         setIsLoading(true);
+         try {
+           const response = await axios.get('/candidates');
+           const data = response.data;
+           setCandidates(data);
+         } catch (error) {
+           console.error('Error fetching candidates:', error);
+         } finally {
+           setIsLoading(false);
+         }
+       };
 
-          try {
-            const response = await axios.get('/candidates', {
-
-          });
-            const data = response.data;
-
-            // Assuming the response is an array of jobs
-            setCandidates(data);
-          } catch (error) {
-            console.error('Error fetching jobs:', error);
-          }
-        }
-        fetchCandidates();
-           }, []);
+       fetchCandidates();
+     }, []);
     // Function to handle opening the modal and setting the selected candidate
     const handleOpenModal = (candidate) => {
       setSelectedCandidate(candidate);
@@ -276,6 +277,9 @@ function CandidatesPage({customerData, dispatch}) {
 
       {/* Display top candidates */}
       <h2>My Shortlist</h2>
+      {customerData.userRole.value == "Company" &&
+      <div>
+
       <CreateCandidateButton onClick={(e) => {setIsCreateCandidateOpen(true)}}> Create Candidate </CreateCandidateButton>
       {isEditing ? (
             <>
@@ -285,6 +289,8 @@ function CandidatesPage({customerData, dispatch}) {
           ) : (
             <CreateCandidateButton onClick={(e) => setIsEditing(true)}>Edit Candidates</CreateCandidateButton>
           )}
+          </div>
+      }
       <TopCandidatesContainer>
         {topCandidates.map(candidate => (
           <CandidateCard key={candidate.id} onClick={() => handleOpenModal(candidate)}>
@@ -299,7 +305,6 @@ function CandidatesPage({customerData, dispatch}) {
             <h3>{candidate.name}</h3>
             <div><label>Location:</label> {candidate.location}</div>
             <div><label>Company:</label> {candidate.company} </div>
-{/*             <div><label>Job: </label>{candidate.job} </div> */}
             <div><label>Experience: </label>{candidate.experience}</div>
             <div><label>Quota: </label>{candidate.quota}</div>
             <div><label>Attainment: </label>{candidate.attainment}</div>
@@ -312,43 +317,55 @@ function CandidatesPage({customerData, dispatch}) {
 
       {/* Display other candidates */}
       <h2>Other Candidates</h2>
-      <OtherCandidatesTable>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Job</th>
-{/*             <th>Years of Experience</th> */}
-            <th> Location </th>
-{/*             <th> Target Base </th> */}
-{/*             <th> Target OTE </th> */}
-{/*             <th> Industry </th> */}
-{/*             <th> Quota </th> */}
-{/*             <th> Attainment </th> */}
-            <th>LinkedIn Profile</th>
+      { isLoading &&
+        <div style={{ height: '50px' }}>
+        <LoadingRing />
+        </div>
+      }
+      { !isLoading &&
+      <>
+       <OtherCandidatesTable>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Job</th>
+      {/*             <th>Years of Experience</th> */}
+                  <th> Location </th>
+      {/*             <th> Target Base </th> */}
+      {/*             <th> Target OTE </th> */}
+      {/*             <th> Industry </th> */}
+      {/*             <th> Quota </th> */}
+      {/*             <th> Attainment </th> */}
+                  <th>LinkedIn Profile</th>
 
-          </tr>
-        </thead>
-        <tbody>
-          {otherCandidates.map(candidate => (
-            <tr key={candidate.id} onClick={() => handleOpenModal(candidate)}>
-              <td>
-              {candidate.firstName} {candidate.lastName} &nbsp; {candidate.firstName == "will" &&
-                    <div style={{display: 'flex'}}> <div style={{flex: "1"}}>Last Active: 4/19/24 </div> <RecentlyActive/> </div>
-              }</td>
-              <td> {candidate.job} </td>
-{/*               <td> {candidate.experience} </td> */}
-              <td> {candidate.location} </td>
-{/*               <td> 100k-150k </td> */}
-{/*               <td> 200k-300k </td> */}
-{/*               <td> {candidate.industry} </td> */}
-{/*               <td> {candidate.quota} </td> */}
-{/*               <td> {candidate.attainment} </td> */}
-              <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
-            <
-            /tr>
-          ))}
-        </tbody>
-      </OtherCandidatesTable>
+                </tr>
+              </thead>
+              <tbody>
+                {otherCandidates.map(candidate => (
+                  <tr key={candidate.id} onClick={() => handleOpenModal(candidate)}>
+                    <td>
+                    {candidate.firstName} {candidate.lastName} &nbsp; {candidate.firstName == "will" &&
+                          <div style={{display: 'flex'}}> <div style={{flex: "1"}}>Last Active: 4/19/24 </div> <RecentlyActive/> </div>
+                    }</td>
+                    <td> {candidate.job} </td>
+      {/*               <td> {candidate.experience} </td> */}
+                    <td> {candidate.location} </td>
+      {/*               <td> 100k-150k </td> */}
+      {/*               <td> 200k-300k </td> */}
+      {/*               <td> {candidate.industry} </td> */}
+      {/*               <td> {candidate.quota} </td> */}
+      {/*               <td> {candidate.attainment} </td> */}
+                    <td><a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></td>
+                  <
+                  /tr>
+                ))}
+              </tbody>
+            </OtherCandidatesTable>
+
+      </>
+
+      }
+
       {/* Candidate Modal */}
         <ModalWrapper isOpen={isModalOpen}>
         <ModalContent>

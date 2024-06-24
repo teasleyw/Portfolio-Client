@@ -87,6 +87,14 @@ export const SubmitButton = styled.button`
       cursor: not-allowed;
     }
 `;
+export const Select = styled.select`
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
 export const ModalTitle = styled.div`
     font-size: 30px;
     text-align: center;
