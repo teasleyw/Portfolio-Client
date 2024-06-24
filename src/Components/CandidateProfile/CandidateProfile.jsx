@@ -15,7 +15,7 @@ import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Component
 import axios from 'axios';
 import { Document, Page } from 'react-pdf';
 import ManageJobs from '../../Components/ManageJobs/ManageJobs'
-
+import LoadingRing from '../../Components/LoadingRing/LoadingRing.jsx'
 import OutlineButton from "../../Components/Buttons/OutlineButton"
 import CreateWorkHistoryItem from "../../Components/CreateCandidateForm/CreateWorkHistoryItem"
 import CreateCandidateMetrics from "../../Components/CreateCandidateForm/CreateCandidateMetrics"
@@ -45,6 +45,10 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
   const [isWorkHistoryOpen, setIsWorkHistoryOpen] = useState(false);
   const [isQuestionAnswerOpen, setIsQuestionAnswerOpen] = useState(false);
   const [isMetricsOpen, setIsMetricsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [resumeExists,setResumeExists] = useState(false)
+
   const profileStyle= {
     border:'5px solid #e0e0e0',
     background: 'blue',
@@ -126,27 +130,35 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
 
 
     const fetchProfilePictureUrl = async () => {
-      axios.get(`1/profile-picture`,{responseType:'blob'})
+    if (userId) {
+      axios.get(`${userId}/profile-picture`,{responseType:'blob'})
         .then(response => {
         const imageUrl = URL.createObjectURL(response.data);
         setProfilePictureUrl(imageUrl);
         })
         .catch(error => {
+
         });
+        }
     };
      const fetchUserData = async () => {
+     if (userId){
           axios.get(`/${userId}/candidates/info`)
             .then(response => {
+            setUserInfo(response.data);
 
             })
             .catch(error => {
+                setErrorMessage('Failed to fetch user data');
+                setShowError(true);
             });
+            }
         };
     const fetchResumeUrl = async () => {
+    if (userId){
           axios.get('1/resume', {
             responseType: 'blob', // Set the response type to 'blob' to receive a binary response
-            headers: {
-              'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
+            headers: {// Include the Authorization header with the token
               'Content-Type': 'multipart/form-data', // Set the content type if required by the API
             },
           })
@@ -162,9 +174,20 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
 
                 };
                 setResume(file)
+                setResumeExists(true)
             })
             .catch(error => {
+            if (error.response && error.response.status === 404) {
+                  setResumeExists(false)
+            }
+            else{
+                setErrorMessage("Resume retrieval returned: "  + error.message);
+                setShowError(true)
+            }
+
+
             });
+            }
         };
         const onUpdateWorkHistory = async (item) => {
               const payload = {
@@ -219,54 +242,28 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
                }
             };
         const getWorkHistory = async () => {
-                  axios.get(`workhistory/${userId}`, {
-                    headers: {
-                      'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
-                    }
-                  })
+        if (userId) {
+                  axios.get(`workhistory/${userId}`)
                     .then(response => {
                             setWorkHistoryList(response.data);
 
                     })
                     .catch(error => {
                     });
+                    }
                 };
     const getQuestionAnswer= async () => {
-              axios.get(`QandA/${userId}`, {
-                headers: {
-                  'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
-                }
-              })
+    if (userId){
+              axios.get(`QandA/${userId}`)
                 .then(response => {
                         setQuestionAnswerList(response.data);
 
                 })
                 .catch(error => {
                 });
+                }
             };
-    useEffect(() => {
-    const fetchUserInfo = async () => {
-    fetchResumeUrl()
-    getWorkHistory()
-    getQuestionAnswer()
-     axios.get(
-         `${userId}/candidates/info`,
-         {
-           headers: {
-             'Content-Type': 'multipart/form-data',
-             'Authorization': "Bearer " + getAuthToken()
-           }
-         }
-       ).then(response => {
-        setUserInfo(response.data);
 
-        })
-        .catch(error => {
-        });
-    };
-    fetchUserInfo();
-    },[userId]
-    );
     const uploadImage = async (userId) => {
       try {
         const formData = new FormData();
@@ -279,13 +276,15 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
             'Authorization': "Bearer " + getAuthToken()
           }
         });
-        axios.get(`1/profile-picture`,{responseType:'blob'})
+        if(userId){
+        axios.get(`${userId}/profile-picture`,{responseType:'blob'})
         .then(response => {
         const imageUrl = URL.createObjectURL(response.data);
         setProfilePictureUrl(imageUrl);
         })
         .catch(error => {
         });
+        }
       } catch (error) {
         console.error('Error uploading image:', error);
       }
@@ -455,6 +454,14 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
                 }
             });
         };
+        useEffect(() => {
+            setIsLoading(true);
+            fetchProfilePictureUrl();
+            fetchUserData();
+            fetchResumeUrl();
+            setIsLoading(false);
+
+          }, [userId,editable]);
     const handleShowError = (errorMessage) => {
         setShowError(true)
         setErrorMessage(errorMessage)
@@ -463,6 +470,10 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
             setShowError(false)
             setErrorMessage("Error")
     }
+    if (isLoading) {
+        return <LoadingRing>Loading...</LoadingRing>; // Replace this with your spinner or loading component
+    }
+
 
 return (
 <>
