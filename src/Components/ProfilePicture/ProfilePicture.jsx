@@ -12,6 +12,7 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) =
       useEffect(() => {
 
       const fetchProfilePictureUrl = async () => {
+      if(userId){
             axios.get(userId + `/profile-picture`,{responseType:'blob'})
               .then(response => {
               const imageUrl = URL.createObjectURL(response.data);
@@ -21,6 +22,7 @@ const ProfilePicture = ({dispatch, customerData, name, img,userId,size,Style}) =
               setImageUrl(null);
                 console.log("profile picture" + error)
               });
+              }
           };
           fetchProfilePictureUrl()
 //             const createUrl = async () => {

@@ -89,8 +89,7 @@ const ProfilePage = ({ customerData,dispatch }) => {
           axios.get('1/resume', {
             responseType: 'blob', // Set the response type to 'blob' to receive a binary response
             headers: {
-              'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
-              'Content-Type': 'multipart/form-data', // Set the content type if required by the API
+              'Content-Type': 'multipart/form-data' // Set the content type if required by the API
             },
           })
             .then(response => {
@@ -118,8 +117,7 @@ const ProfilePage = ({ customerData,dispatch }) => {
          `${customerData.userId.value}/candidates/info`,
          {
            headers: {
-             'Content-Type': 'multipart/form-data',
-             'Authorization': "Bearer " + getAuthToken()
+             'Content-Type': 'multipart/form-data'
            }
          }
        ).then(response => {

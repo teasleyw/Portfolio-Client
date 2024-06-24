@@ -99,9 +99,7 @@ const MetricsTable = ({ userId, metrics: propsMetrics, setMetricsModalOpen, edit
         if (!propsMetrics && userId) {
             const fetchMetrics = async () => {
                 try {
-                    const response = await axios.get(`/metrics/${userId}`, {
-                        headers: { Authorization: `Bearer ${getAuthToken()}` },
-                    });
+                    const response = await axios.get(`/metrics/${userId}`);
                     setMetrics(response.data);
                     console.log(metrics)
                     setError(null);
