@@ -7,6 +7,22 @@ import {
 import {
     checkIfRegisterIsValid
  } from "../validation/FormValidation";
+
+ const loadStateFromLocalStorage = () => {
+   try {
+     const serializedState = localStorage.getItem('userData');
+     if (serializedState === null) {
+       return initialState;
+     }
+     return JSON.parse(serializedState);
+   } catch (err) {
+     console.error("Could not load state from localStorage", err);
+     return initialState;
+   }
+ };
+
+ const persistedState = loadStateFromLocalStorage();
+
 export const customerDataSlice = createSlice({
   name: "customerDataSlice",
   initialState: initialState,
@@ -59,11 +75,30 @@ export const customerDataSlice = createSlice({
     },
      updateUserRole : (state, action) => {
            state.userRole.value = action.payload;
-     }
+     },
+     login: (state, action) => {
+           const { userId, userRole } = action.payload;
+           state.userId.value = userId;
+           state.userRole.value = userRole;
+           state.isLoggedIn.value = true;
+
+           localStorage.setItem('user', JSON.stringify({ userId, userRole }));
+         },
+         logout: (state) => {
+           state.userId.value = '';
+           state.userRole.value = '';
+           state.isLoggedIn.value = false;
+
+           localStorage.removeItem('user');
+         },
+          loadState: (state, action) => {
+               return { ...state, ...action.payload };
+             }
   },
 });
 
 export const {
+  loadState,
   updateFirstName,
   updateUserRole,
   updateUserId,
@@ -74,7 +109,9 @@ export const {
   updatePoemTitle,
   updatePoemContent,
   updateEmail,
-  updateIsLoggedIn
+  updateIsLoggedIn,
+  login,
+  logout
 } = customerDataSlice.actions;
 
 export default customerDataSlice.reducer;

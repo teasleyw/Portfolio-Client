@@ -13,7 +13,22 @@ import WorkHistoryItem from "../../Components/WorkHistoryItem/WorkHistoryItem"
 import {ModalContent,ModalHeader,ModalWrapper,CloseButton} from '../../Components/ModalAlt/ModalAltStyled.jsx'
 import {useNavigate} from "react-router";
 import axios from "axios";
-const CreateCandidateForm = ({dispatch,customerData}) => {
+
+const initialFormData = {
+  profilePicture: '',
+  firstName: '',
+  lastName: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
+  linkedIn: '',
+  role: '',
+  email: '',
+  jobTitle: '',
+  experience: ''
+};
+
+const CreateCandidateForm = ({closeModal, dispatch,customerData}) => {
   const [formData, setFormData] = useState({
     profilePicture: '',
     firstName: '',
@@ -38,6 +53,15 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
   const [workHistoryList, setWorkHistoryList] = useState([]);
   const [QuestionAnswerList, setQuestionAnswer] = useState([]);
   const [metricList, setMetricList] = useState([]);
+  const resetForm = () => {
+      setFormData(initialFormData);
+      setWorkHistoryList([]);
+      setQuestionAnswer([]);
+      setMetricList([]);
+      setCurrentPage(1);
+      setErrorMessage('');
+      setShowError(false);
+    };
   const navigate = useNavigate();
     const addWorkHistoryItemToList = (workHistoryData) => {
       // Generate a unique ID for the new item using the current length of the list
@@ -61,7 +85,8 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
 
               // Add the new item to the workHistoryList
               setMetricList([...metricList, newItem]);
-            };
+              console.log(metricList)
+    };
 
   const updateWorkHistoryList = (updatedItem) => {
 
@@ -138,7 +163,6 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
 
        }).catch(
        (error) => {
-           setAuthHeader(null);
            if(error.response === undefined){
               handleShowError("Error Creating User")
            }
@@ -148,6 +172,33 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
        }
    )
    }
+   const metricsRequest = (userId,year,salesCycle,targetVerticals,buyerPersona,avgDeal,attainment,quota) =>{
+     request(
+          "POST",
+          "/metrics",
+          {
+              userId: userId,
+              year: year,
+              salesCycle: salesCycle,
+              targetVerticals: targetVerticals,
+              buyerPersona: buyerPersona,
+              avgDeal: avgDeal,
+              attainment: attainment,
+              quota: quota
+          },{"Authorization" : `Bearer ${getAuthToken()}`}).then(
+          (response) => {
+
+          }).catch(
+          (error) => {
+              if(error.response === undefined){
+                 handleShowError("Error Creating User")
+              }
+              else{
+                 handleShowError(error.response.data.message)
+              }
+          }
+      )
+      }
    const questionAnswerRequest = (userId,question,answer) =>{
       request(
            "POST",
@@ -161,7 +212,6 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
 
            }).catch(
            (error) => {
-               setAuthHeader(null);
                if(error.response === undefined){
                   handleShowError("Error Creating User")
                }
@@ -190,6 +240,7 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
          },{}).then(
          (response) => {
             const tempUserId = response.data.id
+            setAuthHeader(response.data.token);
             // Loop through workHistoryList and call workHistoryRequest
                 workHistoryList.forEach((workHistoryItem) => {
                     workHistoryRequest(
@@ -201,12 +252,29 @@ const CreateCandidateForm = ({dispatch,customerData}) => {
                     );
                 });
                 QuestionAnswerList.forEach((questionAnswerItem) => {
+
                         questionAnswerRequest(
                             tempUserId,
                             questionAnswerItem.question,
                             questionAnswerItem.answer,
                         );
                     });
+                metricList.forEach((metricItem) => {
+                    metricsRequest(
+                        tempUserId,
+                        metricItem.year,
+                        metricItem.salesCycle,
+                        metricItem.targetVerticals,
+                        metricItem.buyerPersona,
+                        metricItem.avgDeal,
+                        metricItem.attainment,
+                        metricItem.quota
+                    );
+                });
+                alert("Successful User Creation")
+                closeModal();
+                resetForm();
+
 
          }).catch(
          (error) => {

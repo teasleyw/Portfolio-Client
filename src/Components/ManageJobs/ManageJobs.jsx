@@ -9,7 +9,7 @@ const ManageJobs = ({customerData,dispatch,userId}) => {
  useEffect(() => {
        const fetchJobs = async () => {
        try {
-            const response = await axios.get(`jobs/company/1`, {
+            const response = await axios.get(`jobs/company/${customerData.userId.value}`, {
               headers: {
                 'Authorization': `Bearer ${getAuthToken()}`, // Include the Authorization header with the token
                 'Content-Type': 'multipart/form-data', // Set the content type if required by the API
@@ -23,7 +23,7 @@ const ManageJobs = ({customerData,dispatch,userId}) => {
       }
       }
       fetchJobs()
-      },[])
+      },[userId])
        const onAddToJob = async (user,jobId) => {
             const payload = {
                     "jobId": jobId,

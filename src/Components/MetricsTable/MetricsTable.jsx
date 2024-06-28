@@ -48,7 +48,7 @@ const StickyTh = styled.td`
   max-width: 100px; /* Adjust as needed */
   position: sticky;
   left: 0;
-  z-index: 999;
+  z-index: 1;
   &:hover {
       background-color: #5555cc;
     }
@@ -81,7 +81,7 @@ const StickyTd = styled.td`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
   left: 0;
   background-color: #fff;
-  z-index: 999;
+  z-index: 1;
 `;
 const MetricsTable = ({ userId, metrics: propsMetrics, setMetricsModalOpen, editable, updateMetricsList, deleteMetricById}) => {
     const [metrics, setMetrics] = useState(propsMetrics || []);
@@ -90,6 +90,12 @@ const MetricsTable = ({ userId, metrics: propsMetrics, setMetricsModalOpen, edit
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: 'year', direction: 'ascending' });
+    useEffect(() => {
+        if (propsMetrics) {
+          setMetrics(propsMetrics);
+          setLoading(false);
+        }
+      }, [propsMetrics]);
     useEffect(() => {
         setEditedMetrics(metrics);
       }, [metrics]);
@@ -101,7 +107,6 @@ const MetricsTable = ({ userId, metrics: propsMetrics, setMetricsModalOpen, edit
                 try {
                     const response = await axios.get(`/metrics/${userId}`);
                     setMetrics(response.data);
-                    console.log(metrics)
                     setError(null);
                 } catch (err) {
                     setError(err);
@@ -141,7 +146,6 @@ const MetricsTable = ({ userId, metrics: propsMetrics, setMetricsModalOpen, edit
       };
    const handleCancel = () => {
       setIsEditing(false);
-      console.log(metrics)
       setEditedMetrics(metrics);
     };
     const handleDelete = (id) => {
@@ -177,7 +181,13 @@ const MetricsTable = ({ userId, metrics: propsMetrics, setMetricsModalOpen, edit
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error fetching data: {error.message}</p>;
     if (metrics.length === 0) {
+        console.log(propsMetrics)
+        if (editable) {
         return <OutlineButton onClick={(e) => {setMetricsModalOpen(true)}}> Add Metrics <FaPlus /> </OutlineButton>;
+    }
+    else{
+        return <div/>
+    }
     }
     const sortedMetrics = () => {
         const sortedMetrics = [...editedMetrics];

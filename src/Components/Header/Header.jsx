@@ -2,8 +2,9 @@ import React, {useState,useRef, useEffect , useContext} from "react";
 import {useNavigate} from "react-router";
 import {HeaderContainer, Logo, HeaderDiv, TabContainer, TabItem, MobileIcon, DropdownItem, DropdownMenu,DropdownMenuJobs} from "./HeaderStyled";
 import { FaBars, FaTimes } from 'react-icons/fa';
+import {setAuthHeader} from "../../axiosHelper.js"
 import LionLogo from '../../Assets/Images/lionseye.jpeg'
-import {updateIsLoggedIn} from "../../redux/app-state-slice";
+import {updateIsLoggedIn,logout} from "../../redux/app-state-slice";
 import { useMediaQuery } from 'react-responsive';
 function Header({customerData,dispatch}) {
       const [click, setClick] = useState(false);
@@ -23,10 +24,10 @@ function Header({customerData,dispatch}) {
         }, [isDropdownJobsVisible]);
 
         const handleLogout = () => {
-        console.log('here')
-        console.log(customerData)
-           dispatch(updateIsLoggedIn(false))
-           console.log(customerData.IsLoggedIn)
+           setAuthHeader(null);
+           localStorage.removeItem('userData');
+           dispatch(updateIsLoggedIn(false));
+           dispatch(logout());
         }
         const handleTabItemClick = () => {
             if (isDesktopOrLaptop) {

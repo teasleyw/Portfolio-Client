@@ -376,7 +376,7 @@ function CandidatesPage({customerData, dispatch}) {
        <ModalWrapper isOpen={isCreateCandidateOpen}>
               <ModalContent>
                 <CloseButton onClick={(e) => {setIsCreateCandidateOpen(false)}}> &times; </CloseButton>
-                <CreateCandidateForm customerData={customerData} dispatch={dispatch}/>
+                <CreateCandidateForm closeModal={(e) => {setIsCreateCandidateOpen(false)}}customerData={customerData} dispatch={dispatch}/>
                 </ModalContent>
        </ModalWrapper>
         </CandidatesPageContainer>

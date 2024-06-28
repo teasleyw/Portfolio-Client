@@ -8,6 +8,15 @@ export const getAuthToken = () => {
     console.log(window.localStorage.getItem("auth_token"))
     return window.localStorage.getItem("auth_token")
 }
+const setAuthHeaderFromLocalStorage = () => {
+  const serializedState = localStorage.getItem('userData');
+  if (serializedState !== null) {
+    const userData = JSON.parse(serializedState);
+    if (userData.token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+    }
+  }
+};
 
 export const setAuthHeader = (token) =>{
     console.log(window.localStorage.getItem("auth_token"))
@@ -27,3 +36,5 @@ export const request = (method, url, data,headers) => {
         data: data
     })
 }
+// Call this function to set the auth header on app start
+setAuthHeaderFromLocalStorage();

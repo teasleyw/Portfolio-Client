@@ -456,7 +456,10 @@ const CandidateProfile = ({editable, customerData,dispatch,userId,leftOffset=fal
         };
         useEffect(() => {
             setIsLoading(true);
+
             fetchProfilePictureUrl();
+            getWorkHistory();
+            getQuestionAnswer();
             fetchUserData();
             fetchResumeUrl();
             setIsLoading(false);
@@ -481,7 +484,7 @@ return (
          <ModalWrapper isOpen={isJobModalOpened}>
            <ModalContent>
                 <CloseButton onClick={e => {setJobModalOpened(false)}}>&times;</CloseButton>
-                <ManageJobs userId={userId}customerData={customerData} dispatch={dispatch}/>
+                <ManageJobs userId={userId} customerData={customerData} dispatch={dispatch}/>
            </ModalContent>
           </ModalWrapper>
           <ModalWrapper isOpen={isWorkHistoryOpen}>

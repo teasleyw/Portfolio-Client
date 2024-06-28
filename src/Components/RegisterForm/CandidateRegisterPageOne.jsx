@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {FormContainer,Input,LabelInput,FormTitle, LinkedInButton, Label,FormGroup,SubmitButton,Form,ErrorMessage} from "./RegisterFormStyled.jsx"
-import {updateEmail,updateIsLoggedIn,updateUserId, updateRegisterConfirmPassword,updateRegisterPassword,updateRegisterUserName,updateFirstName,updateLastName} from "../../redux/app-state-slice";
+import {updateEmail,login,updateIsLoggedIn,updateUserId, updateRegisterConfirmPassword,updateRegisterPassword,updateRegisterUserName,updateFirstName,updateLastName} from "../../redux/app-state-slice";
 import {request, setAuthHeader} from "../../axiosHelper";
 import ErrorPopup from "../../Components/ErrorPopup/ErrorPopup.jsx"
 import OutlineButton from "../../Components/Buttons/OutlineButton.jsx"
@@ -73,20 +73,32 @@ const CandidateRegisterPageOne = ({dispatch,customerData}) => {
              firstName: formData.firstName,
              lastName: formData.lastName,
              login: formData.email,
-             role: "candidate",
+             role: "Candidate",
              job: formData.jobTitle,
              password: formData.password,
              experience: formData.experience
          },{}).then(
          (response) => {
-             dispatch(updateFirstName(response.data.firstName));
-             dispatch(updateLastName(response.data.lastName));
-             dispatch(updateEmail(response.data.email));
-             dispatch(updateUserId(response.data.id));
-             alert("Functionality Under Construction. Only Cosmetic right now (which is also under construction lol)")
+             const userData = response.data;
+              // Save user data in localStorage
+             localStorage.setItem('userData', JSON.stringify(userData));
+
+             // Dispatch login action to set all user data
+             dispatch(login(userData));
+
+             // Additional updates if necessary
+             dispatch(updateFirstName(userData.firstName));
+             dispatch(updateLastName(userData.lastName));
+             dispatch(updateEmail(userData.email));
+             dispatch(updateUserId(userData.id));
+             dispatch(updateIsLoggedIn(true));
+
+             // Set auth header for axios
+             setAuthHeader(userData.token);
+
+             // Navigate to profile
+             alert("Successful register");
              navigate("/Profile")
-             dispatch(updateIsLoggedIn(true))
-             setAuthHeader(response.data.token);
          }).catch(
          (error) => {
              setAuthHeader(null);
