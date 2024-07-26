@@ -63,7 +63,7 @@ const PoetryPage = ({ dispatch, customerData }) => {
                 <ButtonContainer>
                     <Button onClick={() => nextPoem()} label="Next Poem" />
                     <Button onClick={openSubmitPoemModal} label="Submit Poem" />
-                    <Button onClick={openFilterModal} label="Poems by Author" />
+                    <Button onClick={openFilterModal} label="Filter By Author" />
                 </ButtonContainer>
                 <PoemContainer>
                     <div>
