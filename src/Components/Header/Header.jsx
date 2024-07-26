@@ -45,36 +45,37 @@ function Header({customerData,dispatch}) {
         return (
             <HeaderDiv>
                 <HeaderContainer>
-                    <Logo onClick={() => { navigate('/Home') }}>Will Teasley</Logo>
+                    <Logo onClick={() => { navigate('/Poetry') }}>Will Teasley</Logo>
                     <MobileIcon onClick={() => { setClick(!click) }}>
                         {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
                     </MobileIcon>
+{/*                     <TabItem  ref={toggleRef} onClick={handleJobBoardClick }>Job Board</TabItem> */}
                     <TabContainer onClick={() => { setClick(!click) }} click={click}>
-                        <TabItem  ref={toggleRef} onClick={handleJobBoardClick }>Job Board</TabItem>
-                        <DropdownMenuJobs style={{ left: dropdownPosition.left }} show={isDropdownJobsVisible}>
-                                <DropdownItem onClick={() => { navigate('/Jobs') }}>Jobs</DropdownItem>
-                                <DropdownItem onClick={() => { navigate('/Candidates') }}>Candidates</DropdownItem>
-                        </DropdownMenuJobs>
+{/*                          */}
+{/*                         <DropdownMenuJobs style={{ left: dropdownPosition.left }} show={isDropdownJobsVisible}> */}
+{/*                                 <DropdownItem onClick={() => { navigate('/Jobs') }}>Jobs</DropdownItem> */}
+{/*                                 <DropdownItem onClick={() => { navigate('/Candidates') }}>Candidates</DropdownItem> */}
+{/*                         </DropdownMenuJobs> */}
                         <TabItem onClick={() => { navigate('/Poetry') }}>Poetry</TabItem>
                         <TabItem onClick={() => { navigate('/Music') }}>Music</TabItem>
-                        <TabItem onClick={() => { navigate('/About') }}>About</TabItem>
-                        {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in
-                        <>
-                            <TabItem
-                           onClick={handleTabItemClick}
-                                    >
-                                My Profile
-                            </TabItem>
-                            <DropdownMenu show={isDropdownVisible}>
-                                <DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
-                                <DropdownItem onClick={() => { navigate('/Profile') }}>Profile Information</DropdownItem>
+{/*                         <TabItem onClick={() => { navigate('/About') }}>About</TabItem> */}
+{/*                         {customerData.isLoggedIn.value == true ? ( // Render "My Profile" tab if logged in */}
+{/*                         <> */}
+{/*                             <TabItem */}
+{/*                            onClick={handleTabItemClick} */}
+{/*                                     > */}
+{/*                                 My Profile */}
+{/*                             </TabItem> */}
+{/*                             <DropdownMenu show={isDropdownVisible}> */}
+{/*                                 <DropdownItem onClick={handleLogout}>Sign out</DropdownItem> */}
+{/*                                 <DropdownItem onClick={() => { navigate('/Profile') }}>Profile Information</DropdownItem> */}
 {/*                                 <DropdownItem onClick={() => { navigate('/Settings') }}>Settings</DropdownItem> */}
-                            </DropdownMenu>
+{/*                             </DropdownMenu> */}
 
-                            </>
-                        ) : ( // Render "Login" tab if not logged in
-                            <TabItem onClick={() => { navigate('/Login') }}>Login</TabItem>
-                        )}
+{/*                             </> */}
+{/*                         ) : ( // Render "Login" tab if not logged in */}
+{/*                             <TabItem onClick={() => { navigate('/Login') }}>Login</TabItem> */}
+{/*                         )} */}
                     </TabContainer>
                 </HeaderContainer>
             </HeaderDiv>

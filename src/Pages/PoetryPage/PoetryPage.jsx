@@ -4,7 +4,7 @@ import Header from "../../Components/Header/Header";
 import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
 import Modal from "../../Components/Modal/Modal";
 import {updatePoemContent} from "../../redux/app-state-slice";
-import {SuitAndTie} from "../../utils/poems.js"
+import {SuitAndTie} from "../../utils/poems.jsx"
 import {VerseCollection} from "../../utils/poemObjects.js"
 
 
@@ -15,6 +15,8 @@ const PoetryPage = ({ dispatch, customerData }) => {
     const [poemAuthor, setAuthor] = useState("");
     const [poemIndex, setPoemIndex] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [currentPoemIndex, setCurrentPoemIndex] = useState(0);
+    const currentPoem = VerseCollection[currentPoemIndex];
     const [prevPoemIndex, setPrevPoemIndex] = useState(-1); // Initialize prevPoemIndex state
 
     const poemElement = useRef(null);
@@ -60,6 +62,11 @@ const PoetryPage = ({ dispatch, customerData }) => {
         setPoemHTML(randomPoem.poem);
     };
 
+    const nextPoem = () => {
+            setCurrentPoemIndex((prevIndex) => (prevIndex + 1) % VerseCollection.length);
+    };
+
+
     const exitModal = () => {
         setShowModal(false);
         console.log(customerData);
@@ -73,27 +80,19 @@ const PoetryPage = ({ dispatch, customerData }) => {
             <PoetryPageContainer>
                 <Header customerData={customerData} dispatch={dispatch} />
                 <ButtonContainer>
-                    <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit" />
-                    <NeuMorphicButton onClick={() => randomPoem()} label="Read Other Poems" />
-                    <NeuMorphicButton onClick={() => clearFunction()} label="Clear" />
+{/*                     <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit" /> */}
+                    <NeuMorphicButton onClick={() => nextPoem()} label="Next Poem" />
+{/*                     <NeuMorphicButton onClick={() => clearFunction()} label="Clear" /> */}
                 </ButtonContainer>
                 <PoemContainer>
                     <div>
                         <Poem>
-                            {poemTitle !== "" &&
-                                <>
-                                    <PoemTitle>{poemTitle}</PoemTitle>
-                                    <br />
-                                    <PoemAuthor>{poemAuthor}</PoemAuthor>
-                                    <br />
-                                    <br />
-                                </>
-                            }
-                            <PoemLogic onChange={handleChangePoem}>
-                                <div>
-                                {poemHTML}
-                                </div>
-                           </PoemLogic>
+                            <PoemTitle>{currentPoem.title}</PoemTitle>
+                            <br />
+                            <PoemAuthor>{currentPoem.author}</PoemAuthor>
+                            <br />
+                            <br />
+                            {currentPoem.poem}
                         </Poem>
                     </div>
                 </PoemContainer>
@@ -118,8 +117,8 @@ const PoemLogic = (props) => {
         onChange(value);
     });
     elements = React.cloneElement(elements[0], {
-        contentEditable: true,
-        suppressContentEditableWarning: true,
+        contentEditable: false,
+        suppressContentEditableWarning: false,
         ref: element,
         onKeyUp: onMouseUp
     });

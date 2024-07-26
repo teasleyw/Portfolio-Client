@@ -26,7 +26,7 @@ function LandingPage() {
             <Milano>
                 Teasley
             </Milano>
-            <NeonBtn onClick={() => {navigate("/Home")}} NeonColor={"rgb(180,242,242)"}>
+            <NeonBtn onClick={() => {navigate("/Poetry")}} NeonColor={"rgb(180,242,242)"}>
                 Enter
             </NeonBtn>
         </LogoContainer>

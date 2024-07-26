@@ -63,9 +63,9 @@ export const Poem = styled.div`
     padding: 2rem;
     color: ${poemColor};
     font-size: 26px;
-    text-align: center;
     z-index: 1;
     outline: none;
+    line-height: 1.8rem;
     font-family: 'Maitree', serif;
     white-space: pre;
     white-space: pre-wrap;
