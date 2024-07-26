@@ -1,6 +1,11 @@
-import {SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs} from "./poems.jsx";
+import {SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs,KingForADay} from "./poems.jsx";
 
 export const VerseCollection = [
+    {
+        author: "Tito Santana",
+        title: "King for a day",
+        poem: KingForADay
+    },
     {
         author: "William Teasley",
         title: "I Woke Up Today",

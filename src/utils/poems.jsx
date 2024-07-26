@@ -219,3 +219,26 @@ I for one and you for two
 Ain't got the time for outside
 Just keep your injured looks to you
 We'll tell the world we tried`
+export const KingForADay = `
+Waves crashing with the tides of man
+Time passing like grains of sand.
+Memories of what came before,
+Bodies lying on an endless shore.
+
+I'll build these walls up high,
+They’ll stand the test of time.
+For this life, I will battle
+It’s my castle, it’s my castle.
+
+This moat separates from most,
+Separation gives me hope.
+The torment comes with the night
+Under the moonlight we will fight.
+
+I built these walls up high,
+They all washed away with time.
+In this life of battle
+It’s my castle, my sand castle.
+
+King for a day.
+`;
