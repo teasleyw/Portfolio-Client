@@ -1,10 +1,15 @@
-import {SuitAndTie, SoManyMoons,SpokeAndSage,WokeUpToday,GraceAndJack,BrookInTheCity} from "./poems.jsx"
+import {SuitAndTie, SoManyMoons,SpokeAndSage,WokeUpToday,GraceAndJack,BrookInTheCity,StoppingByWoods} from "./poems.jsx"
 
 export const VerseCollection = [
     {
         author : "William Teasley",
         title : "I Woke Up Today",
         poem : WokeUpToday
+    },
+    {
+        author: "Robert Frost",
+        title : "Stopping by Woods on a Snowy Evening",
+        poem : StoppingByWoods
     },
     {
         author : "William Teasley",

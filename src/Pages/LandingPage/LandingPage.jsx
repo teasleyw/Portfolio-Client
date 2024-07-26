@@ -17,7 +17,7 @@ function LandingPage() {
         <>
 
         <LandingPageContainer>
-            {Array.from({ length: 800}, (_, i) => <BackgroundFlower key={i} src={flower}/>)}
+            {Array.from({ length: 700}, (_, i) => <BackgroundFlower key={i} src={flower}/>)}
         </LandingPageContainer>
         <LogoContainer>
             <Frost>

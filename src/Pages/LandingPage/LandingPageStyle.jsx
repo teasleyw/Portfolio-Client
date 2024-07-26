@@ -18,7 +18,10 @@ const rotate = keyframes`
 
 export const LandingPageContainer = styled.div`
   display: -webkit-grid;
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
   background: ${backgroundColor};
   width: 100vw;
