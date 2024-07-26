@@ -1,7 +1,7 @@
 import React from "react";
-import {StyledButton} from "./NeumorphicButtonStyled.js"
+import {StyledButton} from "./ButtonStyled"
 
-function NeuMorphicButton({label,onClick}) {
+function Button({label,onClick}) {
 
     return (
         <StyledButton
@@ -11,4 +11,4 @@ function NeuMorphicButton({label,onClick}) {
         </StyledButton>
     )
 }
-export default NeuMorphicButton
+export default Button

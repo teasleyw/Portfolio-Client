@@ -2,33 +2,21 @@ import styled from 'styled-components';
 
 const ruler = '16';
 const white = '#feeeee';
-const colorBg = '#272727';
-const colorShadow = '#141414';
-const colorWhite = '#212121';
+const colorBg = 'rgb(255, 253, 208)';  // Very light grayish-beige
+const colorShadow = '#272727';  // Dark shadow color
+const colorWhite = '#272727';  // Main color for text, interpreted as a dark grayish-black
+const textColor = '#272727';  // Off black color for text, a very dark gray
 
-export const Body = styled.body`
-  background-color: ${colorBg};
-`;
 
-export const Heading1 = styled.h1`
-  color: ${white};
-`;
-
-export const FontFamily = styled.div`
-  font-family: 'Montserrat', sans-serif;
-  letter-spacing: -0.2px;
-  font-size: ${ruler}px;
-`;
-
-export const StyledButton = styled.button`
+export const NeumorphicButton = styled.button`
   border: 0;
   outline: 0;
+  font-family: Textile-Regular;
   font-size: ${ruler}px;
   border-radius: ${(ruler * 20)}px;
   padding: ${ruler}px;
   background-color: ${colorBg};
-  text-shadow: 1px 1px 0 ${colorWhite};
-  color: #61677C;
+  color: ${textColor};  // Text color for the button
   font-weight: bold;
   box-shadow: -5px -5px 20px ${colorWhite}, 5px 5px 20px ${colorShadow};
   transition: all 0.2s ease-in-out;
@@ -67,16 +55,6 @@ export const StyledButton = styled.button`
   &.red {
     display: block;
     width: 100%;
-    color: ${white};
+    color: ${white};  // Red button text color
   }
-`;
-
-export const Input = styled.input`
-  border: 0;
-  outline: 0;
-  font-size: ${ruler}px;
-  border-radius: ${ruler * 20}px;
-  padding: ${ruler}px;
-  background-color: ${colorBg};
-  text-shadow: 1px 1px 0 ${colorWhite};
 `;

@@ -12,7 +12,7 @@ import InfoSection from "../../Components/InfoSection/infoSection"
 import AboutPictureOne from "../../Assets/Images/AboutPictureOne.jpg"
 import guitar from "../../Assets/Images/guitar-emoji.png"
 import coding from "../../Assets/Images/Coding.png"
-import {CareerText, GuitarText} from "../../utils/constants.js"
+import {CareerText, GuitarText} from "../../utils/constants"
 import Folsom from "../../Assets/Videos/Folsom.MOV"
 
 function AboutPage({customerData, dispatch}) {

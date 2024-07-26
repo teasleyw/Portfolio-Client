@@ -1,128 +1,91 @@
-import React, {useEffect, useRef, useState} from "react";
-import {ButtonContainer, Poem, PoemAuthor, PoemTitle, PoemContainer, PoetryPageContainer} from "./PoetryPageStyled";
+// src/Pages/PoetryPage/PoetryPage.jsx
+import React, { useState } from "react";
+import { ButtonContainer, Poem, PoemAuthor, PoemTitle, PoemContainer, PoetryPageContainer } from "./PoetryPageStyled";
 import Header from "../../Components/Header/Header";
-import NeuMorphicButton from "../../Components/Button/NeumorphicButton";
-import Modal from "../../Components/Modal/Modal";
-import {updatePoemContent} from "../../redux/app-state-slice";
-import {SuitAndTie} from "../../utils/poems.jsx"
-import {VerseCollection} from "../../utils/poemObjects.js"
-
-
+import Button from "../../Components/Button/Button";
+import { ModalContent, ModalWrapper, CloseButton } from '../../Components/Modal/ModalGenericStyled.jsx';
+import SubmitPoem from "../../Components/SubmitPoem/SubmitPoem";
+import FilterByAuthor from "../../Components/FilterByAuthor/FilterByAuthor.jsx"; // Import the new modal
+import { updatePoemContent } from "../../redux/app-state-slice";
+import { VerseCollection } from "../../utils/poemObjects.js";
 
 const PoetryPage = ({ dispatch, customerData }) => {
-    const [poemHTML, setPoemHTML] = useState("Write me a poem");
-    const [poemTitle, setPoemTitle] = useState("");
-    const [poemAuthor, setAuthor] = useState("");
-    const [poemIndex, setPoemIndex] = useState(0);
-    const [showModal, setShowModal] = useState(false);
+    const [showSubmitPoemModal, setShowSubmitPoemModal] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [currentPoemIndex, setCurrentPoemIndex] = useState(0);
-    const currentPoem = VerseCollection[currentPoemIndex];
-    const [prevPoemIndex, setPrevPoemIndex] = useState(-1); // Initialize prevPoemIndex state
+    const [filteredPoems, setFilteredPoems] = useState(VerseCollection); // Default to all poems
+    const currentPoem = filteredPoems[currentPoemIndex];
 
-    const poemElement = useRef(null);
-    let poem = ""
-    const handleChangePoem = (value) => {
-        if (value) {
-            poem = value
-        }
+    const openSubmitPoemModal = () => {
+        setShowSubmitPoemModal(true);
     };
 
-    const clearFunction = () => {
-        setAuthor("");
-        setPoemTitle("");
-        setPoemHTML(poemHTML === "Roses Are Red...." ? "Believe In Yourself, Because I Believe in you." : "Roses Are Red....");
+    const openFilterModal = () => {
+        setShowFilterModal(true);
     };
 
-    const submitPoem = (dispatch) => {
-        setShowModal(true);
-        if (poemHTML) {
-            console.log("submitted poem: " + poemHTML);
-        } else {
-            console.log("poem not submitted");
-        }
-        dispatch(updatePoemContent(poemHTML));
+    const exitSubmitPoemModal = () => {
+        setShowSubmitPoemModal(false);
     };
 
-    const randomPoem = () => {
-        let randomIndex;
-        do {
-            // Get a random index within the VerseCollection array
-            randomIndex = Math.floor(Math.random() * VerseCollection.length);
-        } while (randomIndex === prevPoemIndex); // Repeat until a different poem index is selected
+    const exitFilterModal = () => {
+        setShowFilterModal(false);
+    };
 
-        // Update the previously selected poem index
-        setPrevPoemIndex(randomIndex);
-
-        // Get the poem object at the random index
-        const randomPoem = VerseCollection[randomIndex];
-
-        // Set the author, poem title, and poem content based on the random poem
-        setAuthor("by: " + randomPoem.author);
-        setPoemTitle(randomPoem.title);
-        setPoemHTML(randomPoem.poem);
+    const handleFilter = (selectedAuthors) => {
+        const filtered = VerseCollection.filter(poem => selectedAuthors.includes(poem.author));
+        setFilteredPoems(filtered);
     };
 
     const nextPoem = () => {
-            setCurrentPoemIndex((prevIndex) => (prevIndex + 1) % VerseCollection.length);
-    };
-
-
-    const exitModal = () => {
-        setShowModal(false);
-        console.log(customerData);
+        setCurrentPoemIndex((prevIndex) => (prevIndex + 1) % filteredPoems.length);
     };
 
     return (
         <>
-            {showModal &&
-                <Modal customerData={customerData} dispatch={dispatch} exitModal={() => exitModal()} />
-            }
+            <ModalWrapper isOpen={showSubmitPoemModal}>
+                <ModalContent>
+                    <CloseButton onClick={exitSubmitPoemModal}>Close</CloseButton>
+                    <SubmitPoem />
+                </ModalContent>
+            </ModalWrapper>
+
+            <ModalWrapper isOpen={showFilterModal}>
+                <FilterByAuthor
+                    isOpen={showFilterModal}
+                    onClose={exitFilterModal}
+                    onFilter={handleFilter}
+                />
+            </ModalWrapper>
+
             <PoetryPageContainer>
                 <Header customerData={customerData} dispatch={dispatch} />
                 <ButtonContainer>
-{/*                     <NeuMorphicButton onClick={() => submitPoem(dispatch)} label="Submit" /> */}
-                    <NeuMorphicButton onClick={() => nextPoem()} label="Next Poem" />
-{/*                     <NeuMorphicButton onClick={() => clearFunction()} label="Clear" /> */}
+                    <Button onClick={() => nextPoem()} label="Next Poem" />
+                    <Button onClick={openSubmitPoemModal} label="Submit Poem" />
+                    <Button onClick={openFilterModal} label="Poems by Author" />
                 </ButtonContainer>
                 <PoemContainer>
                     <div>
-                        <Poem>
-                            <PoemTitle>{currentPoem.title}</PoemTitle>
-                            <br />
-                            <PoemAuthor>{currentPoem.author}</PoemAuthor>
-                            <br />
-                            <br />
-                            {currentPoem.poem}
-                        </Poem>
+                        {currentPoem ? (
+                            <Poem>
+                                <PoemTitle>{currentPoem.title}</PoemTitle>
+                                <br />
+                                <PoemAuthor>{currentPoem.author}</PoemAuthor>
+                                <br />
+                                <br />
+                                {currentPoem.poem}
+                            </Poem>
+                        ) : (
+                            <Poem>
+                                <PoemTitle>No Poems available under those filters</PoemTitle>
+                            </Poem>
+                        )}
                     </div>
                 </PoemContainer>
             </PoetryPageContainer>
         </>
     );
-};
-
-const PoemLogic = (props) => {
-    const {onChange} = props;
-    const element = useRef();
-    let elements = React.Children.toArray(props.children);
-    if (elements.length > 1) {
-        throw Error("Can't have more than one child");
-    }
-    const onMouseUp = () => {
-        const value = element.current?.value || element.current?.innerText;
-        onChange(value);
-    };
-    useEffect(() => {
-        const value = element.current?.value || element.current?.innerText;
-        onChange(value);
-    });
-    elements = React.cloneElement(elements[0], {
-        contentEditable: false,
-        suppressContentEditableWarning: false,
-        ref: element,
-        onKeyUp: onMouseUp
-    });
-    return elements;
 };
 
 export default PoetryPage;
