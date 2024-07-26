@@ -17,14 +17,14 @@ function LandingPage() {
         <>
 
         <LandingPageContainer>
-            {Array.from({ length: 630}, (_, i) => <BackgroundFlower key={i} src={flower}/>)}
+            {Array.from({ length: 800}, (_, i) => <BackgroundFlower key={i} src={flower}/>)}
         </LandingPageContainer>
         <LogoContainer>
             <Frost>
-                Will
+                Frost
             </Frost>
             <Milano>
-                Teasley
+                Poems
             </Milano>
             <NeonBtn onClick={() => {navigate("/Poetry")}} NeonColor={"rgb(180,242,242)"}>
                 Enter

@@ -45,7 +45,7 @@ function Header({customerData,dispatch}) {
         return (
             <HeaderDiv>
                 <HeaderContainer>
-                    <Logo onClick={() => { navigate('/Poetry') }}>Will Teasley</Logo>
+                    <Logo onClick={() => { navigate('/Poetry') }}>Frost Poems</Logo>
                     <MobileIcon onClick={() => { setClick(!click) }}>
                         {click ? <FaTimes color={"white"} /> : <FaBars color={"white"} />}
                     </MobileIcon>
