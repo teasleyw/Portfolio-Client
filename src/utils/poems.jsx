@@ -60,7 +60,7 @@ But there is still one thing I know for certain:
 A man sure of anything is surely right about nothing.`;
 export const WokeUpToday = `I woke up today under concrete slabs.
  The ones above bind to the ones below.
- Dread fills me.
+ Dread fills my senses.
  I know there is nowhere to go.
 
  I woke up today to muffled screams.
