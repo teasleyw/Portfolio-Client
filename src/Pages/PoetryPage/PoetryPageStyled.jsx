@@ -20,21 +20,17 @@ export const PoetryPageContainer = styled.div`
   align-items: center;
   top: 0;
   left: 0;
-  opacity: ${props => props.opacity};
+  opacity: ${props => props.opacity || 1};
 `
+// Poem Container
 export const PoemContainer = styled.div`
-  height: fit-content;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 25px;
-  @media screen and (max-width: 960px) {
-      font-size: 25px;
-  }
-  @media screen and (max-width: 350px) {
-  }
-`
+`;
+
 export const PoemTitle = styled.div`
     color: ${poemTitleColor};
     font-size: 35px;
@@ -67,7 +63,6 @@ export const Poem = styled.div`
     outline: none;
     line-height: 1.8rem;
     font-family: 'Maitree', serif;
-    white-space: pre;
     white-space: pre-wrap;
     @media screen and (max-width: 960px) {
           font-size: 20px;
