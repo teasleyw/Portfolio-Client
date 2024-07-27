@@ -1,4 +1,4 @@
-import { SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay } from "./poems.jsx";
+import { SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
 
 export const VerseCollection = [
     {
@@ -47,6 +47,18 @@ export const VerseCollection = [
         author: "Townes Van Zandt",
         title: "Lungs",
         poem: Lungs,
+        poemOfTheDay: false
+    },
+    {
+        author: "Robert Frost",
+        title: "A Cliff Dwelling",
+        poem: ACliffDwelling,
+        poemOfTheDay: false
+    },
+    {
+        author: "Robert Frost",
+        title: "A Fountain, a Bottle, a Donkey's Ears, and Some Books",
+        poem: AFountainABottleADonkeysEarsAndSomeBooks,
         poemOfTheDay: false
     }
 ];
