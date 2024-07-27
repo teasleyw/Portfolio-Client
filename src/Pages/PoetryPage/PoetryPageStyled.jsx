@@ -95,6 +95,7 @@ export const PoemAuthor = styled.div`
 export const PoemText = styled.div`
     margin-top: 30px;
     white-space: pre-wrap;
+    line-height: 2.1rem;
 `
 export const PoemItemContainer = styled.div``
 export const Poem = styled.div`
@@ -105,7 +106,7 @@ export const Poem = styled.div`
     font-size: 26px;
     z-index: 1;
     outline: none;
-    line-height: 1.8rem;
+
     font-family: 'Maitree', serif;
      @media screen and (max-width: ${MobileSize}) {
                font-size: 20px;
