@@ -33,7 +33,13 @@ const PoetryPage = ({ dispatch, customerData }) => {
     };
 
     const handleFilter = (selectedAuthors) => {
+
         const filtered = VerseCollection.filter(poem => selectedAuthors.includes(poem.author));
+        if (filtered.length > 0) {
+                setCurrentPoemIndex(0); // Set to the first poem in the filtered list
+            } else {
+                setCurrentPoemIndex(-1); // Set to an invalid index if no poems match the filter
+            }
         setFilteredPoems(filtered);
     };
 
