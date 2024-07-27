@@ -7,6 +7,8 @@ const backgroundColor = "#272727";
 const poemColor = "#D8D8D8"
 const poemTitleColor = "rgb(255, 253, 208)"
 const poemAuthorColor = "rgb(255, 253, 208)"
+const titleColor = "rgb(180,242,242)"
+
 
 
 export const PoetryPageContainer = styled.div`
@@ -30,10 +32,53 @@ export const PoemContainer = styled.div`
   justify-content: center;
   padding-bottom: 25px;
 `;
+export const PoemOfTheDay= styled.div`
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    justify-self: flex-start;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: ${titleColor};
+    font-family: "IceCaps", sans-serif; //Title Font;
+    font-size: 3rem;
+    text-shadow: 0 0 0.2em hsl(0 0% 100% / 0.5), 0 0 0.6em ${titleColor};
+    cursor: pointer;
+    transform-origin: right;
+    transform: scaleX(1);
+    background: linear-gradient(to right, white 20%, #0AF 40%, #0AF 60%, #0AF 80%);
+    background-size: 200% auto;
 
+    color: #000;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: shine 1.5s linear infinite;
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+    &:after {
+      transition: all .4s ease-out;
+      right: 100%;
+      }
+   @media screen and (max-width: ${MobileSize}) {
+       font-size: 2.5rem;
+   }
+    @media screen and (max-width: ${"400px"}) {
+          font-size: 2.3rem;
+      }
+
+
+`
 export const PoemTitle = styled.div`
     color: ${AccentColor};
     font-size: 35px;
+
     text-align: center;
     @media screen and (max-width: ${MobileSize}) {
           font-size: 25px;
@@ -47,6 +92,11 @@ export const PoemAuthor = styled.div`
           font-size: 25px;
       }
 `
+export const PoemText = styled.div`
+    margin-top: 30px;
+    white-space: pre-wrap;
+`
+export const PoemItemContainer = styled.div``
 export const Poem = styled.div`
     background: #303030;
     border-radius: 25px;
@@ -57,9 +107,9 @@ export const Poem = styled.div`
     outline: none;
     line-height: 1.8rem;
     font-family: 'Maitree', serif;
-    white-space: pre-wrap;
      @media screen and (max-width: ${MobileSize}) {
                font-size: 20px;
+               padding: none;
                width: 90vw;
      }
 `

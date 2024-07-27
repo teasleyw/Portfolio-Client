@@ -219,8 +219,7 @@ I for one and you for two
 Ain't got the time for outside
 Just keep your injured looks to you
 We'll tell the world we tried`
-export const KingForADay = `
-Waves crashing with the tides of man
+export const KingForADay = `Waves crashing with the tides of man
 Time passing like grains of sand.
 Memories of what came before,
 Bodies lying on an endless shore.
