@@ -1,11 +1,17 @@
-import { SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
+import {Propane, SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
 
 export const VerseCollection = [
+{
+    author: "William Teasley",
+    title: "Propane",
+    poem: Propane,
+    poemOfTheDay: true
+},
     {
         author: "Tito Santana",
         title: "King for a day",
         poem: KingForADay,
-        poemOfTheDay: true
+        poemOfTheDay: false
     },
     {
         author: "William Teasley",

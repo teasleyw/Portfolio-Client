@@ -432,3 +432,28 @@ At having eased her heart of one more copy
 Legitimately. My demand upon her,
 Though slight, was a demand. She felt the tug.
 In time she would be rid of all her books.`;
+
+export const Propane = `There is a build-up of propane
+In my room where I have lain
+Before I rest every night.
+Flick Flick Flick
+But no ignite
+
+A simple cause? I wouldn’t know.
+Never search, let it grow
+Don’t have time; my duties call
+Flick Flick Flick
+I still recall.
+
+In day I work till withered bone,
+Till everyone has long gone home.
+From morning dew to moonlit grass
+Flick Flick Flick
+Gas evicts the gas
+
+Every night, my dreams remain
+Raging flames, embered by rain
+Every night, it stays the same.
+Flick Flick Flick
+`;
+
