@@ -449,7 +449,7 @@ In day I work till withered bone,
 Till everyone has long gone home.
 From morning dew to moonlit grass
 Flick Flick Flick
-Gas evicts the gas
+Gas evicts gas
 
 Every night, my dreams remain
 Raging flames, embered by rain
