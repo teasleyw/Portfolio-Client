@@ -456,4 +456,28 @@ Raging flames, embered by rain
 Every night, it stays the same.
 Flick Flick Flick
 `;
+export const TimePoem = `
+If what I'm told is true, there's a beginning to every end.
+Then from what womb, did time ascend?
+
+And when it's time, that time grows old,
+Will its structure creak, sag, and fold?
+
+Does time have a boss that throws a fit
+When time is late or time forgets?
+
+And will we lose a lap ‘round the sun,
+If time stays up late having too much fun?
+
+Does time write poems?
+Does time rhyme?
+Will time spare time
+To read this poem of mine?
+
+Does time feel sad; wish it was better.
+When space throws away times love letter.
+
+Well, I don't know, for my time grows old.
+And my time will end, or so I'm told.
+`;
 

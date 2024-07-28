@@ -1,4 +1,4 @@
-import {Propane, SuitAndTie, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
+import {Propane,TimePoem, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
 
 export const VerseCollection = [
 {
@@ -66,5 +66,11 @@ export const VerseCollection = [
         title: "A Fountain, a Bottle, a Donkey's Ears, and Some Books",
         poem: AFountainABottleADonkeysEarsAndSomeBooks,
         poemOfTheDay: false
-    }
+    },
+    {
+            author: "William Teasley",
+            title: "Time Poem",
+            poem: TimePoem,
+            poemOfTheDay: false
+        }
 ];
