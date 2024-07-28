@@ -1,6 +1,6 @@
 // src/Components/Modal/FilterByAuthorModalStyled.jsx
 import styled from 'styled-components';
-import { AccentColor } from '../../utils/constants';
+import {AccentColor, MobileSize} from "../../utils/constants"
 
 const darkGray = '#333333';
 const lightGray = '#d3d3d3';
@@ -10,7 +10,17 @@ export const Title = styled.h2`
   font-family: 'Textile-Regular';
   color: ${AccentColor};
 `;
-
+export const ButtonContainer = styled.div`
+  width: 100vw;
+  height: 10vh;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: ${MobileSize}) {
+         gap: 0;
+  }
+`
 export const MultiSelect = styled.select`
   width: 100%;
   height: 150px;
