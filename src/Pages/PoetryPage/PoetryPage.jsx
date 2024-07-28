@@ -52,14 +52,18 @@ const PoetryPage = ({ dispatch, customerData }) => {
     const nextPoem = () => {
         setCurrentPoemIndex((prevIndex) => (prevIndex + 1) % filteredPoems.length);
     };
-    const showPoemOfTheDay = () => {
-            if (poemOfTheDay) {
-                const index = filteredPoems.findIndex(poem => poem === poemOfTheDay);
-                if (index !== -1) {
-                    setCurrentPoemIndex(index);
-                }
-            }
-        };
+      const showPoemOfTheDay = () => {
+        if (poemOfTheDay) {
+          // Reset filters
+          setFilteredPoems(VerseCollection);
+
+          // Find the index of the poem of the day in the original collection
+          const index = VerseCollection.findIndex(poem => poem === poemOfTheDay);
+          if (index !== -1) {
+            setCurrentPoemIndex(index);
+          }
+        }
+      };
 
 
     return (
