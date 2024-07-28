@@ -454,6 +454,6 @@ Gas evicts gas
 Every night, my dreams remain
 Raging flames, embered by rain
 Every night, it stays the same.
-Flick Flick Flick
+Flick
 `;
 
