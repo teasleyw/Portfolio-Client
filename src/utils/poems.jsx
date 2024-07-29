@@ -449,12 +449,12 @@ In day I work till withered bone,
 Till everyone has long gone home.
 From morning dew to moonlit grass
 Flick Flick Flick
-Gas evicts the gas
+Gas evicts gas
 
 Every night, my dreams remain
 Raging flames, embered by rain
 Every night, it stays the same.
-Flick Flick Flick
+Flick
 `;
 export const TimePoem = `
 If what I'm told is true, there's a beginning to every end.
