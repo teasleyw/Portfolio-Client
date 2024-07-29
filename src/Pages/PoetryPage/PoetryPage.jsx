@@ -1,6 +1,6 @@
 // src/Pages/PoetryPage/PoetryPage.jsx
-import React, { useState } from "react";
-import { ButtonContainer, Poem, PoemAuthor, PoemTitle, PoemContainer, PoetryPageContainer } from "./PoetryPageStyled";
+import React, { useState,useEffect } from "react";
+import { ButtonContainer, Poem, PoemAuthor, PoemTitle, PoemContainer, PoetryPageContainer,PoemText,PoemOfTheDay } from "./PoetryPageStyled";
 import Header from "../../Components/Header/Header";
 import Button from "../../Components/Button/Button";
 import { ModalContent, ModalWrapper, CloseButton } from '../../Components/Modal/ModalGenericStyled.jsx';
@@ -8,7 +8,7 @@ import SubmitPoem from "../../Components/SubmitPoem/SubmitPoem";
 import FilterByAuthor from "../../Components/FilterByAuthor/FilterByAuthor.jsx"; // Import the new modal
 import { updatePoemContent } from "../../redux/app-state-slice";
 import { VerseCollection } from "../../utils/poemObjects.js";
-
+import axios from "axios";
 const PoetryPage = ({ dispatch, customerData }) => {
     const [showSubmitPoemModal, setShowSubmitPoemModal] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false);
