@@ -24,13 +24,13 @@ const OriginalsTheme = () => {
 
   return (
   <>
-    <AudioPlayer
-        style={{display: 'none'}}
-        autoPlay
-        src={proyn}
-        onPlay={e => console.log("onPlay")}
-        loop
-      />
+{/*     <AudioPlayer */}
+{/*         style={{display: 'none'}} */}
+{/*         autoPlay */}
+{/*         src={proyn} */}
+{/*         onPlay={e => console.log("onPlay")} */}
+{/*         loop */}
+{/*       /> */}
       <NinetiesHeader theme={themes}>
       <GifTitle src={jukeBox} alt="jukebox"/>
       <GifTitle src={gifTitle} alt="90s Title" />
