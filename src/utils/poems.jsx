@@ -459,8 +459,8 @@ Flick
 export const TimePoem = `If what I'm told is true, there's a beginning to every end.
 Then tell me from what womb, did time itself ascend?
 
-Does time have a mother that scolds.
-when time fights its brother.
+Does time have a mother that scolds
+when time fights its brother?
 
 Does time have a boss that throws a fit
 When time is late, or time forgets?
