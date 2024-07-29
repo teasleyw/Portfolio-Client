@@ -8,7 +8,6 @@ import SubmitPoem from "../../Components/SubmitPoem/SubmitPoem";
 import FilterByAuthor from "../../Components/FilterByAuthor/FilterByAuthor.jsx"; // Import the new modal
 import { updatePoemContent } from "../../redux/app-state-slice";
 import { VerseCollection } from "../../utils/poemObjects.js";
-import axios from 'axios';
 
 const PoetryPage = ({ dispatch, customerData }) => {
     const [showSubmitPoemModal, setShowSubmitPoemModal] = useState(false);
@@ -32,6 +31,12 @@ const PoetryPage = ({ dispatch, customerData }) => {
       title: 'My Poem',
       poem: 'This is the content of my poem.',
     };
+     const [poemOfTheDay, setPoemOfTheDay] = useState(null);
+    useEffect(() => {
+            // Find the poem of the day when the component mounts
+            const poem = VerseCollection.find(poem => poem.poemOfTheDay);
+            setPoemOfTheDay(poem);
+        }, []);
 
     const openSubmitPoemModal = () => {
         setShowSubmitPoemModal(true);
@@ -50,13 +55,32 @@ const PoetryPage = ({ dispatch, customerData }) => {
     };
 
     const handleFilter = (selectedAuthors) => {
+
         const filtered = VerseCollection.filter(poem => selectedAuthors.includes(poem.author));
+        if (filtered.length > 0) {
+                setCurrentPoemIndex(0); // Set to the first poem in the filtered list
+            } else {
+                setCurrentPoemIndex(-1); // Set to an invalid index if no poems match the filter
+            }
         setFilteredPoems(filtered);
     };
 
     const nextPoem = () => {
         setCurrentPoemIndex((prevIndex) => (prevIndex + 1) % filteredPoems.length);
     };
+      const showPoemOfTheDay = () => {
+        if (poemOfTheDay) {
+          // Reset filters
+          setFilteredPoems(VerseCollection);
+
+          // Find the index of the poem of the day in the original collection
+          const index = VerseCollection.findIndex(poem => poem === poemOfTheDay);
+          if (index !== -1) {
+            setCurrentPoemIndex(index);
+          }
+        }
+      };
+
 
     return (
         <>
@@ -78,8 +102,8 @@ const PoetryPage = ({ dispatch, customerData }) => {
             <PoetryPageContainer>
                 <Header customerData={customerData} dispatch={dispatch} />
                 <ButtonContainer>
-                    <Button onClick={() => sendPoem()} label="test"/>
-                    <Button onClick={() => nextPoem()} label="Next Poem" />
+                     <Button onClick={nextPoem} label="Next Poem" />
+                    <Button onClick={showPoemOfTheDay} label="Poem of the Day" />
                     <Button onClick={openSubmitPoemModal} label="Submit Poem" />
                     <Button onClick={openFilterModal} label="Filter By Author" />
                 </ButtonContainer>
@@ -87,12 +111,13 @@ const PoetryPage = ({ dispatch, customerData }) => {
                     <div>
                         {currentPoem ? (
                             <Poem>
+                            {currentPoem === poemOfTheDay && <PoemOfTheDay>Poem of the Day</PoemOfTheDay>}
                                 <PoemTitle>{currentPoem.title}</PoemTitle>
                                 <br />
                                 <PoemAuthor>{currentPoem.author}</PoemAuthor>
-                                <br />
-                                <br />
+                                <PoemText>
                                 {currentPoem.poem}
+                                </PoemText>
                             </Poem>
                         ) : (
                             <Poem>

@@ -6,6 +6,7 @@ import ColterWall from "../../Assets/Images/ColterWall.jpeg"
 import WarrenZeiders from "../../Assets/Images/WarrenZeiders.jpeg"
 import JohnnyCash from "../../Assets/Images/JohnnyCash.jpg"
 import RLBurnside from "../../Assets/Images/RLBurnside.jpeg"
+import Towns from "../../Assets/Images/Towns.jpeg"
 import FrostMilano from "../../Assets/Images/Frost.jpeg"
 import Creek from "../../Assets/Images/Creek.jpeg"
 import { FaTimes } from 'react-icons/fa';
@@ -47,6 +48,7 @@ const opts: YouTubeProps['opts'] = {
   };
 
 const videos = [
+  {name : 'Lungs - Towns Van Zandt', videoId: 'MIAN8JGyjkg', image: Towns},
   { name: 'Folsom Prison - Johnny Cash', videoId: 'WgX-RpJUQaY' ,image: JohnnyCash },
   { name: 'On the run - Warren Zeiders', videoId: 'uPzXBCo3oX0', image: WarrenZeiders },
   { name: 'Kate McCannon - Colter Wall', videoId: '6aZvjIHHqsg', image: ColterWall },
