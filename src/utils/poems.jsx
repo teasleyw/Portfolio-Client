@@ -520,6 +520,6 @@ Where soft piano echoes through forest's sheen,
 Where man sits atop the moon,
 And your warmth never leaves too soon.
 
-And I woke up to the sound of a screeching phone.
+I wake to sound of screeching phone.
 As the story goes, nights like these are spent alone.
 `;
