@@ -483,3 +483,43 @@ Well, I don't know, for my time grows old.
 And my time will soon end, or so I'm told.
 `;
 
+export const NightsAlone = `The rain fell light that melancholy night.
+Steelbound lamps shone a fiery hue.
+They lie their reflections across the water,
+As if they rest with me,
+The moon too.
+
+As the story goes, nights like these are spent alone,
+And nights like these I've had many.
+Twinkling sky, soft creek, bugs aplenty,
+Weary bones, weary soul,
+The river's rhythm on a roll.
+
+Some thoughts will drop by, like a friendly neighbor.
+A quick hello and see you later.
+Others, they stay, give air to fire,
+Which fuels trespassers, who stretch heart to wire.
+They run amok, leave the mind in disarray,
+But their fingerprints and grime washed away
+By similar thoughts I beg to stay.
+
+As the story goes, nights like these are spent alone,
+But soon I heard, leaves snap and crumple,
+Which came alongside, your familiar chuckle.
+And you eased yourself, down next to I.
+We sat in the silence
+While we searched our minds in the sky.
+
+All between us has been said.
+No questions or concerns pry space in our heads.
+Not even needing a glance in the eye,
+Just your breath, breathing the same air as my.
+
+It all reminds me of a dream,
+Where soft piano echoes through forest's sheen,
+Where man sits atop the moon,
+And your warmth never leaves too soon.
+
+And I woke up to the sound of a screeching phone.
+As the story goes, nights like these are spent alone.
+`;
