@@ -503,23 +503,28 @@ They run amok, leave the mind in disarray,
 But their fingerprints and grime washed away
 By similar thoughts I beg to stay.
 
-As the story goes, nights like these are spent alone,
+As the story goes, nights like these are spent alone.
 But soon I heard, leaves snap and crumple,
 Which came alongside, your familiar chuckle.
 And you eased yourself, down next to I.
-We sat in the silence
-While we searched our minds in the sky.
+We sat in silence,
+searched our minds in sky.
 
-All between us has been said.
-No questions or concerns pry space in our heads.
-Not even needing a glance in the eye,
-Just your breath, breathing the same air as my.
+For all between us has been said.
+No questions or concerns, pry space in heads.
+No guilt or fear, to keep us shy,
+No insecurity, if eye meets eye.
+
+Our breathes entangle like thread through thread.
+no need for words we feel instead.
+save those waves for needy ears.
+no need to obtain what is already here.
 
 It all reminds me of a dream,
 Where soft piano echoes through forest's sheen,
 Where man sits atop the moon,
 And your warmth never leaves too soon.
 
-I wake to sound of screeching phone.
+And I wake. to sound of screeching phone.
 As the story goes, nights like these are spent alone.
 `;
