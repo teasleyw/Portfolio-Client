@@ -515,7 +515,7 @@ No questions or concerns, pry space in heads.
 No guilt or fear, to keep us shy,
 No insecurity, if eye meets eye.
 
-Our breathes entangle like thread through thread.
+Our breaths entangle like thread through thread.
 no need for words we feel instead.
 save those waves for needy ears.
 no need to obtain what is already here.
