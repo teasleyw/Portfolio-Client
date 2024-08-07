@@ -1,11 +1,17 @@
-import {Propane,NightsAlone, TimePoem, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
+import {Propane,RavenZipped,NightsAlone, TimePoem, SoManyMoons, SpokeAndSage, WokeUpToday, GraceAndJack, BrookInTheCity, StoppingByWoods, Lungs, KingForADay,ACliffDwelling,AFountainABottleADonkeysEarsAndSomeBooks } from "./poems.jsx";
 
 export const VerseCollection = [
     {
         author: "William Teasley",
+        title: "Zippers, Trains, goodbye.",
+        poem: RavenZipped,
+        poemOfTheDay: true
+    },
+    {
+        author: "William Teasley",
         title: "Nights Like These Are Spent Alone",
         poem: NightsAlone,
-        poemOfTheDay: true
+        poemOfTheDay: false
     },
     {
             author: "William Teasley",

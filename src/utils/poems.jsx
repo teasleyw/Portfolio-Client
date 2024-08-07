@@ -528,3 +528,90 @@ And your warmth never leaves too soon.
 And I wake. to sound of screeching phone.
 As the story goes, nights like these are spent alone.
 `;
+export const RavenZipped = `
+Nothing fills the silence the way zippers zip when love is leaving
+When she packs her bags for one last time,
+And the train horns shake my ceiling.
+
+The zips and horns echo off my walls,
+Never fading after years.
+They scream like the underworld's tortured souls,
+While they singe the hair out of my ears.
+
+I sit in my home stare into a fire.
+She used to bring me warmth when she spoke,
+But now these embers are nothing to admire,
+Her snaps like zips, her breath a train's coal burnt smoke.
+
+But the dancing flames caught my attention,
+I heard her speak again,
+"Pay me fuel for your inquisitions,
+I'll answer any about your friend."
+
+So I tossed a log on the fire to make sure she was well fed,
+And asked her,
+
+"Oh Eternal Flame, has the wind blown your ashes across her path, have you heard her speak of me?"
+But the fire declares,
+
+"You speak alone."
+
+I asked,
+
+"Oh Eternal Flame, do your embers reach her in her home? Does she feel her body warmed by your aura like they were by my hands?"
+
+The fire speaks back,
+
+"You feel alone."
+
+I ask,
+
+"Oh Eternal Flame, as your smoke glides across the globe. Would you mind asking the lake, If while she swings her feet and the water splashes, does she sing our favorite song?"
+
+"You sing alone."
+
+"Oh Eternal Fla---"
+
+The flame exploded, deafening my senses a moment before it pointed its fiery arm towards the sky and spoke.
+
+"My friend, have you not looked towards the sun, moon, and stars? Spoken to them the same questions and already received your answer?"
+
+And continued,
+
+"Use your intuition, forget your superstition and these stupid inquisitions. Between these celestial bodies, you have already discovered your position."
+
+The flame, with a whoosh, went out.
+Silence arose.
+The zips stopped,
+The train horns faded like a wolf's howl.
+And a raven began tapping, tapping at my chamber door.
+
+The flames were right
+Because when pen hits paper
+Vibrance fills this silence.
+Roses bloom in the void.
+Ravens put their wings to the air.
+And rage prances without a care.
+
+"I was born to be a poet,"
+
+I exclaimed this to the heavens.
+And with gentle swagger, I sat down.
+Under candlelight, I raided this tree carcass with ink.
+
+Echoing my pen jabs was the ebony bird tapping at my door.
+I could feel through its rapping, the approval of poets before.
+I felt as though my adventure had begun,
+I smiled and exclaimed to the raven.
+"Will I hear the zips again?"
+Quoth the Raven, “Nevermore.”
+
+I smiled and the days went on.
+The raven atop my door still tapped,
+Tapped,
+Tappe,
+Tapp,
+Tipp,
+Zipp,
+Zipped, zipped at my chamber door.
+`;
